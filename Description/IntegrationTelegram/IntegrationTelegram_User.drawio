@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" modified="2024-06-24T18:43:14.250Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="UGNvPwh5t-apBW3u2y8O" version="24.6.2" type="device">
+  <diagram name="Страница — 1" id="6_kf7a4UJlBJ0kwGdQS4">
+    <mxGraphModel dx="1050" dy="625" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TMD0wSkBmeW8nhcPqqG2-1" value="Пользователь" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="TMD0wSkBmeW8nhcPqqG2-3" value="Получение информации о коллегах&amp;nbsp;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="40" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="TMD0wSkBmeW8nhcPqqG2-4" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="TMD0wSkBmeW8nhcPqqG2-1" target="TMD0wSkBmeW8nhcPqqG2-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="180" y="190" as="sourcePoint" />
+            <mxPoint x="230" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMD0wSkBmeW8nhcPqqG2-5" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="140" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
