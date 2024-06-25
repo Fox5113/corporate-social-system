@@ -10,5 +10,6 @@ namespace NewsFeed.Models
     {
         public ICollection<JoinTablesPairs> TablePairs { get; set; }
         public JoinType JoinType { get; set; }
+        public LogicalOperationStrict Operation { get; set; }
     }
 }
