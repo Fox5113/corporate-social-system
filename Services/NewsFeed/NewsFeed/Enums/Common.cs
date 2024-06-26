@@ -4,21 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace NewsFeed.Enums
-
 {
     public class Common
     {
+        public enum OrderBy
+        {
+            ASC,
+            DESC
+        }
+
         public enum LogicalOperationStrict
         {
-            And = 0,
-            Or = 1
+            AND = 0,
+            OR = 1
         }
 
         public enum JoinType
         {
+            INNER, 
             LEFT,
             RIGHT,
-            INNER,
             OUTER
         }
 

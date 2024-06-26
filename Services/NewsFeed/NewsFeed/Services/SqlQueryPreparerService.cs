@@ -2,46 +2,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using static NewsFeed.Enums.Common;
 
 namespace NewsFeed.Services
 {
-    public class SearchMaker
+    public class SqlQueryPreparerService
     {
-		public string GetQuery(TableSearch tableSearch)
-        {
-			var selectQuery = new SelectQuery();
-			selectQuery.Columns = GetColumns(tableSearch.Tables);
-			selectQuery.Joins = GetJoins(tableSearch.Joins);
-			selectQuery.Filters = GetFilters(tableSearch.Mapping);
-			//нужно допилить order by и может group by
+		public string GetSelectQuery(TableSearch tableSearch)
+		{
+			if (String.IsNullOrEmpty(tableSearch.MainTableName))
+				return null;
 
-			return PrepareSqlString(selectQuery);
-        }
+			var selectQuery = new SelectQuery(tableSearch.MainTableName);
+			selectQuery.Columns = tableSearch.Tables == null ? "*" : GetColumns(tableSearch.Tables);
+			selectQuery.Joins = tableSearch.Joins == null ? "" : GetJoins(tableSearch.Joins);
+			selectQuery.Filters = tableSearch.Mapping == null ? "" : GetFilters(tableSearch.Mapping);
+			selectQuery.OrdersBy = tableSearch.OrderBy == null ? "" : GetOrderBy(tableSearch.OrderBy);
 
-		public string PrepareSqlString(SelectQuery selectQuery)
-        {
-			var newQuery = new List<string>();
-			newQuery.Add("SELECT ");
-			newQuery.Add(" FROM " + selectQuery.MainTable);
-			if (!String.IsNullOrEmpty(selectQuery.Joins.Trim()))
-				newQuery.Add(" \n" + selectQuery.Joins + "\n ");
-			if (!String.IsNullOrEmpty(selectQuery.Filters.Trim()))
-				newQuery.Add(" WHERE " + selectQuery.Filters);
-
-			return newQuery.ToString();
+			return selectQuery.PrepareSqlString();
 		}
 
-		private string GetColumns(ICollection<TableWithFieldsNames> tables)
+		private string GetOrderBy(ICollection<OrderBySqlQuery> orderBySqls)
         {
+			var columns = new List<string>();
+			foreach(var orderBy in orderBySqls)
+            {
+				columns.Add(orderBy.TableName + '.' + orderBy.ColumnName + " " + orderBy.OrderBy.ToString());
+            }
+
+			return String.Join(", ", columns);
+        }
+
+		/// <summary>
+		/// Получение колонок для sql запроса
+		/// </summary>
+		/// <param name="tables">Таблицы</param>
+		/// <returns>Строка sql</returns>
+		private string GetColumns(ICollection<TableWithFieldsNames> tables)
+		{
 			var columns = new List<string>();
 			foreach (var table in tables)
 			{
 				if (table.Fields == null)
 				{
-					columns.Add(" * ");
+					columns.Add("*");
 				}
 				else
 				{
@@ -55,25 +60,43 @@ namespace NewsFeed.Services
 			return String.Join(", ", columns);
 		}
 
+		/// <summary>
+		/// Создание джойнов sql
+		/// </summary>
+		/// <param name="joinTables">Маппинг джойнов</param>
+		/// <returns>Строка sql</returns>
 		private string GetJoins(ICollection<JoinTables> joinTables)
-        {
+		{
 			var joins = new List<string>();
-			foreach(var join in joinTables)
-            {
-				var joinStr = new List<string>();
-				foreach(var pair in join.TablePairs)
-                {
-					joinStr.Add(pair.FirstTableName + "." + pair.FirstTableColumnName);
-					joinStr.Add(GetOperation(pair.ComparisonType));
-					joinStr.Add(pair.SecondTableName + "." + pair.SecondTableColumnName);
+			foreach (var join in joinTables)
+			{
+				var joinValues = new List<string>();
+				foreach (var pair in join.TablePairs)
+				{
+					joinValues.Add(pair.FirstTableName + "." + pair.FirstTableColumnName);
+					joinValues.Add(GetOperation(pair.ComparisonType));
+					joinValues.Add(pair.SecondTableName + "." + pair.SecondTableColumnName);
 				}
 
-				joins.Add(join.JoinType.ToString() + " JOIN ON " + String.Join(" " + join.Operation.ToString() + " ", joinStr));
+				var joinStr = new List<string>();
+				joinStr.Add(join.JoinType.ToString());
+				joinStr.Add("JOIN");
+				joinStr.Add(join.JoiningTableName);
+				joinStr.Add("ON");
+				joinStr.Add(String.Join(" " + join.Operation.ToString() + " ", joinValues));
+
+				joins.Add(String.Join(" ", joinStr));
 			}
 
 			return String.Join("\n ", joins);
-        }
+		}
 
+		//Надо допилить оставшиеся операции
+		/// <summary>
+		/// Создание строки фильтров по маппингу
+		/// </summary>
+		/// <param name="map">Маппинг</param>
+		/// <returns>Строка sql</returns>
 		private string GetFilters(Mapping map)
 		{
 			var newGroup = new List<string>();
@@ -89,25 +112,25 @@ namespace NewsFeed.Services
 			{
 				var tableName = field.TableName;
 				if (field.Data != null && field.Data.Count > 0)
-                {
+				{
 					if (field.ComparisonType == FilterComparisonType.Equal)
 					{
-						if(field.Data.Count == 1)
-							newGroup.Add(tableName + '.' + field.Name + GetOperation(field.ComparisonType) + field.Data.First().ToString());
+						if (field.Data.Count == 1)
+							newGroup.Add(tableName + '.' + field.Name + GetOperation(field.ComparisonType) + "\'" + field.Data.First().ToString() + "\'");
 						else
-                        {
+						{
 							var values = String.Join(", ", field.Data.Select(x => "\'" + x.ToString() + "\'").ToArray());
-							newGroup.Add(tableName + '.' + field.Name + " in (" + values + ") ");
+							newGroup.Add(tableName + '.' + field.Name + " in (" + values + ")");
 						}
 					}
 					else if (field.ComparisonType == FilterComparisonType.Contain)
-                    {
-						newGroup.Add(tableName + '.' + field.Name + " like \'%" + field.Data.First().ToString() + "\'%");
+					{
+						newGroup.Add(tableName + '.' + field.Name + " like \'%" + field.Data.First().ToString() + "%\'");
 					}
 					else if (field.ComparisonType == FilterComparisonType.Between)
 					{
-						if(field.Data.Count == 2)
-                        {
+						if (field.Data.Count == 2)
+						{
 							newGroup.Add(tableName + '.' + field.Name + " >= \'" + field.Data.First().ToString() + "\'");
 							newGroup.Add(tableName + '.' + field.Name + " <= \'" + field.Data.Last().ToString() + "\'");
 						}
@@ -126,24 +149,24 @@ namespace NewsFeed.Services
 						else
 						{
 							var values = String.Join(", ", field.Data.Select(x => "\'" + x.ToString() + "\'").ToArray());
-							newGroup.Add(tableName + '.' + field.Name + " not in (" + values + ") ");
+							newGroup.Add(tableName + '.' + field.Name + " not in (" + values + ")");
 						}
 					}
 				}
 				else
-                {
+				{
 					if (field.ComparisonType == FilterComparisonType.IsNull || field.ComparisonType == FilterComparisonType.IsNotNull)
 					{
 						newGroup.Add(tableName + '.' + field.Name + GetOperation(field.ComparisonType));
 					}
 				}
 			}
-			
+
 			return '(' + String.Join(operation, newGroup) + ')';
 		}
 
 		private string GetOperation(FilterComparisonType type)
-        {
+		{
 			if (type == FilterComparisonType.Equal)
 			{
 				return " = ";
@@ -179,6 +202,5 @@ namespace NewsFeed.Services
 
 			return null;
 		}
-
 	}
 }
