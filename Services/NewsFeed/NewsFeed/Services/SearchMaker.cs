@@ -12,13 +12,33 @@ namespace NewsFeed.Services
     {
 		public string GetQuery(TableSearch tableSearch)
         {
-			var newQuery = new List<string>();
-			var columns = new List<string>();
-			var filters = "";
-			var joins = "";
+			var selectQuery = new SelectQuery();
+			selectQuery.Columns = GetColumns(tableSearch.Tables);
+			selectQuery.Joins = GetJoins(tableSearch.Joins);
+			selectQuery.Filters = GetFilters(tableSearch.Mapping);
+			//нужно допилить order by и может group by
 
-			foreach(var table in tableSearch.Tables)
-            {
+			return PrepareSqlString(selectQuery);
+        }
+
+		public string PrepareSqlString(SelectQuery selectQuery)
+        {
+			var newQuery = new List<string>();
+			newQuery.Add("SELECT ");
+			newQuery.Add(" FROM " + selectQuery.MainTable);
+			if (!String.IsNullOrEmpty(selectQuery.Joins.Trim()))
+				newQuery.Add(" \n" + selectQuery.Joins + "\n ");
+			if (!String.IsNullOrEmpty(selectQuery.Filters.Trim()))
+				newQuery.Add(" WHERE " + selectQuery.Filters);
+
+			return newQuery.ToString();
+		}
+
+		private string GetColumns(ICollection<TableWithFieldsNames> tables)
+        {
+			var columns = new List<string>();
+			foreach (var table in tables)
+			{
 				if (table.Fields == null)
 				{
 					columns.Add(" * ");
@@ -32,26 +52,8 @@ namespace NewsFeed.Services
 				}
 			}
 
-			if(tableSearch.Joins != null)
-            {
-				joins = GetJoins(tableSearch.Joins);
-            }
-
-			if(tableSearch.Mapping != null)
-            {
-				filters = GetFilters(tableSearch.Mapping);
-			}
-
-			newQuery.Add("SELECT ");
-			newQuery.Add(String.Join(", ", columns));
-			newQuery.Add(" FROM " + tableSearch.MainTableName);
-			if (!String.IsNullOrEmpty(joins.Trim()))
-				newQuery.Add(" \n" + joins + "\n ");
-			if (!String.IsNullOrEmpty(filters.Trim()))
-				newQuery.Add(" WHERE " + filters);
-
-			return newQuery.ToString();
-        }
+			return String.Join(", ", columns);
+		}
 
 		private string GetJoins(ICollection<JoinTables> joinTables)
         {
@@ -65,12 +67,11 @@ namespace NewsFeed.Services
 					joinStr.Add(GetOperation(pair.ComparisonType));
 					joinStr.Add(pair.SecondTableName + "." + pair.SecondTableColumnName);
 				}
-				
-				var val = join.JoinType.ToString() + "JOIN ON " + String.Join(join.JoinType.ToString(), joinStr);
-				joins.Add(val);
+
+				joins.Add(join.JoinType.ToString() + " JOIN ON " + String.Join(" " + join.Operation.ToString() + " ", joinStr));
 			}
 
-			return String.Join("\n", joins);
+			return String.Join("\n ", joins);
         }
 
 		private string GetFilters(Mapping map)
@@ -116,12 +117,12 @@ namespace NewsFeed.Services
 							field.ComparisonType == FilterComparisonType.Less ||
 							field.ComparisonType == FilterComparisonType.LessOrEqual)
 					{
-						newGroup.Add(tableName + '.' + field.Name + GetOperation(field.ComparisonType) + " \'" + field.Data.First().ToString() + "\'");
+						newGroup.Add(tableName + '.' + field.Name + GetOperation(field.ComparisonType) + "\'" + field.Data.First().ToString() + "\'");
 					}
 					else if (field.ComparisonType == FilterComparisonType.NotEqual)
 					{
 						if (field.Data.Count == 1)
-							newGroup.Add(tableName + '.' + field.Name + " != \'" + field.Data.First().ToString() + "\'");
+							newGroup.Add(tableName + '.' + field.Name + GetOperation(field.ComparisonType) + "\'" + field.Data.First().ToString() + "\'");
 						else
 						{
 							var values = String.Join(", ", field.Data.Select(x => "\'" + x.ToString() + "\'").ToArray());

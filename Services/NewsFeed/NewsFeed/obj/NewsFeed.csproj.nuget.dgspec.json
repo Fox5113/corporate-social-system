@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\NewsFeed\\NewsFeed\\NewsFeed.csproj": {}
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\NewsFeed.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\NewsFeed\\NewsFeed\\NewsFeed.csproj": {
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\NewsFeed.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\NewsFeed\\NewsFeed\\NewsFeed.csproj",
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\NewsFeed.csproj",
         "projectName": "NewsFeed",
-        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\NewsFeed\\NewsFeed\\NewsFeed.csproj",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\NewsFeed.csproj",
         "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\NewsFeed\\NewsFeed\\obj\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
