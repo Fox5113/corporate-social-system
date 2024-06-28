@@ -6,10 +6,10 @@ using static NewsFeed.Enums.Common;
 
 namespace NewsFeed.Models
 {
-    public class Mapping
+    public class Group
     {
         public ICollection<Field> Fields { get; set; }
-        public ICollection<Mapping> Groups { get; set; }
+        public ICollection<Group> Groups { get; set; }
         public LogicalOperationStrict Operation { get; set; }
     }
 }

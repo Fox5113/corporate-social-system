@@ -7,22 +7,84 @@ using static NewsFeed.Enums.Common;
 
 namespace NewsFeed.Services
 {
-    public class SqlQueryPreparerService
+    public class SqlScriptPreparerService
     {
-		public string GetSelectQuery(TableSearch tableSearch)
+		/// <summary>
+		/// Получение скрипта удаления
+		/// </summary>
+		/// <param name="mapping">Маппинг удаления</param>
+		/// <returns></returns>
+		public string GetDeleteQuery(Mapping mapping)
 		{
-			if (String.IsNullOrEmpty(tableSearch.MainTableName))
+			if (String.IsNullOrEmpty(mapping.MainTableName))
 				return null;
 
-			var selectQuery = new SelectQuery(tableSearch.MainTableName);
-			selectQuery.Columns = tableSearch.Tables == null ? "*" : GetColumns(tableSearch.Tables);
-			selectQuery.Joins = tableSearch.Joins == null ? "" : GetJoins(tableSearch.Joins);
-			selectQuery.Filters = tableSearch.Mapping == null ? "" : GetFilters(tableSearch.Mapping);
-			selectQuery.OrdersBy = tableSearch.OrderBy == null ? "" : GetOrderBy(tableSearch.OrderBy);
+			var deleteQuery = new DeleteQuery(mapping.MainTableName);
+			deleteQuery.Filters = mapping.Group == null ? "" : GetFilters(mapping.Group);
+
+			return deleteQuery.PrepareSqlString();
+		}
+
+		/// <summary>
+		/// Получение скрипта обновления
+		/// </summary>
+		/// <param name="mapping">Маппинг обновления</param>
+		/// <returns></returns>
+		public string GetUpdateQuery(Mapping mapping)
+        {
+			if (String.IsNullOrEmpty(mapping.MainTableName) || mapping.Sets == null || mapping.Sets.Count == 0)
+				return null;
+
+			var updateQuery = new UpdateQuery(mapping.MainTableName);
+			updateQuery.ColumnsWithValues = GetSets(mapping.Sets);
+			updateQuery.Filters = mapping.Group == null ? "" : GetFilters(mapping.Group);
+
+			return updateQuery.PrepareSqlString();
+		}
+
+		/// <summary>
+		/// Получение скрипта запроса данных
+		/// </summary>
+		/// <param name="mapping">Маппинг запроса</param>
+		/// <returns></returns>
+		public string GetSelectQuery(Mapping mapping)
+		{
+			if (String.IsNullOrEmpty(mapping.MainTableName))
+				return null;
+
+			var selectQuery = new SelectQuery(mapping.MainTableName);
+			selectQuery.Columns = mapping.Tables == null ? "*" : GetColumns(mapping.Tables);
+			selectQuery.Joins = mapping.Joins == null ? "" : GetJoins(mapping.Joins);
+			selectQuery.Filters = mapping.Group == null ? "" : GetFilters(mapping.Group);
+			selectQuery.OrdersBy = mapping.OrderBy == null ? "" : GetOrderBy(mapping.OrderBy);
 
 			return selectQuery.PrepareSqlString();
 		}
 
+		/// <summary>
+		/// Получить строку установок новых значений
+		/// </summary>
+		/// <param name="sets">Маппинг устновок значений колонок</param>
+		/// <returns></returns>
+		private string GetSets(ICollection<SetSqlQuery> sets)
+        {
+			var setsString = new List<string>();
+			foreach (var set in sets)
+			{
+				if (!String.IsNullOrEmpty(set.ColumnName))
+				{
+					setsString.Add(set.ColumnName + " = \'" + set.Value.ToString() + "\'");
+				}
+			}
+
+			return String.Join(", ", setsString);
+		}
+
+		/// <summary>
+		/// Получить строку сортировки
+		/// </summary>
+		/// <param name="orderBySqls">Маппинг сортировок по колонкам</param>
+		/// <returns></returns>
 		private string GetOrderBy(ICollection<OrderBySqlQuery> orderBySqls)
         {
 			var columns = new List<string>();
@@ -97,7 +159,7 @@ namespace NewsFeed.Services
 		/// </summary>
 		/// <param name="map">Маппинг</param>
 		/// <returns>Строка sql</returns>
-		private string GetFilters(Mapping map)
+		private string GetFilters(Group map)
 		{
 			var newGroup = new List<string>();
 			var operation = ' ' + map.Operation.ToString() + ' ';
@@ -165,6 +227,11 @@ namespace NewsFeed.Services
 			return '(' + String.Join(operation, newGroup) + ')';
 		}
 
+		/// <summary>
+		/// Получить строку оператора сравнения по типу
+		/// </summary>
+		/// <param name="type">Тип сравнения</param>
+		/// <returns></returns>
 		private string GetOperation(FilterComparisonType type)
 		{
 			if (type == FilterComparisonType.Equal)

@@ -1,4 +1,4 @@
-﻿using NewsFeed.Intefaces;
+﻿using NewsFeed.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewsFeed.Models
 {
-    public class SelectQuery : IQuery
+    public class SelectQuery : QueryBase
     {
         private readonly string _queryType = "SELECT";
 		private readonly string _orderBy = "ORDER BY";
@@ -16,6 +16,8 @@ namespace NewsFeed.Models
         public string GroupBy { get; set; }
         public string QueryType { get { return _queryType; } }
 		public string OrderByStartString { get { return _orderBy; } }
+		public int Offset { get; set; }
+		public int Fetch { get; set; }
 
 		public SelectQuery(string mainTableName)
         {
@@ -44,6 +46,14 @@ namespace NewsFeed.Models
 			{
 				newQuery.Add(OrderByStartString);
 				newQuery.Add(OrdersBy);
+			}
+			if(Offset > 0)
+            {
+				newQuery.Add($"OFFSET {Offset} ROWS");
+			}
+			if (Fetch > 0)
+			{
+				newQuery.Add($"FETCH NEXT {Fetch} ROWS ONLY");
 			}
 
 			return String.Join(" ", newQuery);

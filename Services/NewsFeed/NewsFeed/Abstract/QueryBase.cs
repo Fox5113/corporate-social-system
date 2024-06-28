@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NewsFeed.Intefaces
+namespace NewsFeed.Abstract
 {
-    public abstract class IQuery
+    public abstract class QueryBase
     {
         private readonly string _where = "WHERE";
         private readonly string _from = "FROM";
