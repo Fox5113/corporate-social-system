@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace NewsFeed.Models
 {
-    public class HashtagPost
+    public class HashtagNews
     {
         public Guid Id { get; set; }
         public Guid HashtagId { get; set; }
-        public Guid PostId { get; set; }
+        public Guid NewsId { get; set; }
         public Hashtag Hashtag { get; set; }
-        public Post Post { get; set; }
+        public News News { get; set; }
     }
 }

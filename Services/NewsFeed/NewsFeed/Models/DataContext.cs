@@ -8,11 +8,11 @@ namespace NewsFeed.Models
 {
     public class DataContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<News> News { get; set; }
         public DbSet<Hashtag> Hashtags { get; set; }
-        public DbSet<PostComment> PostComments { get; set; }
-        public DbSet<HashtagPost> HashtagPost { get; set; }
+        public DbSet<NewsComment> NewsComments { get; set; }
+        public DbSet<HashtagNews> HashtagNews { get; set; }
 
         public DataContext()
         {
@@ -21,28 +21,28 @@ namespace NewsFeed.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.Posts)
+            modelBuilder.Entity<Employee>()
+                .HasMany(u => u.NewsList)
                 .WithOne(p => p.Author)
                 .HasForeignKey(p => p.AuthorId);
 
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.PostComments)
+            modelBuilder.Entity<Employee>()
+                .HasMany(u => u.NewsComments)
                 .WithOne(pc => pc.Author)
                 .HasForeignKey(pc => pc.AuthorId);
 
-            modelBuilder.Entity<Post>()
-                .HasMany(pc => pc.PostComments)
-                .WithOne(p => p.Post)
-                .HasForeignKey(p => p.PostId);
+            modelBuilder.Entity<News>()
+                .HasMany(pc => pc.NewsComments)
+                .WithOne(p => p.News)
+                .HasForeignKey(p => p.NewsId);
             
-            modelBuilder.Entity<Post>()
-                .HasMany(ph => ph.PostHashtags)
-                .WithOne(p => p.Post)
-                .HasForeignKey(p => p.PostId);
+            modelBuilder.Entity<News>()
+                .HasMany(ph => ph.NewsHashtags)
+                .WithOne(p => p.News)
+                .HasForeignKey(p => p.NewsId);
 
             modelBuilder.Entity<Hashtag>()
-                .HasMany(p => p.HashtagPosts)
+                .HasMany(p => p.HashtagNews)
                 .WithOne(p => p.Hashtag)
                 .HasForeignKey(p => p.HashtagId);
 

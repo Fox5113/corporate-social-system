@@ -17,17 +17,17 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="jsonData">Запрос</param>
         /// <returns></returns>
-        public ICollection<Post> GetPosts(string jsonData, string objectName)
+        public ICollection<News> GetNewsCollection(string jsonData, string objectName)
         {
             if(objectName == "Mapping")
             {
                 var mapping = JsonSerializer.Deserialize<Mapping>(jsonData);
-                return GetPosts(mapping);
+                return GetNewsCollection(mapping);
             }
-            else if(objectName == "PostSearch")
+            else if(objectName == "NewsSearch")
             {
-                var postSearch = JsonSerializer.Deserialize<PostSearch>(jsonData);
-                return GetPosts(postSearch);
+                var postSearch = JsonSerializer.Deserialize<NewsSearch>(jsonData);
+                return GetNewsCollection(postSearch);
             }
 
             return null;
@@ -38,27 +38,32 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="mapping">Mapping</param>
         /// <returns></returns>
-        public ICollection<Post> GetPosts(Mapping mapping)
+        public ICollection<News> GetNewsCollection(Mapping mapping)
         {
             var script = new SqlScriptPreparerService().GetSelectQuery(mapping);
             using (var dbContext = new DataContext())
             {
-                return dbContext.Posts.FromSqlRaw(script).ToList();
+                var collection = dbContext.News.FromSqlRaw(script).ToList();
+                foreach (var post in collection)
+                {
+                    JoinAdditionalEntities(post);
+                }
+                return collection;
             }
         }
 
         /// <summary>
         /// Получение коллекции Новостей по объекту PostSearch
         /// </summary>
-        /// <param name="post">PostSearch</param>
+        /// <param name="post">NewsSearch</param>
         /// <returns></returns>
-        public ICollection<Post> GetPosts(PostSearch post)
+        public ICollection<News> GetNewsCollection(NewsSearch post)
         {
             using (var dbContext = new DataContext())
             {
-                var query = dbContext.Posts
+                var query = dbContext.News
                     .Where(x => !String.IsNullOrEmpty(post.Title) ? x.Title.Contains(post.Title) : true)
-                    .Where(x => !String.IsNullOrEmpty(post.Body) ? x.Body.Contains(post.Body) : true)
+                    .Where(x => !String.IsNullOrEmpty(post.Body) ? x.Content.Contains(post.Body) : true)
                     .Where(x => post.From != null ? x.CreatedAt >= (DateTime)post.From : true)
                     .Where(x => post.To != null ? x.CreatedAt <= (DateTime)post.To : true)
                     .Where(x => post.AuthorId != Guid.Empty ? x.AuthorId == post.AuthorId : true);
@@ -67,15 +72,21 @@ namespace NewsFeed.Services
                 {
                     var names = post.Hashtags.Select(x => x.Name).ToList();
                     var hashtagsFromDb = GetHashtagsCollection(names);
-                    var hashtagsPosts = GetHashtagPostCollectionByHashtagId(hashtagsFromDb.Select(x => x.Id).ToList());
-                    var postsIds = hashtagsPosts.Select(x => x.PostId).ToList();
+                    var hashtagsPosts = GetHashtagNewsCollectionByHashtagId(hashtagsFromDb.Select(x => x.Id).ToList());
+                    var postsIds = hashtagsPosts.Select(x => x.NewsId).ToList();
                     query = query.Where(x => postsIds.Contains(x.Id));
                 }
                 
-                return query.OrderByDescending(x => x.CreatedAt)
+                var collection = query.OrderByDescending(x => x.CreatedAt)
                     .Skip(post.Skip)
                     .Take(post.Take > 0 ? post.Take : 1000)
                     .ToList();
+
+                foreach (var item in collection)
+                {
+                    JoinAdditionalEntities(item);
+                }
+                return collection;
             }
         }
 
@@ -85,11 +96,16 @@ namespace NewsFeed.Services
         /// <param name="skip"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public ICollection<Post> GetPosts(int skip, int count)
+        public ICollection<News> GetNewsCollection(int skip, int count)
         {
             using (var dbContext = new DataContext())
             {
-                return dbContext.Posts.OrderByDescending(e => e.CreatedAt).Skip(skip).Take(count).ToList();
+                var collection = dbContext.News.OrderByDescending(e => e.CreatedAt).Skip(skip).Take(count).ToList();
+                foreach (var post in collection)
+                {
+                    JoinAdditionalEntities(post);
+                }
+                return collection;
             }
         }
 
@@ -98,11 +114,16 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="ids">Id новостей</param>
         /// <returns></returns>
-        public ICollection<Post> GetPosts(ICollection<Guid> ids)
+        public ICollection<News> GetNewsCollection(ICollection<Guid> ids)
         {
             using (var dbContext = new DataContext())
             {
-                return dbContext.Posts.Where(x => ids.Contains(x.Id)).ToList();
+                var collection = dbContext.News.Where(x => ids.Contains(x.Id)).ToList();
+                foreach(var post in collection)
+                {
+                    JoinAdditionalEntities(post);
+                }
+                return collection;
             }
         }
 
@@ -111,16 +132,23 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="id">Id новости</param>
         /// <returns></returns>
-        public Post GetPost(Guid id)
+        public News GetNewsById(Guid id)
         {
             using (var dbContext = new DataContext())
             {
-                var post = dbContext.Posts.FirstOrDefault(x => x.Id == id);
-                post.PostComments = GetComments(id);
-                post.PostHashtags = GetHashtagPostCollectionByPostId(new List<Guid>() { id });
+                var post = dbContext.News.FirstOrDefault(x => x.Id == id);
+                JoinAdditionalEntities(post);
 
                 return post;
             }
+        }
+
+        public void JoinAdditionalEntities(News post)
+        {
+            post.NewsComments = GetComments(post.Id);
+            post.NewsHashtags = GetHashtagNewsCollectionByNewsId(new List<Guid>() { post.Id });
+            if (post.NewsHashtags.Count > 0)
+                post.Hashtags = GetHashtagsCollection(post.NewsHashtags.Select(x => x.HashtagId).ToList());
         }
 
         /// <summary>
@@ -129,12 +157,11 @@ namespace NewsFeed.Services
         /// <param name="newPost">Новость</param>
         /// <param name="hashtags">Коллекция хэштегов</param>
         /// <returns></returns>
-        public Post CreatePost(Post newPost, ICollection<Hashtag> hashtags = null)
+        public News CreateNews(News newPost, ICollection<Hashtag> hashtags = null)
         {
             using (var dbContext = new DataContext())
             {
-                newPost.Id = Guid.NewGuid();
-                dbContext.Posts.Add(newPost);
+                dbContext.News.Add(newPost);
                 dbContext.SaveChanges();
 
                 if(hashtags != null)
@@ -147,14 +174,14 @@ namespace NewsFeed.Services
                             hashtagDb = CreateHashtag(hashtag.Name);
                         }
 
-                        var hashtagPost = CreateHashtagPostEntity(hashtagDb.Id, newPost.Id);
+                        var hashtagPost = CreateHashtagNewsEntity(hashtagDb.Id, newPost.Id);
 
-                        if (newPost.PostHashtags == null)
-                            newPost.PostHashtags = new List<HashtagPost>();
+                        if (newPost.NewsHashtags == null)
+                            newPost.NewsHashtags = new List<HashtagNews>();
                         if (newPost.Hashtags == null)
                             newPost.Hashtags = new List<Hashtag>();
 
-                        newPost.PostHashtags.Add(hashtagPost);
+                        newPost.NewsHashtags.Add(hashtagPost);
                         newPost.Hashtags.Add(hashtagDb);
                     }
                 }
@@ -167,14 +194,14 @@ namespace NewsFeed.Services
         /// Удаление Новости
         /// </summary>
         /// <param name="id">Id новости</param>
-        public void DeletePost(Guid id)
+        public void DeleteNewsById(Guid id)
         {
             using (var dbContext = new DataContext())
             {
-                DeleteHashtagPost(id);
-                var post = dbContext.Posts.FirstOrDefault(x => x.Id == id);
+                DeleteHashtagNews(id);
+                var post = dbContext.News.FirstOrDefault(x => x.Id == id);
 
-                dbContext.Posts.Remove(post);
+                dbContext.News.Remove(post);
                 dbContext.SaveChanges();
             }
         }
@@ -188,11 +215,11 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="postId">Id новости</param>
         /// <returns></returns>
-        public ICollection<PostComment> GetComments(Guid postId)
+        public ICollection<NewsComment> GetComments(Guid postId)
         {
             using (var dbContext = new DataContext())
             {
-                return dbContext.PostComments.Where(x => x.PostId == postId).ToList();
+                return dbContext.NewsComments.Where(x => x.NewsId == postId).ToList();
             }
         }
 
@@ -201,12 +228,12 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="comment">Комментарий</param>
         /// <returns></returns>
-        public PostComment CreatePostComment(PostComment comment)
+        public NewsComment CreateNewsComment(NewsComment comment)
         {
             using (var dbContext = new DataContext())
             {
                 comment.Id = Guid.NewGuid();
-                dbContext.PostComments.Add(comment);
+                dbContext.NewsComments.Add(comment);
                 dbContext.SaveChanges();
                 return comment;
             }
@@ -216,13 +243,13 @@ namespace NewsFeed.Services
         /// Удаление комментария
         /// </summary>
         /// <param name="id">Id комментария</param>
-        public void DeletePostComment(Guid id)
+        public void DeleteNewsComment(Guid id)
         {
             using (var dbContext = new DataContext())
             {
-                var comment = dbContext.PostComments.Where(x => x.Id == id);
+                var comment = dbContext.NewsComments.Where(x => x.Id == id);
 
-                dbContext.PostComments.RemoveRange(comment);
+                dbContext.NewsComments.RemoveRange(comment);
                 dbContext.SaveChanges();
             }
         }
@@ -237,11 +264,11 @@ namespace NewsFeed.Services
         /// <param name="hashtagId">Id хэштега</param>
         /// <param name="postId">Id новости</param>
         /// <returns></returns>
-        public HashtagPost GetHashtagPost(Guid hashtagId, Guid postId)
+        public HashtagNews GetHashtagNews(Guid hashtagId, Guid postId)
         {
             using (var dbContext = new DataContext())
             {
-                return dbContext.HashtagPost.FirstOrDefault(x => x.HashtagId == hashtagId && x.PostId == postId);
+                return dbContext.HashtagNews.FirstOrDefault(x => x.HashtagId == hashtagId && x.NewsId == postId);
             }
         }
 
@@ -250,11 +277,11 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="postIds">Id новостей</param>
         /// <returns></returns>
-        public ICollection<HashtagPost> GetHashtagPostCollectionByPostId(ICollection<Guid> postIds)
+        public ICollection<HashtagNews> GetHashtagNewsCollectionByNewsId(ICollection<Guid> postIds)
         {
             using (var dbContext = new DataContext())
             {
-                return dbContext.HashtagPost.Where(x => postIds.Contains(x.PostId)).ToList();
+                return dbContext.HashtagNews.Where(x => postIds.Contains(x.NewsId)).ToList();
             }
         }
 
@@ -263,11 +290,11 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="hashtagIds">Id хэштегов</param>
         /// <returns></returns>
-        public ICollection<HashtagPost> GetHashtagPostCollectionByHashtagId(ICollection<Guid> hashtagIds)
+        public ICollection<HashtagNews> GetHashtagNewsCollectionByHashtagId(ICollection<Guid> hashtagIds)
         {
             using (var dbContext = new DataContext())
             {
-                return dbContext.HashtagPost.Where(x => hashtagIds.Contains(x.HashtagId)).ToList();
+                return dbContext.HashtagNews.Where(x => hashtagIds.Contains(x.HashtagId)).ToList();
             }
         }
 
@@ -277,12 +304,12 @@ namespace NewsFeed.Services
         /// <param name="hashtagId">Id хэштега</param>
         /// <param name="postId">Id новости</param>
         /// <returns></returns>
-        public HashtagPost CreateHashtagPostEntity(Guid hashtagId, Guid postId)
+        public HashtagNews CreateHashtagNewsEntity(Guid hashtagId, Guid postId)
         {
             using (var dbContext = new DataContext())
             {
-                var hashtagPost = new HashtagPost() { Id = Guid.NewGuid(), HashtagId = hashtagId, PostId = postId };
-                dbContext.HashtagPost.Add(hashtagPost);
+                var hashtagPost = new HashtagNews() { Id = Guid.NewGuid(), HashtagId = hashtagId, NewsId = postId };
+                dbContext.HashtagNews.Add(hashtagPost);
                 dbContext.SaveChanges();
                 return hashtagPost;
             }
@@ -292,13 +319,13 @@ namespace NewsFeed.Services
         /// Удаление записи промежуточной таблицы, связывающей хэштеги и новости
         /// </summary>
         /// <param name="postId">Id новости</param>
-        public void DeleteHashtagPost(Guid postId)
+        public void DeleteHashtagNews(Guid postId)
         {
             using (var dbContext = new DataContext())
             {
-                var postHashtags = dbContext.HashtagPost.Where(x => x.PostId == postId);
+                var postHashtags = dbContext.HashtagNews.Where(x => x.NewsId == postId);
 
-                dbContext.HashtagPost.RemoveRange(postHashtags);
+                dbContext.HashtagNews.RemoveRange(postHashtags);
                 dbContext.SaveChanges();
             }
         }
@@ -384,11 +411,11 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="id">Id пользователя</param>
         /// <returns></returns>
-        public User GetUser(Guid id)
+        public Employee GetEmployee(Guid id)
         {
             using (var dbContext = new DataContext())
             {
-                return dbContext.Users.FirstOrDefault(x => x.Id == id);
+                return dbContext.Employees.FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -398,14 +425,14 @@ namespace NewsFeed.Services
         /// <param name="name">Имя</param>
         /// <param name="lastname">Фамилия</param>
         /// <returns></returns>
-        public ICollection<User> GetUsers(string name, string lastname)
+        public ICollection<Employee> GetEmployees(string name, string lastname)
         {
             if (String.IsNullOrEmpty(name) && String.IsNullOrEmpty(lastname))
-                return GetUsers();
+                return GetEmployees();
             
             using (var dbContext = new DataContext())
             {
-                return dbContext.Users.Where(x => (name != null ? x.Name.Contains(name) : true) && (lastname != null ? x.Lastname.Contains(lastname) : true)).ToList();
+                return dbContext.Employees.Where(x => (name != null ? x.Firstname.Contains(name) : true) && (lastname != null ? x.Surname.Contains(lastname) : true)).ToList();
             }
         }
 
@@ -413,11 +440,11 @@ namespace NewsFeed.Services
         /// Получить полный список пользователей
         /// </summary>
         /// <returns></returns>
-        public ICollection<User> GetUsers()
+        public ICollection<Employee> GetEmployees()
         {
             using (var dbContext = new DataContext())
             {
-                return dbContext.Users.ToList();
+                return dbContext.Employees.ToList();
             }
         }
 
@@ -426,11 +453,11 @@ namespace NewsFeed.Services
         /// </summary>
         /// <param name="ids">Id пользователей</param>
         /// <returns></returns>
-        public ICollection<User> GetUsers(ICollection<Guid> ids)
+        public ICollection<Employee> GetEmployees(ICollection<Guid> ids)
         {
             using (var dbContext = new DataContext())
             {
-                return dbContext.Users.Where(x => ids.Contains(x.Id)).ToList(); ;
+                return dbContext.Employees.Where(x => ids.Contains(x.Id)).ToList(); ;
             }
         }
 
