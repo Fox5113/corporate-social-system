@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "7YamyxQBkQHWbBKsWIypIvj36yQZZoccUGBsUNZU4cw=",
+  "Source": "NewsFeed",
+  "BasePath": "_content/NewsFeed",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

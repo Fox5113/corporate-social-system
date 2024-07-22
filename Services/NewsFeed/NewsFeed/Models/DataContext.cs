@@ -8,13 +8,13 @@ namespace NewsFeed.Models
 {
     public class DataContext : DbContext
     {
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Employee> Employee { get; set; }
         public DbSet<News> News { get; set; }
-        public DbSet<Hashtag> Hashtags { get; set; }
-        public DbSet<NewsComment> NewsComments { get; set; }
+        public DbSet<Hashtag> Hashtag { get; set; }
+        public DbSet<NewsComment> NewsComment { get; set; }
         public DbSet<HashtagNews> HashtagNews { get; set; }
 
-        public DataContext()
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
             Database.EnsureCreated();
         }
@@ -22,37 +22,72 @@ namespace NewsFeed.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>()
-                .HasMany(u => u.NewsList)
-                .WithOne(p => p.Author)
-                .HasForeignKey(p => p.AuthorId);
+                .HasMany(emp => emp.NewsList)
+                .WithOne(news => news.Author)
+                .HasForeignKey(news => news.AuthorId);
 
             modelBuilder.Entity<Employee>()
-                .HasMany(u => u.NewsComments)
-                .WithOne(pc => pc.Author)
-                .HasForeignKey(pc => pc.AuthorId);
+                .HasMany(emp => emp.NewsCommentList)
+                .WithOne(nc => nc.Author)
+                .HasForeignKey(nc => nc.AuthorId);
 
             modelBuilder.Entity<News>()
-                .HasMany(pc => pc.NewsComments)
-                .WithOne(p => p.News)
-                .HasForeignKey(p => p.NewsId);
-            
+                .HasMany(news => news.NewsCommentList)
+                .WithOne(nc => nc.News)
+                .HasForeignKey(nc => nc.NewsId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<News>()
-                .HasMany(ph => ph.NewsHashtags)
-                .WithOne(p => p.News)
-                .HasForeignKey(p => p.NewsId);
+                .HasMany(news => news.HashtagNewsList)
+                .WithOne(hn => hn.News)
+                .HasForeignKey(hn => hn.NewsId);
 
             modelBuilder.Entity<Hashtag>()
-                .HasMany(p => p.HashtagNews)
-                .WithOne(p => p.Hashtag)
-                .HasForeignKey(p => p.HashtagId);
+                .HasMany(h => h.HashtagNewsList)
+                .WithOne(hn => hn.Hashtag)
+                .HasForeignKey(hn => hn.HashtagId);
+
+            modelBuilder.Entity<News>()
+                .Property(news => news.Likes)
+                .HasDefaultValue(0);
+
+            modelBuilder.Entity<News>()
+                .Property(news => news.CreatedAt)
+                .HasDefaultValue(DateTime.Now);
+            
+            modelBuilder.Entity<News>()
+                .Property(news => news.UpdatedAt)
+                .HasDefaultValue(DateTime.Now);
+
+            modelBuilder.Entity<NewsComment>()
+                .Property(nc => nc.CreatedAt)
+                .HasDefaultValue(DateTime.Now);
+            
+            modelBuilder.Entity<NewsComment>()
+                .Property(nc => nc.UpdatedAt)
+                .HasDefaultValue(DateTime.Now);
+
+            modelBuilder.Entity<NewsComment>()
+                .Property(nc => nc.Id)
+                .HasDefaultValue(Guid.NewGuid());
+
+            modelBuilder.Entity<News>()
+                .Property(n => n.Id)
+                .HasDefaultValue(Guid.NewGuid());
+
+            modelBuilder.Entity<Hashtag>()
+                .Property(h => h.Id)
+                .HasDefaultValue(Guid.NewGuid());
+
+            modelBuilder.Entity<HashtagNews>()
+                .Property(hn => hn.Id)
+                .HasDefaultValue(Guid.NewGuid());
+
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.Id)
+                .HasDefaultValue(Guid.NewGuid());
 
             base.OnModelCreating(modelBuilder);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Host=localhost;Username=admin;Password=password;Database=NewsFeed");
-            base.OnConfiguring(optionsBuilder);
         }
     }
 }
