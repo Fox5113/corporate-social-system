@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,11 +9,22 @@ namespace NewsFeed.Models
 {
     public class Employee
     {
-        public Guid Id { get; }
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set;  }
+        [Required]
         public string Firstname { get; set; }
         public string Surname { get; set; }
         public string Position { get; set; }
-        public ICollection<News> NewsList { get; set; }
-        public ICollection<NewsComment> NewsComments { get; set; }
+        [NotMapped]
+        public virtual ICollection<News> NewsList { get; set; }
+        [NotMapped]
+        public virtual ICollection<NewsComment> NewsCommentList { get; set; }
+
+        public Employee()
+        {
+            NewsList = new List<News>();
+            NewsCommentList = new List<NewsComment>();
+        }
     }
 }
