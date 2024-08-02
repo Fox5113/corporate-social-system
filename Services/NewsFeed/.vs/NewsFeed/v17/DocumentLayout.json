@@ -3,52 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\services\\newsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\services\\newsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\webapi\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\webapi\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\models\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\models\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\dal\\dataaccess.repositories.implementations\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\dal\\dataaccess.repositories.implementations\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\models\\news.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\models\\news.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\webapi\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\webapi\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\common\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\common\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\dal\\dataaccess.repositories.implementations\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\dal\\dataaccess.repositories.implementations\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\models\\newscomment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\models\\newscomment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\webapi\\common\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\webapi\\common\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\models\\hashtagnews.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\models\\hashtagnews.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\models\\hashtag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\models\\hashtag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\abstract\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\abstract\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\common\\invoker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\common\\invoker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\services\\newscommentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\services\\newscommentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\newsfeed\\webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D3BC34B2-2EF4-4018-9BD0-34476D97CBDE}|NewsFeed\\NewsFeed.csproj|solutionrelative:newsfeed\\webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,156 +34,84 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "News.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\News.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Models\\News.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\News.cs",
-              "RelativeToolTip": "NewsFeed\\Models\\News.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAYwBoAAABNAAAA",
+              "DocumentIndex": 0,
+              "Title": "NewsController.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\WebApi\\Controllers\\NewsController.cs",
+              "RelativeDocumentMoniker": "NewsFeed\\WebApi\\Controllers\\NewsController.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\WebApi\\Controllers\\NewsController.cs",
+              "RelativeToolTip": "NewsFeed\\WebApi\\Controllers\\NewsController.cs",
+              "ViewState": "AQIAACwAAAAAAAAAAAAgwDkAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T18:38:28.672Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Hashtag.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\Hashtag.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Models\\Hashtag.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\Hashtag.cs",
-              "RelativeToolTip": "NewsFeed\\Models\\Hashtag.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAkAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T18:38:12.207Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Employee.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\Employee.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Models\\Employee.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\Employee.cs",
-              "RelativeToolTip": "NewsFeed\\Models\\Employee.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAwAAAA9AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T18:37:54.459Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DataContext.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\DataContext.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Models\\DataContext.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\DataContext.cs",
-              "RelativeToolTip": "NewsFeed\\Models\\DataContext.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAxwFUAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T18:37:26.469Z",
+              "WhenOpened": "2024-08-02T16:16:53.156Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Constants.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Common\\Constants.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Common\\Constants.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Common\\Constants.cs",
-              "RelativeToolTip": "NewsFeed\\Common\\Constants.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAVAAAA",
+              "Title": "BaseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\BaseRepository.cs",
+              "RelativeDocumentMoniker": "NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\BaseRepository.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\BaseRepository.cs",
+              "RelativeToolTip": "NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\BaseRepository.cs",
+              "ViewState": "AQIAACwAAAAAAAAAAAAgwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T18:07:15.839Z",
+              "WhenOpened": "2024-08-02T15:50:47.285Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "NewsCommentService.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Services\\NewsCommentService.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Services\\NewsCommentService.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Services\\NewsCommentService.cs",
-              "RelativeToolTip": "NewsFeed\\Services\\NewsCommentService.cs",
-              "ViewState": "AQIAAEYAAAAAAAAAAAAAAFcAAAAtAAAA",
+              "DocumentIndex": 2,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\WebApi\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "NewsFeed\\WebApi\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\WebApi\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "NewsFeed\\WebApi\\Controllers\\HomeController.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAQwBwAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T17:34:52.158Z"
+              "WhenOpened": "2024-08-02T15:15:51.517Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Invoker.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Common\\Invoker.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Common\\Invoker.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Common\\Invoker.cs",
-              "RelativeToolTip": "NewsFeed\\Common\\Invoker.cs",
-              "ViewState": "AQIAAHcAAAAAAAAAAAAjwH4AAAAUAAAA",
+              "DocumentIndex": 4,
+              "Title": "Constants.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\WebApi\\Common\\Constants.cs",
+              "RelativeDocumentMoniker": "NewsFeed\\WebApi\\Common\\Constants.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\WebApi\\Common\\Constants.cs",
+              "RelativeToolTip": "NewsFeed\\WebApi\\Common\\Constants.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T08:35:34.713Z"
+              "WhenOpened": "2024-08-02T15:15:01.025Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "NewsService.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Services\\NewsService.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Services\\NewsService.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Services\\NewsService.cs",
-              "RelativeToolTip": "NewsFeed\\Services\\NewsService.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAAWwCsAAAAMAAAA",
+              "DocumentIndex": 1,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\Repository.cs",
+              "RelativeDocumentMoniker": "NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\Repository.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\Repository.cs",
+              "RelativeToolTip": "NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\Repository.cs",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAjwAkBAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-20T14:36:58.706Z",
+              "WhenOpened": "2024-08-02T15:13:30.383Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "HashtagNews.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\HashtagNews.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Models\\HashtagNews.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\HashtagNews.cs",
-              "RelativeToolTip": "NewsFeed\\Models\\HashtagNews.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA9AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T18:42:22.628Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "NewsComment.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\NewsComment.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Models\\NewsComment.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Models\\NewsComment.cs",
-              "RelativeToolTip": "NewsFeed\\Models\\NewsComment.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAAwBkAAAAvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T18:42:29.551Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "BaseService.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Abstract\\BaseService.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Abstract\\BaseService.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Abstract\\BaseService.cs",
-              "RelativeToolTip": "NewsFeed\\Abstract\\BaseService.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAA3wCsAAAAvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-20T15:50:53.267Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "NewsFeed\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "NewsFeed\\Controllers\\HomeController.cs",
-              "ViewState": "AQIAAG8AAAAAAAAAAAAnwHIAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-19T18:29:40.156Z",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\WebApi\\appsettings.json",
+              "RelativeDocumentMoniker": "NewsFeed\\WebApi\\appsettings.json",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\NewsFeed\\WebApi\\appsettings.json",
+              "RelativeToolTip": "NewsFeed\\WebApi\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAACbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-02T09:07:32.802Z",
               "EditorCaption": ""
             }
           ]
