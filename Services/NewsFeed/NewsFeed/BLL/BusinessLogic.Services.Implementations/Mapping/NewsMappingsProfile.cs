@@ -1,0 +1,32 @@
+﻿using AutoMapper;
+using BusinessLogic.Contracts.News;
+using DataAccess.Entities;
+
+namespace BusinessLogic.Services.Mapping
+{
+    public class NewsMappingsProfile : Profile
+    {
+        public NewsMappingsProfile()
+        {
+            CreateMap<News, NewsDto>();
+
+            CreateMap<CreatingNewsDto, News>()
+                .ForMember(d => d.Id, map => map.Ignore())
+                .ForMember(d => d.HashtagNewsList, map => map.Ignore())
+                .ForMember(d => d.NewsCommentList, map => map.Ignore())
+                .ForMember(d => d.Author, map => map.Ignore())
+                .ForMember(d => d.UpdatedAt, map => map.Ignore())
+                .ForMember(d => d.CreatedAt, map => map.Ignore())
+                .ForMember(d => d.Likes, map => map.Ignore());
+
+            CreateMap<UpdatingNewsDto, News>()
+                .ForMember(d => d.Id, map => map.Ignore())
+                .ForMember(d => d.NewsCommentList, map => map.Ignore())
+                .ForMember(d => d.HashtagNewsList, map => map.Ignore())
+                .ForMember(d => d.Author, map => map.Ignore())
+                .ForMember(d => d.UpdatedAt, map => map.Ignore())
+                .ForMember(d => d.CreatedAt, map => map.Ignore())
+                .ForMember(d => d.AuthorId, map => map.Ignore());
+        }
+    }
+}
