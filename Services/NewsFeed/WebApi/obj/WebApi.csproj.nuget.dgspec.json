@@ -1,0 +1,743 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\WebApi\\WebApi.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Contracts\\BusinessLogic.Contracts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Contracts\\BusinessLogic.Contracts.csproj",
+        "projectName": "BusinessLogic.Contracts",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Contracts\\BusinessLogic.Contracts.csproj",
+        "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Contracts\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj",
+        "projectName": "BusinessLogic.Services.Abstractions",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj",
+        "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Contracts\\BusinessLogic.Contracts.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Contracts\\BusinessLogic.Contracts.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj",
+        "projectName": "BusinessLogic.Services.Implementations",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj",
+        "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.9.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj",
+        "projectName": "DataAccess.Common",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj",
+        "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Context\\DataAccess.Context.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Context\\DataAccess.Context.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Context\\DataAccess.Context.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Context\\DataAccess.Context.csproj",
+        "projectName": "DataAccess.Context",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Context\\DataAccess.Context.csproj",
+        "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Context\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.EnvironmentVariables": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.FileExtensions": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj",
+        "projectName": "DataAccess.Entities",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj",
+        "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.Identity.Stores": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj",
+        "projectName": "DataAccess.Repositories.Abstractions",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj",
+        "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\DataAccess.Repositories.Implementations.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\DataAccess.Repositories.Implementations.csproj",
+        "projectName": "DataAccess.Repositories.Implementations",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\DataAccess.Repositories.Implementations.csproj",
+        "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Context\\DataAccess.Context.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Context\\DataAccess.Context.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\WebApi\\WebApi.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\WebApi\\WebApi.csproj",
+        "projectName": "WebApi",
+        "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\WebApi\\WebApi.csproj",
+        "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\WebApi\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj"
+              },
+              "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\DataAccess.Repositories.Implementations.csproj": {
+                "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\DataAccess.Repositories.Implementations.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
