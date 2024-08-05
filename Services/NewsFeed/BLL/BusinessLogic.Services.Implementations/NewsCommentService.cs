@@ -20,18 +20,33 @@ namespace BusinessLogic.Services
             _newsCommentRepository = newsCommentRepository;
         }
 
+        /// <summary>
+        /// Получить список комментариев.
+        /// </summary>
+        /// <param name="page"> Номер страницы. </param>
+        /// <param name="pageSize"> Объем страницы. </param>
+        /// <returns> Список комментариев. </returns>
         public async Task<ICollection<NewsCommentDto>> GetPagedAsync(int page, int pageSize)
         {
             ICollection<NewsComment> entities = await _newsCommentRepository.GetPagedAsync(page, pageSize);
             return _mapper.Map<ICollection<NewsComment>, ICollection<NewsCommentDto>>(entities);
         }
 
+        /// <summary>
+        /// Получить комментарий новости.
+        /// </summary>
+        /// <param name="id"> Идентификатор. </param>
+        /// <returns> ДТО комментария. </returns>
         public async Task<NewsCommentDto> GetByIdAsync(Guid id)
         {
             var news = await _newsCommentRepository.GetAsync(id);
             return _mapper.Map<NewsCommentDto>(news);
         }
 
+        /// <summary>
+        /// Создать комментарий новости.
+        /// </summary>
+        /// <param name="creatingNewsCommentDto"> ДТО создаваемого комментария. </param>
         public async Task<Guid> CreateAsync(CreatingNewsCommentDto creatingNewsCommentDto)
         {
             var news = _mapper.Map<CreatingNewsCommentDto, NewsComment>(creatingNewsCommentDto);
@@ -40,12 +55,21 @@ namespace BusinessLogic.Services
             return createdNews.Id;
         }
 
+        /// <summary>
+        /// Удалить комментарий новости.
+        /// </summary>
+        /// <param name="id"> Идентификатор. </param>
         public async Task DeleteAsync(Guid id)
         {
             _newsCommentRepository.Delete(id);
             await _newsCommentRepository.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Изменить комментарий новости.
+        /// </summary>
+        /// <param name="id"> Иентификатор. </param>
+        /// <param name="updatingNewsCommentDto"> ДТО редактируемого комментария. </param>
         public async Task UpdateAsync(Guid id, UpdatingNewsCommentDto updatingNewsCommentDto)
         {
             var news = await _newsCommentRepository.GetAsync(id);
@@ -58,6 +82,17 @@ namespace BusinessLogic.Services
             news.UpdatedAt = DateTime.Now;
             _newsCommentRepository.Update(news);
             await _newsCommentRepository.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Получение коллекции комментариев к Новости
+        /// </summary>
+        /// <param name="newsId">Id новости</param>
+        /// <returns>Коллекция комментариев по новости</returns>
+        public async Task<List<NewsCommentDto>> GetCollectionByNewsId(Guid newsId)
+        {
+            var news = await _newsCommentRepository.GetCollectionByNewsId(newsId);
+            return _mapper.Map<List<NewsCommentDto>>(news);
         }
     }
 }

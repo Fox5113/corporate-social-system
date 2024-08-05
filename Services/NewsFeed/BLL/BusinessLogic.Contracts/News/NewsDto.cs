@@ -3,6 +3,7 @@ using System;
 using BusinessLogic.Contracts.NewsComment;
 using BusinessLogic.Contracts.HashtagNews;
 using BusinessLogic.Contracts.Employee;
+using BusinessLogic.Contracts.Hashtag;
 
 namespace BusinessLogic.Contracts.News
 {

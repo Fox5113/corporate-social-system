@@ -20,12 +20,23 @@ namespace BusinessLogic.Services
             _employeeRepository = employeeRepository;
         }
 
+        /// <summary>
+        /// Получить список сотрудников.
+        /// </summary>
+        /// <param name="page"> Номер страницы. </param>
+        /// <param name="pageSize"> Объем страницы. </param>
+        /// <returns> Список сотрудников. </returns>
         public async Task<ICollection<EmployeeDto>> GetPagedAsync(int page, int pageSize)
         {
             ICollection<Employee> entities = await _employeeRepository.GetPagedAsync(page, pageSize);
             return _mapper.Map<ICollection<Employee>, ICollection<EmployeeDto>>(entities);
         }
 
+        /// <summary>
+        /// Получить новость.
+        /// </summary>
+        /// <param name="id"> Идентификатор. </param>
+        /// <returns> ДТО сотрудника. </returns>
         public async Task<EmployeeDto> GetByIdAsync(Guid id)
         {
             var Employee = await _employeeRepository.GetAsync(id);

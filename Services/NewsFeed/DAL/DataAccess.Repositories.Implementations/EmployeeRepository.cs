@@ -35,7 +35,7 @@ namespace DataAccess.Repositories
         /// Получить список пользователей по фильтрам
         /// </summary>
         /// <param name="filterEmployee">Фильтры</param>
-        /// <returns></returns>
+        /// <returns>Коллекция пользователей</returns>
         public async Task<List<Employee>> GetCollection(Employee filterEmployee)
         {
             if (string.IsNullOrEmpty(filterEmployee.Firstname) && string.IsNullOrEmpty(filterEmployee.Surname))

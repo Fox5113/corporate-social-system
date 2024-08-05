@@ -1,10 +1,13 @@
 ﻿using DataAccess.Common;
 using DataAccess.Common.SqlQuery;
+using DataAccess.Common.SqlQuery.MSSQL;
 using DataAccess.EntityFramework;
 using DataAccess.Repositories.Abstractions;
 using Infrastructure.Repositories.Implementations;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace DataAccess.Repositories
 {
@@ -16,6 +19,11 @@ namespace DataAccess.Repositories
             _dataContext = context;
         }
 
+        /// <summary>
+        /// Получение коллекции сущностей по маппингу с расширенными фильтрами
+        /// </summary>
+        /// <param name="mapping">Маппинг</param>
+        /// <returns>Коллекция сущностей</returns>
         public object GetSomeCollectionFromMapping(MappingQuery mapping)
         {
             if (mapping == null || string.IsNullOrEmpty(mapping.MainTableName))
@@ -33,7 +41,13 @@ namespace DataAccess.Repositories
             return invoker.InvokeMethod();
         }
 
-        public object GetSomeCollectionByIds(List<Guid> ids, string tableName)
+        /// <summary>
+        /// Получение коллекции сущностей по списку Id с указанием таблицы поиска
+        /// </summary>
+        /// <param name="ids">Список id</param>
+        /// <param name="tableName">Название таблицы</param>
+        /// <returns>Коллекция сущностей</returns>
+        public object GetSomeCollectionByIds(ICollection<Guid> ids, string tableName)
         {
             if (ids == null || ids.Count == 0 || string.IsNullOrEmpty(tableName))
                 return null;
@@ -49,6 +63,12 @@ namespace DataAccess.Repositories
             return invoker.InvokeMethod();
         }
 
+        /// <summary>
+        /// Получение сущности по id с указанием таблицы поиска
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <param name="tableName">Таблица</param>
+        /// <returns>Сущность</returns>
         public object GetEntity(Guid id, string tableName)
         {
             if (id == Guid.Empty || string.IsNullOrEmpty(tableName))
@@ -65,40 +85,71 @@ namespace DataAccess.Repositories
             return invoker.InvokeMethod();
         }
 
+        /// <summary>
+        /// Получение коллекции по json запросу
+        /// </summary>
+        /// <param name="jsonData">Запрос</param>
+        /// <param name="jsonObjectName">Объект, в который десериализуется запрос</param>
+        /// <param name="tableName">Таблица поиска</param>
+        /// <returns>Коллекция сущностей</returns>
         public object GetCollectionByJsonString(string jsonData, string jsonObjectName, string tableName)
         {
             if (string.IsNullOrEmpty(jsonData) || string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(jsonObjectName))
                 return null;
 
-            var servicePath = Constants.TableAndRepositoryPath[tableName];
-            if (string.IsNullOrEmpty(servicePath))
+            if(!Constants.TableAndRepositoryPath.ContainsKey(tableName))
                 return null;
+            var repoPath = Constants.TableAndRepositoryPath[tableName];
 
+            if (!Constants.ClassPathByName.ContainsKey(jsonObjectName))
+                return null;
             var classPath = Constants.ClassPathByName[jsonObjectName];
-            if (string.IsNullOrEmpty(classPath))
+
+            var type = Type.GetType(classPath);
+
+            if (type == null)
                 return null;
 
-            var invoker = new Invoker(servicePath, "GetCollection", false,
+            var obj = JsonSerializer.Deserialize(jsonData, type);
+            if (obj != null)
+            {
+                var repoType = Type.GetType(repoPath);
+                var methods = repoType.GetMethods();
+                var invoker = new Invoker(repoType.FullName.ToString(), "GetCollection", false,
                 new[] { new Tuple<Type, object>(_dataContext.GetType(), _dataContext) },
-                new[] { new Tuple<Type, object>(jsonData.GetType(), jsonData), new Tuple<Type, object>(classPath.GetType(), classPath) });
+                new[] { new Tuple<Type, object>(type, obj) });
+                return invoker.InvokeMethod();
+            }
 
-            return invoker.InvokeMethod();
+            return null;
         }
 
+        /// <summary>
+        /// Удаление данных по фильтрам с указанием таблицы
+        /// </summary>
+        /// <param name="filters">Фильтры</param>
+        /// <param name="tableName">Таблица</param>
+        /// <returns>Количество удаленных записей</returns>
         public object Delete(List<FieldFilter> filters, string tableName)
         {
             if (filters == null || filters.Count == 0 || string.IsNullOrEmpty(tableName))
                 return null;
 
-            var servicePath = Constants.TableAndRepositoryPath[tableName];
-            if (string.IsNullOrEmpty(servicePath))
+            if (!Constants.TableAndRepositoryPath.ContainsKey(tableName))
                 return null;
+            var repoPath = Constants.TableAndRepositoryPath[tableName];
 
-            var invoker = new Invoker(servicePath, "Delete", false,
-                new[] { new Tuple<Type, object>(_dataContext.GetType(), _dataContext) },
-                new[] { new Tuple<Type, object>(tableName.GetType(), tableName), new Tuple<Type, object>(filters.GetType(), filters) });
+            var mapping = new MappingQuery()
+            {
+                MainTableName = tableName,
+                TableFilter = new TableFilter()
+                {
+                    FieldsFilter = filters
+                }
+            };
 
-            return invoker.InvokeMethod();
+            var deleteQuery = SqlScriptPreparerHelper.GetDeleteQuery(mapping);
+            return ((DbContext)_dataContext).Database.ExecuteSqlRaw(deleteQuery);
         }
     }
 }

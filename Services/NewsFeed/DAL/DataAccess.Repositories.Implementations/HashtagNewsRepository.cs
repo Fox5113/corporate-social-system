@@ -20,7 +20,7 @@ namespace DataAccess.Repositories
         /// Получение записей промежуточной таблицы, связывающей хэштеги и новости
         /// </summary>
         /// <param name="hashtagNewsDto">Дто связки</param>
-        /// <returns></returns>
+        /// <returns>Коллекция записей</returns>
         public async Task<List<HashtagNews>> GetCollection(HashtagNews hashtagNewsDto)
         {
             var query = GetAll();
@@ -32,13 +32,13 @@ namespace DataAccess.Repositories
         /// <summary>
         /// Получение записей промежуточной таблицы, связывающей хэштеги и новости
         /// </summary>
-        /// <param name="postIds">Id новостей</param>
-        /// <returns></returns>
-        public async Task<List<HashtagNews>> GetCollectionByNewsId(List<Guid> postIds)
+        /// <param name="newsIds">Id новостей</param>
+        /// <returns>Коллекция записей</returns>
+        public async Task<List<HashtagNews>> GetCollectionByNewsId(ICollection<Guid> newsIds)
         {
             var query = GetAll();
             return await query
-                .Where(x => postIds.Contains(x.NewsId))
+                .Where(x => newsIds.Contains(x.NewsId))
                 .ToListAsync();
         }
 
@@ -46,8 +46,8 @@ namespace DataAccess.Repositories
         /// Получение записей промежуточной таблицы, связывающей хэштеги и новости
         /// </summary>
         /// <param name="hashtagIds">Id хэштегов</param>
-        /// <returns></returns>
-        public async Task<List<HashtagNews>> GetCollectionByHashtagId(List<Guid> hashtagIds)
+        /// <returns>Коллекция записей</returns>
+        public async Task<List<HashtagNews>> GetCollectionByHashtagId(ICollection<Guid> hashtagIds)
         {
             var query = GetAll();
             return await query
@@ -62,13 +62,7 @@ namespace DataAccess.Repositories
         public async void DeleteByNewsId(Guid newsId)
         {
             var collection = await GetAll().Where(x => x.NewsId == newsId).ToListAsync();
-
-            foreach (var item in collection)
-            {
-                Delete(item);
-            }
-
-            SaveChanges();
+            DeleteRange(collection);
         }
     }
 }

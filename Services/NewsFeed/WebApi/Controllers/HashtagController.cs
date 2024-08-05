@@ -27,12 +27,14 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        [Route("GetAsync")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             return Ok(_mapper.Map<HashtagModel>(await _service.GetByIdAsync(id)));
         }
 
+        [Route("CreateAsync")]
         [HttpPost]
         public async Task<IActionResult> CreateAsync(CreatingHashtagModel HashtagModel)
         {

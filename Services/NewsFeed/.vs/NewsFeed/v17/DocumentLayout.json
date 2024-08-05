@@ -1,12 +1,122 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8A900D40-02E6-4029-868E-D17C7C4141D8}|WebApi\\WebApi.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\webapi\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A900D40-02E6-4029-868E-D17C7C4141D8}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A900D40-02E6-4029-868E-D17C7C4141D8}|WebApi\\WebApi.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\webapi\\mapping\\newsmappingsprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A900D40-02E6-4029-868E-D17C7C4141D8}|WebApi\\WebApi.csproj|solutionrelative:webapi\\mapping\\newsmappingsprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41B10749-532A-4BF5-8797-B35E73F3F21B}|DAL\\DataAccess.Repositories.Implementations\\DataAccess.Repositories.Implementations.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\dal\\dataaccess.repositories.implementations\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41B10749-532A-4BF5-8797-B35E73F3F21B}|DAL\\DataAccess.Repositories.Implementations\\DataAccess.Repositories.Implementations.csproj|solutionrelative:dal\\dataaccess.repositories.implementations\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5EFD7CD-0157-4B93-A351-8E54C4285C56}|DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\dal\\dataaccess.repositories.abstractions\\inewsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5EFD7CD-0157-4B93-A351-8E54C4285C56}|DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj|solutionrelative:dal\\dataaccess.repositories.abstractions\\inewsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41B10749-532A-4BF5-8797-B35E73F3F21B}|DAL\\DataAccess.Repositories.Implementations\\DataAccess.Repositories.Implementations.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\dal\\dataaccess.repositories.implementations\\newsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41B10749-532A-4BF5-8797-B35E73F3F21B}|DAL\\DataAccess.Repositories.Implementations\\DataAccess.Repositories.Implementations.csproj|solutionrelative:dal\\dataaccess.repositories.implementations\\newsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C43E2CB9-8924-4637-8EC4-04A6B7F128C9}|BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj|c:\\users\\user_atc\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\services\\newsfeed\\bll\\businesslogic.services.implementations\\newsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C43E2CB9-8924-4637-8EC4-04A6B7F128C9}|BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj|solutionrelative:bll\\businesslogic.services.implementations\\newsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NewsMappingsProfile.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\WebApi\\Mapping\\NewsMappingsProfile.cs",
+              "RelativeDocumentMoniker": "WebApi\\Mapping\\NewsMappingsProfile.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\WebApi\\Mapping\\NewsMappingsProfile.cs",
+              "RelativeToolTip": "WebApi\\Mapping\\NewsMappingsProfile.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T14:27:05.191Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "INewsRepository.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\INewsRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\DataAccess.Repositories.Abstractions\\INewsRepository.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\INewsRepository.cs",
+              "RelativeToolTip": "DAL\\DataAccess.Repositories.Abstractions\\INewsRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T14:00:17.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\Repository.cs",
+              "RelativeDocumentMoniker": "DAL\\DataAccess.Repositories.Implementations\\Repository.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\Repository.cs",
+              "RelativeToolTip": "DAL\\DataAccess.Repositories.Implementations\\Repository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAKAAAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T12:55:32.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NewsController.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\WebApi\\Controllers\\NewsController.cs",
+              "RelativeDocumentMoniker": "WebApi\\Controllers\\NewsController.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\WebApi\\Controllers\\NewsController.cs",
+              "RelativeToolTip": "WebApi\\Controllers\\NewsController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T17:54:07.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NewsService.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\NewsService.cs",
+              "RelativeDocumentMoniker": "BLL\\BusinessLogic.Services.Implementations\\NewsService.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\NewsService.cs",
+              "RelativeToolTip": "BLL\\BusinessLogic.Services.Implementations\\NewsService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T16:55:35.361Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NewsRepository.cs",
+              "DocumentMoniker": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\NewsRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\DataAccess.Repositories.Implementations\\NewsRepository.cs",
+              "ToolTip": "C:\\Users\\User_ATC\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043F\u0430\u043F\u043A\u0430\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Implementations\\NewsRepository.cs",
+              "RelativeToolTip": "DAL\\DataAccess.Repositories.Implementations\\NewsRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T17:44:22.848Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

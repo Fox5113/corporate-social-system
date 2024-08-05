@@ -15,6 +15,12 @@ namespace DataAccess.Repositories.Abstractions
         /// <param name="itemsPerPage"> Количество элементов на странице. </param>
         /// <returns> Список сотрудников. </returns>
         Task<List<Employee>> GetPagedAsync(int page, int itemsPerPage);
+
+        /// <summary>
+        /// Получить список пользователей по фильтрам
+        /// </summary>
+        /// <param name="filterEmployee">Фильтры</param>
+        /// <returns>Коллекция пользователей</returns>
         Task<List<Employee>> GetCollection(Employee employee);
     }
 }

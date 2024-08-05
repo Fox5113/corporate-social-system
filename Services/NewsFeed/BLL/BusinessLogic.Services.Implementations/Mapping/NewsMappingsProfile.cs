@@ -12,7 +12,6 @@ namespace BusinessLogic.Services.Mapping
 
             CreateMap<CreatingNewsDto, News>()
                 .ForMember(d => d.Id, map => map.Ignore())
-                .ForMember(d => d.HashtagNewsList, map => map.Ignore())
                 .ForMember(d => d.NewsCommentList, map => map.Ignore())
                 .ForMember(d => d.Author, map => map.Ignore())
                 .ForMember(d => d.UpdatedAt, map => map.Ignore())
@@ -22,7 +21,6 @@ namespace BusinessLogic.Services.Mapping
             CreateMap<UpdatingNewsDto, News>()
                 .ForMember(d => d.Id, map => map.Ignore())
                 .ForMember(d => d.NewsCommentList, map => map.Ignore())
-                .ForMember(d => d.HashtagNewsList, map => map.Ignore())
                 .ForMember(d => d.Author, map => map.Ignore())
                 .ForMember(d => d.UpdatedAt, map => map.Ignore())
                 .ForMember(d => d.CreatedAt, map => map.Ignore())

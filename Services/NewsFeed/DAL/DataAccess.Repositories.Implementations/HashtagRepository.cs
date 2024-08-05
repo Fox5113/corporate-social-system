@@ -20,7 +20,7 @@ namespace DataAccess.Repositories
         /// Получение коллекции хэштегов по названиям хэштегов
         /// </summary>
         /// <param name="hashtagNames">Коллекция наименований</param>
-        /// <returns></returns>
+        /// <returns>Коллекция хештегов</returns>
         public async Task<List<Hashtag>> GetCollectionByNames(ICollection<string> hashtagNames)
         {
             var query = GetAll();

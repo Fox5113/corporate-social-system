@@ -2,10 +2,8 @@
 using DataAccess.Common.SqlQuery.MSSQL;
 using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,10 +34,9 @@ namespace Infrastructure.Repositories.Implementations
         /// </summary>
         /// <param name="ids">Id записей</param>
         /// <returns>Коллекция</returns>
-        public List<T> GetCollection(List<TPrimaryKey> ids)
+        public virtual IQueryable<T> GetCollection(ICollection<TPrimaryKey> ids)
         {
-            var collection = _entitySet.Where(x => ids.Contains(x.Id)).ToList();
-            return collection;
+            return _entitySet.Where(x => ids.Contains(x.Id));
         }
 
         /// <summary>
@@ -235,67 +232,5 @@ namespace Infrastructure.Repositories.Implementations
         }
 
         #endregion
-
-        /// <summary>
-        /// Получение коллекции по json запросу
-        /// </summary>
-        /// <param name="jsonData">Запрос</param>
-        /// <returns></returns>
-        public object GetCollection(string jsonData, string objectName)
-        {
-            var type = Type.GetType(objectName);
-
-            if (type == null)
-                return null;
-
-            var obj = JsonSerializer.Deserialize(jsonData, type);
-            if (obj != null)
-            {
-                var thisType = this.GetType();
-                var methods = thisType.GetMethods();
-                var invoker = new Invoker(GetType().FullName.ToString(), "GetCollection", false);
-                var param = new[] { new Tuple<Type, object>(type, obj) };
-                foreach (var method in methods)
-                {
-                    try
-                    {
-                        var parametersOfMethod = method.GetParameters();
-                        if (invoker.CheckMethod(param, parametersOfMethod))
-                        {
-                            return method.Invoke(this, new[] { obj });
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        continue;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Удаление
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="filters"></param>
-        public int Delete(string tableName, List<FieldFilter> filters)
-        {
-            if (filters == null || filters.Count == 0 || string.IsNullOrEmpty(tableName))
-                return 0;
-
-            var mapping = new MappingQuery()
-            {
-                MainTableName = tableName,
-                TableFilter = new TableFilter()
-                {
-                    FieldsFilter = filters
-                }
-            };
-
-            var deleteQuery = SqlScriptPreparerHelper.GetDeleteQuery(mapping);
-            return Context.Database.ExecuteSqlRaw(deleteQuery);
-        }
     }
 }

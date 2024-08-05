@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DataAccess.Common.SqlQuery;
 using DataAccess.Entities;
 
 namespace Services.Repositories.Abstractions
@@ -14,6 +15,20 @@ namespace Services.Repositories.Abstractions
     public interface IRepository<T, TPrimaryKey>
         where T : IEntity<TPrimaryKey>
     {
+        /// <summary>
+        /// Получение коллекции сущностей по списку Id
+        /// </summary>
+        /// <param name="ids">Список Id</param>
+        /// <returns>Коллекция сущностей</returns>
+        IQueryable<T> GetCollection(ICollection<TPrimaryKey> ids);
+
+        /// <summary>
+        /// Получение коллекции сущностей по маппингу с расширенными фильтрами
+        /// </summary>
+        /// <param name="mapping">Маппинг</param>
+        /// <returns>Коллекция сущностей</returns>
+        IQueryable<T> GetCollection(MappingQuery mapping);
+
         /// <summary>
         /// Запросить все сущности в базе.
         /// </summary>

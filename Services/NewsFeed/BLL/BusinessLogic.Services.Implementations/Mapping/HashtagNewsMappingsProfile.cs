@@ -12,7 +12,6 @@ namespace BusinessLogic.Services.Mapping
 
             CreateMap<CreatingHashtagNewsDto, HashtagNews>()
                 .ForMember(d => d.News, map => map.Ignore())
-                .ForMember(d => d.Hashtag, map => map.Ignore())
                 .ForMember(d => d.Id, map => map.Ignore());
         }
     }
