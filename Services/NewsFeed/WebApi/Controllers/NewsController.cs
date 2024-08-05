@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditAsync(Guid id, UpdatingNewsModel newsModel)
+        public async Task<IActionResult> EditAsync(Guid id, [FromBody] UpdatingNewsModel newsModel)
         {
             await _service.UpdateAsync(id, _mapper.Map<UpdatingNewsModel, UpdatingNewsDto>(newsModel));
             return Ok();
@@ -56,7 +56,7 @@ namespace WebApi.Controllers
         }
 
         [Route("GetListAsync")]
-        [HttpPost]
+        [HttpGet("list/{page}/{itemsPerPage}")]
         public async Task<IActionResult> GetListAsync(NewsFilterModel filterModel)
         {
             return Ok(_mapper.Map<List<NewsModel>>(await _service.GetPagedAsync(filterModel.Page, filterModel.ItemsPerPage)));

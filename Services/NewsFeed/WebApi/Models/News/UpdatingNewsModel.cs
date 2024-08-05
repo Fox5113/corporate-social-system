@@ -1,4 +1,7 @@
-﻿namespace WebApi.Models.News
+﻿using System.Collections.Generic;
+using WebApi.Models.HashtagNews;
+
+namespace WebApi.Models.News
 {
     public class UpdatingNewsModel
     {
@@ -6,5 +9,6 @@
         public string Content { get; set; }
         public string ShortDescription { get; set; }
         public int Likes { get; set; }
+        public List<CreatingHashtagNewsModel> HashtagNewsList { get; set; }
     }
 }

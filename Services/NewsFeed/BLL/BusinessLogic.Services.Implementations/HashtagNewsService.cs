@@ -19,12 +19,21 @@ namespace BusinessLogic.Services
             _hashtagNewsRepository = hashtagNewsRepository;
         }
 
+        /// <summary>
+        /// Получить связку.
+        /// </summary>
+        /// <param name="id"> Идентификатор. </param>
+        /// <returns> ДТО связки. </returns>
         public async Task<HashtagNewsDto> GetByIdAsync(Guid id)
         {
             var HashtagNews = await _hashtagNewsRepository.GetAsync(id);
             return _mapper.Map<HashtagNewsDto>(HashtagNews);
         }
 
+        /// <summary>
+        /// Создать связку.
+        /// </summary>
+        /// <param name="creatingHashtagNewsDto"> ДТО создаваемой связки. </param>
         public async Task<Guid> CreateAsync(CreatingHashtagNewsDto creatingHashtagNewsDto)
         {
             var HashtagNews = _mapper.Map<CreatingHashtagNewsDto, HashtagNews>(creatingHashtagNewsDto);
@@ -33,6 +42,10 @@ namespace BusinessLogic.Services
             return createdHashtagNews.Id;
         }
 
+        /// <summary>
+        /// Удалить связку.
+        /// </summary>
+        /// <param name="id"> Идентификатор. </param>
         public async Task DeleteAsync(Guid id)
         {
             _hashtagNewsRepository.Delete(id);

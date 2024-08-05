@@ -35,7 +35,7 @@ namespace DataAccess.Repositories
         /// Получение коллекции комментариев к Новости
         /// </summary>
         /// <param name="newsId">Id новости</param>
-        /// <returns></returns>
+        /// <returns>Коллекция комментариев по новости</returns>
         public async Task<List<NewsComment>> GetCollectionByNewsId(Guid newsId)
         {
             var query = GetAll();
@@ -51,13 +51,7 @@ namespace DataAccess.Repositories
         public async void DeleteByNewsId(Guid newsId)
         {
             var collection = await GetAll().Where(x => x.NewsId == newsId).ToListAsync();
-
-            foreach (var item in collection)
-            {
-                Delete(item);
-            }
-
-            SaveChanges();
+            DeleteRange(collection);
         }
 
         /// <summary>
@@ -67,13 +61,7 @@ namespace DataAccess.Repositories
         public async void DeleteByAuthorId(Guid authorId)
         {
             var collection = await GetAll().Where(x => x.AuthorId == authorId).ToListAsync();
-
-            foreach (var item in collection)
-            {
-                Delete(item);
-            }
-
-            SaveChanges();
+            DeleteRange(collection);
         }
     }
 }

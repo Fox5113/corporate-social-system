@@ -1,4 +1,6 @@
-﻿using BusinessLogic.Contracts.News;
+﻿using BusinessLogic.Contracts.Hashtag;
+using BusinessLogic.Contracts.News;
+using DataAccess.Common;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,6 +21,13 @@ namespace BusinessLogic.Abstractions
         Task<ICollection<NewsDto>> GetPagedAsync(int page, int pageSize);
 
         /// <summary>
+        /// Получение коллекции Новостей по объекту NewsSearch
+        /// </summary>
+        /// <param name="newsSearch">Объект расширенного поиска новостей</param>
+        /// <returns>Коллекция новостей</returns>
+        Task<ICollection<NewsDto>> GetCollection(NewsSearch newsSearch);
+
+        /// <summary>
         /// Получить новость.
         /// </summary>
         /// <param name="id"> Идентификатор. </param>
@@ -29,7 +38,7 @@ namespace BusinessLogic.Abstractions
         /// Создать новость.
         /// </summary>
         /// <param name="creatingNewsDto"> ДТО создаваемой новости. </param>
-        Task<Guid> CreateAsync(CreatingNewsDto creatingNewsDto);
+        Task<NewsDto> CreateAsync(CreatingNewsDto creatingNewsDto);
 
         /// <summary>
         /// Изменить новость.

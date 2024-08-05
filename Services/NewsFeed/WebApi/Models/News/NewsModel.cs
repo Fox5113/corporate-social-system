@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System;
-using WebApi.Models.NewsComment;
-using WebApi.Models.HashtagNews;
+﻿using System;
+using System.Collections.Generic;
 using WebApi.Models.Employee;
+using WebApi.Models.Hashtag;
+using WebApi.Models.HashtagNews;
+using WebApi.Models.NewsComment;
 
 namespace WebApi.Models.News
 {

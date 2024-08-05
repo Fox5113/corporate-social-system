@@ -16,7 +16,44 @@ namespace DataAccess.Repositories.Abstractions
         /// <param name="itemsPerPage"> Количество элементов на странице. </param>
         /// <returns> Список новостей. </returns>
         Task<List<News>> GetPagedAsync(int page, int itemsPerPage);
-        void DeleteRelatedEntities(Guid id);
-        Task<List<News>> GetCollection(NewsSearch post);
+
+        /// <summary>
+        /// Удаление связанных сущностей.
+        /// </summary>
+        /// <param name="newsId"> Id новости </param>
+        void DeleteRelatedEntities(Guid newsId);
+
+        /// <summary>
+        /// Получение коллекции Новостей по объекту NewsSearch
+        /// </summary>
+        /// <param name="newsSearch">Объект расширенного поиска новостей</param>
+        /// <returns>Коллекция новостей</returns>
+        Task<List<News>> GetCollection(NewsSearch newsSearch);
+
+        /// <summary>
+        /// Джоин связанных сущностей
+        /// </summary>
+        /// <param name="news">Список новостей</param>
+        void JoinEntities(ICollection<News> news);
+
+        /// <summary>
+        /// Джоин сущности автора
+        /// </summary>
+        /// <param name="news">Новость</param>
+        void JoinAuthor(News news);
+
+        /// <summary>
+        /// Зачистка ссылок для предотвращения зацикливания
+        /// </summary>
+        /// <param name="news">Новость</param>
+        void ClearLinks(News news);
+
+        /// <summary>
+        /// Обновление списка хештегов новости
+        /// </summary>
+        /// <param name="oldList">Старый список</param>
+        /// <param name="newList">Новый список</param>
+        /// <returns>Новый список</returns>
+        List<HashtagNews> GetNewHashtagNewsList(ICollection<HashtagNews> oldList, ICollection<HashtagNews> newList);
     }
 }

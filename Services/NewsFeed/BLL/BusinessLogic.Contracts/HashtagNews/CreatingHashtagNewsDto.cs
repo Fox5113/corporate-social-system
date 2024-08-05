@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Contracts.Hashtag;
+using System;
 
 namespace BusinessLogic.Contracts.HashtagNews
 {
@@ -6,5 +7,6 @@ namespace BusinessLogic.Contracts.HashtagNews
     {
         public Guid HashtagId { get; set; }
         public Guid NewsId { get; set; }
+        public CreatingHashtagDto Hashtag { get; set; }
     }
 }

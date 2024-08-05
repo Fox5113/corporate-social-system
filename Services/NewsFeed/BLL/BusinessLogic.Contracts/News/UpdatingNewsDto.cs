@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessLogic.Contracts.HashtagNews;
+using System;
+using System.Collections.Generic;
 
 namespace BusinessLogic.Contracts.News
 {
@@ -8,5 +10,6 @@ namespace BusinessLogic.Contracts.News
         public string Content { get; set; }
         public string ShortDescription { get; set; }
         public int Likes { get; set; }
+        public List<CreatingHashtagNewsDto> HashtagNewsList { get; set; }
     }
 }

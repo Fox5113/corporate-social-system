@@ -28,18 +28,21 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        [Route("GetAsync")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             return Ok(_mapper.Map<NewsCommentModel>(await _service.GetByIdAsync(id)));
         }
 
+        [Route("CreateAsync")]
         [HttpPost]
         public async Task<IActionResult> CreateAsync(CreatingNewsCommentModel NewsCommentModel)
         {
             return Ok(await _service.CreateAsync(_mapper.Map<CreatingNewsCommentDto>(NewsCommentModel)));
         }
 
+        [Route("EditAsync")]
         [HttpPut("{id}")]
         public async Task<IActionResult> EditAsync(Guid id, UpdatingNewsCommentModel NewsCommentModel)
         {
@@ -47,6 +50,7 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+        [Route("Delete")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
@@ -54,6 +58,7 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+        [Route("GetListAsync")]
         [HttpGet("list/{page}/{itemsPerPage}")]
         public async Task<IActionResult> GetListAsync(NewsCommentFilterModel filterModel)
         {

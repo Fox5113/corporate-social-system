@@ -27,12 +27,14 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        [Route("GetAsync")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             return Ok(_mapper.Map<EmployeeModel>(await _service.GetByIdAsync(id)));
         }
 
+        [Route("GetListAsync")]
         [HttpGet("list/{page}/{itemsPerPage}")]
         public async Task<IActionResult> GetListAsync(EmployeeFilterModel filterModel)
         {

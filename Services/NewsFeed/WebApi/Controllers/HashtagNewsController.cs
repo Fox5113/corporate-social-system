@@ -25,18 +25,21 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        [Route("GetAsync")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             return Ok(_mapper.Map<HashtagNewsModel>(await _service.GetByIdAsync(id)));
         }
 
+        [Route("CreateAsync")]
         [HttpPost]
         public async Task<IActionResult> CreateAsync(CreatingHashtagNewsModel HashtagNewsModel)
         {
             return Ok(await _service.CreateAsync(_mapper.Map<CreatingHashtagNewsDto>(HashtagNewsModel)));
         }
 
+        [Route("Delete")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {

@@ -43,5 +43,12 @@ namespace BusinessLogic.Abstractions
         /// </summary>
         /// <param name="id"> Идентификатор. </param>
         Task DeleteAsync(Guid id);
+
+        /// <summary>
+        /// Получение коллекции комментариев к Новости
+        /// </summary>
+        /// <param name="newsId">Id новости</param>
+        /// <returns>Коллекция комментариев по новости</returns>
+        Task<List<NewsCommentDto>> GetCollectionByNewsId(Guid newsId);
     }
 }
