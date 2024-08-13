@@ -1,32 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Git\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\AuthorizationService.csproj": {}
+    "C:\\OTUS\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\AuthorizationService.csproj": {}
   },
   "projects": {
-    "D:\\Git\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\AuthorizationService.csproj": {
+    "C:\\OTUS\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\AuthorizationService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Git\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\AuthorizationService.csproj",
+        "projectUniqueName": "C:\\OTUS\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\AuthorizationService.csproj",
         "projectName": "AuthorizationService",
-        "projectPath": "D:\\Git\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\AuthorizationService.csproj",
-        "packagesPath": "C:\\Users\\dmanakov\\.nuget\\packages\\",
-        "outputPath": "D:\\Git\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\obj\\",
+        "projectPath": "C:\\OTUS\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\AuthorizationService.csproj",
+        "packagesPath": "C:\\Users\\Public\\.nuget\\packages",
+        "outputPath": "C:\\OTUS\\corporate-social-system\\Services\\AuthorizationService\\AuthorizationService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\dmanakov\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\79655\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,11 +35,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -94,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.107/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

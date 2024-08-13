@@ -3640,44 +3640,45 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User_ATC\\.nuget\\packages\\": {}
+    "C:\\Users\\Public\\.nuget\\packages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj",
+      "projectUniqueName": "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj",
       "projectName": "BusinessLogic.Services.Implementations",
-      "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj",
-      "packagesPath": "C:\\Users\\User_ATC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\obj\\",
+      "projectPath": "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\BusinessLogic.Services.Implementations.csproj",
+      "packagesPath": "C:\\Users\\Public\\.nuget\\packages",
+      "outputPath": "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Implementations\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\User_ATC\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\79655\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj": {
-              "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj"
+            "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj": {
+              "projectPath": "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Services.Abstractions\\BusinessLogic.Services.Abstractions.csproj"
             },
-            "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj": {
-              "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj"
+            "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj": {
+              "projectPath": "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Common\\DataAccess.Common.csproj"
             },
-            "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj": {
-              "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj"
+            "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj": {
+              "projectPath": "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Entities\\DataAccess.Entities.csproj"
             },
-            "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj": {
-              "projectPath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj"
+            "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj": {
+              "projectPath": "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\DAL\\DataAccess.Repositories.Abstractions\\DataAccess.Repositories.Abstractions.csproj"
             }
           }
         }
@@ -3686,11 +3687,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3722,7 +3718,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.107/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
