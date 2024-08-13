@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3sxva6FqyTw=",
+  "dgSpecHash": "UN1A5puGUoNg8gMBA8ixTutRdnfHPyYihP1BzCtaaV7qLVUMnEusIleCkKFxvONDF56XVP4AIOanI4OAS6tXcw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Contracts\\BusinessLogic.Contracts.csproj",
+  "projectFilePath": "C:\\OTUS\\corporate-social-system\\Services\\NewsFeed\\BLL\\BusinessLogic.Contracts\\BusinessLogic.Contracts.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

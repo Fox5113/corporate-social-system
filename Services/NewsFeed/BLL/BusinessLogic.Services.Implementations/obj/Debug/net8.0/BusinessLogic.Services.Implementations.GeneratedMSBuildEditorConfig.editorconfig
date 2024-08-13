@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BusinessLogic.Services
-build_property.ProjectDir = C:\Users\User_ATC\OneDrive\Рабочий стол\папка\corporate-social-system\Services\NewsFeed\BLL\BusinessLogic.Services.Implementations\
+build_property.ProjectDir = C:\OTUS\corporate-social-system\Services\NewsFeed\BLL\BusinessLogic.Services.Implementations\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
