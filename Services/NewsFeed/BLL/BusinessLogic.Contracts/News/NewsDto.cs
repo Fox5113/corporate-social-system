@@ -16,6 +16,8 @@ namespace BusinessLogic.Contracts.News
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public Guid AuthorId { get; set; }
+        public bool IsArchived { get; set; }
+        public bool IsPublished { get; set; }
         public  EmployeeDto Author { get; set; }
         public int Likes { get; set; }
         public List<NewsCommentDto> NewsCommentList { get; set; }
