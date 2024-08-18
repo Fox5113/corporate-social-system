@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using WebApi.Models.Employee;
+using System.Linq;
+using BusinessLogic.Contracts.Employee;
+using System.Text.Json;
 
 namespace WebApi.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
@@ -39,6 +41,21 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetListAsync(EmployeeFilterModel filterModel)
         {
             return Ok(_mapper.Map<List<EmployeeModel>>(await _service.GetPagedAsync(filterModel.Page, filterModel.ItemsPerPage)));
+        }
+
+        [Route("CreateOrUpdateEmployeeRange")]
+        [HttpPost]
+        public IActionResult CreateOrUpdateEmployeeRange(string jsonData)
+        {
+            if (jsonData != null)
+            {
+                var employees = JsonSerializer.Deserialize<List<ShortEmployeeModel>>(jsonData);
+
+                if (employees != null && employees.Count > 0)
+                    _service.CreateOrUpdateRange(employees.Select(x => _mapper.Map<ShortEmployeeModel, ShortEmployeeDto>(x)).ToList());
+            }
+            
+            return Ok();
         }
     }
 }

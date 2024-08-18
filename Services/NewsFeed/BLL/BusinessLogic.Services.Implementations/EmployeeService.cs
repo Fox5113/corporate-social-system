@@ -6,6 +6,7 @@ using AutoMapper;
 using BusinessLogic.Contracts.Employee;
 using DataAccess.Repositories.Abstractions;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BusinessLogic.Services
 {
@@ -41,6 +42,18 @@ namespace BusinessLogic.Services
         {
             var Employee = await _employeeRepository.GetAsync(id);
             return _mapper.Map<EmployeeDto>(Employee);
+        }
+
+        /// <summary>
+        /// Создание/изменение сотрудников
+        /// </summary>
+        /// <param name="employees"> Список сотрудников. </param>
+        public void CreateOrUpdateRange(List<ShortEmployeeDto> employees)
+        {
+            var list = employees.Where(x => x != null && x.Id != Guid.Empty).ToList();
+            
+            _employeeRepository.CreateOrUpdateRange(list.Select(x => _mapper.Map<ShortEmployeeDto, Employee>(x)).ToList());
+            _employeeRepository.SaveChanges();
         }
     }
 }

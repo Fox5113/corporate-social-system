@@ -22,5 +22,11 @@ namespace DataAccess.Repositories.Abstractions
         /// <param name="filterEmployee">Фильтры</param>
         /// <returns>Коллекция пользователей</returns>
         Task<List<Employee>> GetCollection(Employee employee);
+
+        /// <summary>
+        /// Создание/изменение сотрудников
+        /// </summary>
+        /// <param name="employees"> Список сотрудников. </param>
+        void CreateOrUpdateRange(List<Employee> employees);
     }
 }

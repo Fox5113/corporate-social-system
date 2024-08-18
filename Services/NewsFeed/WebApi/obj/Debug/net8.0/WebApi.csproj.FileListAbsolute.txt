@@ -162,3 +162,5 @@ C:\Users\User_ATC\OneDrive\Рабочий стол\папка\corporate-social-s
 C:\Users\User_ATC\OneDrive\Рабочий стол\папка\corporate-social-system\Services\NewsFeed\WebApi\obj\Debug\net8.0\WebApi.pdb
 C:\Users\User_ATC\OneDrive\Рабочий стол\папка\corporate-social-system\Services\NewsFeed\WebApi\obj\Debug\net8.0\WebApi.genruntimeconfig.cache
 C:\Users\User_ATC\OneDrive\Рабочий стол\папка\corporate-social-system\Services\NewsFeed\WebApi\obj\Debug\net8.0\ref\WebApi.dll
+C:\Users\User_ATC\OneDrive\Рабочий стол\папка\corporate-social-system\Services\NewsFeed\WebApi\bin\Debug\net8.0\RabbitMQ.Client.dll
+C:\Users\User_ATC\OneDrive\Рабочий стол\папка\corporate-social-system\Services\NewsFeed\WebApi\bin\Debug\net8.0\RestSharp.dll

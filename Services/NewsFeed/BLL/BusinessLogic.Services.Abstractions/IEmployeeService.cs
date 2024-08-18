@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Contracts.Employee;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Abstractions
@@ -24,5 +25,11 @@ namespace BusinessLogic.Abstractions
         /// <param name="id"> Идентификатор. </param>
         /// <returns> ДТО сотрудника. </returns>
         Task<EmployeeDto> GetByIdAsync(Guid id);
+
+        /// <summary>
+        /// Создание/изменение сотрудников
+        /// </summary>
+        /// <param name="employees"> Список сотрудников. </param>
+        public void CreateOrUpdateRange(List<ShortEmployeeDto> employees);
     }
 }

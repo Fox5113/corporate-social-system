@@ -9,6 +9,7 @@ namespace WebApi.Mapping
         public EmployeeMappingsProfile()
         {
             CreateMap<EmployeeDto, EmployeeModel>();
+            CreateMap<ShortEmployeeModel, ShortEmployeeDto>();
             CreateMap<EmployeeFilterModel, EmployeeFilterDto>();
         }
     }
