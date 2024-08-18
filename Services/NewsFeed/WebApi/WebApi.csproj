@@ -16,6 +16,8 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+		<PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+		<PackageReference Include="RestSharp" Version="111.4.1" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
 	</ItemGroup>
 

@@ -9,6 +9,10 @@ namespace BusinessLogic.Services.Mapping
         public EmployeeMappingsProfile()
         {
             CreateMap<Employee, EmployeeDto>();
+
+            CreateMap<ShortEmployeeDto, Employee>()
+                .ForMember(d => d.NewsCommentList, map => map.Ignore())
+                .ForMember(d => d.NewsList, map => map.Ignore());
         }
     }
 }

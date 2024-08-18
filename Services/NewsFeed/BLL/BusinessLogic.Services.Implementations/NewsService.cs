@@ -104,6 +104,8 @@ namespace BusinessLogic.Services
             news.Content = updatingNewsDto.Content;
             news.Likes = updatingNewsDto.Likes;
             news.UpdatedAt = DateTime.Now;
+            news.IsArchived = updatingNewsDto.IsArchived;
+            news.IsPublished = updatingNewsDto.IsPublished;
 
             if((updatingNewsDto.HashtagNewsList != null && updatingNewsDto.HashtagNewsList.Count > 0) ||
                 (news.HashtagNewsList != null && news.HashtagNewsList.Count > 0))

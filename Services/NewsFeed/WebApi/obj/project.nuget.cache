@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "y93q5GcxGP0=",
+  "dgSpecHash": "jUDO1+7DoAY=",
   "success": true,
   "projectFilePath": "C:\\Users\\User_ATC\\OneDrive\\Рабочий стол\\папка\\corporate-social-system\\Services\\NewsFeed\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
@@ -72,6 +72,8 @@
     "C:\\Users\\User_ATC\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\User_ATC\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
+    "C:\\Users\\User_ATC\\.nuget\\packages\\restsharp\\111.4.1\\restsharp.111.4.1.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\swashbuckle.aspnetcore\\6.7.0\\swashbuckle.aspnetcore.6.7.0.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.7.0\\swashbuckle.aspnetcore.swagger.6.7.0.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.7.0\\swashbuckle.aspnetcore.swaggergen.6.7.0.nupkg.sha512",
@@ -92,7 +94,7 @@
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.0.1\\system.identitymodel.tokens.jwt.8.0.1.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.io.filesystem.accesscontrol\\5.0.0\\system.io.filesystem.accesscontrol.5.0.0.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.io.pipelines\\6.0.3\\system.io.pipelines.6.0.3.nupkg.sha512",
-    "C:\\Users\\User_ATC\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\User_ATC\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.memory.data\\1.0.2\\system.memory.data.1.0.2.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.reflection.metadata\\6.0.1\\system.reflection.metadata.6.0.1.nupkg.sha512",
@@ -106,7 +108,7 @@
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.text.json\\8.0.4\\system.text.json.8.0.4.nupkg.sha512",
-    "C:\\Users\\User_ATC\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
+    "C:\\Users\\User_ATC\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\User_ATC\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],

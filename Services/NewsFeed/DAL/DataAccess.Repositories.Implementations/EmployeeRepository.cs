@@ -51,5 +51,30 @@ namespace DataAccess.Repositories
             
             return collection;
         }
+
+        /// <summary>
+        /// Создание/изменение сотрудников
+        /// </summary>
+        /// <param name="employees"> Список сотрудников. </param>
+        public void CreateOrUpdateRange(List<Employee> employees)
+        {
+            foreach (var employee in employees)
+            {
+                var empFromDb = Get(employee.Id);
+
+                if (empFromDb != null)
+                {
+                    empFromDb.Surname = employee.Surname;
+                    empFromDb.Firstname = employee.Firstname;
+                    empFromDb.Position = employee.Position;
+
+                    Update(empFromDb);
+                }
+                else
+                {
+                    Add(employee);
+                }
+            }
+        }
     }
 }
