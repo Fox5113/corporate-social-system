@@ -10,7 +10,9 @@ namespace WebApi.Mapping
         {
             CreateMap<NewsDto, NewsModel>();
             CreateMap<CreatingNewsModel, CreatingNewsDto>();
-            CreateMap<UpdatingNewsModel, UpdatingNewsDto>();
+            CreateMap<UpdatingNewsModel, UpdatingNewsDto>()
+                .ForMember(d => d.IsPublished, map => map.Ignore())
+                .ForMember(d => d.IsArchived, map => map.Ignore());
             CreateMap<NewsFilterModel, NewsFilterDto>();
         }
     }

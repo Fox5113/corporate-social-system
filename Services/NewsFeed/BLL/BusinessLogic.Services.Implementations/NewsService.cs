@@ -27,7 +27,7 @@ namespace BusinessLogic.Services
         /// Получить постраничный список.
         /// </summary>
         /// <param name="page"> Номер страницы. </param>
-        /// <param name="itemsPerPage"> Количество элементов на странице. </param>
+        /// <param name="pageSize"> Количество элементов на странице. </param>
         /// <returns> Список новостей. </returns>
         public async Task<ICollection<NewsDto>> GetPagedAsync(int page, int pageSize)
         {

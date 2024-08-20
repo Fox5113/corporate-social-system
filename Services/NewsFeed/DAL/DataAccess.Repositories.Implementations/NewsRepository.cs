@@ -51,9 +51,10 @@ namespace DataAccess.Repositories
                     .Where(x => newsSearch.From != DateTime.MinValue ? x.CreatedAt >= newsSearch.From : true)
                     .Where(x => newsSearch.To != DateTime.MinValue ? x.CreatedAt <= newsSearch.To : true)
                     .Where(x => newsSearch.AuthorId != Guid.Empty ? x.AuthorId == newsSearch.AuthorId : true)
+                    .Where(x => newsSearch.IsPublished == x.IsPublished && newsSearch.IsArchived == x.IsArchived)
                     .OrderByDescending(x => x.CreatedAt)
                     .Skip(newsSearch.Skip)
-                    .Take(newsSearch.Take > 0 ? newsSearch.Take : 1000)
+                    .Take(newsSearch.Take > 0 ? newsSearch.Take : 100)
                     .ToListAsync();
 
             if (newsSearch.Hashtags != null && newsSearch.Hashtags.Count > 0)

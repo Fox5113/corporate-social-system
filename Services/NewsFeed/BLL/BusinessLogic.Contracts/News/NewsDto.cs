@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System;
-using BusinessLogic.Contracts.NewsComment;
+﻿using BusinessLogic.Contracts.Employee;
 using BusinessLogic.Contracts.HashtagNews;
-using BusinessLogic.Contracts.Employee;
-using BusinessLogic.Contracts.Hashtag;
+using BusinessLogic.Contracts.NewsComment;
+using System;
+using System.Collections.Generic;
 
 namespace BusinessLogic.Contracts.News
 {
