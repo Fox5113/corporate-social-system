@@ -67,6 +67,8 @@ namespace DataAccess.Repositories
                     empFromDb.Surname = employee.Surname;
                     empFromDb.Firstname = employee.Firstname;
                     empFromDb.Position = employee.Position;
+                    empFromDb.IsDeleted = employee.IsDeleted;
+                    empFromDb.IsAdmin = employee.IsAdmin;
 
                     Update(empFromDb);
                 }

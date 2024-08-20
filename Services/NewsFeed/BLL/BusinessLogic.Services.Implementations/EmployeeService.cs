@@ -52,7 +52,7 @@ namespace BusinessLogic.Services
         {
             var list = employees.Where(x => x != null && x.Id != Guid.Empty).ToList();
             
-            _employeeRepository.CreateOrUpdateRange(list.Select(x => _mapper.Map<ShortEmployeeDto, Employee>(x)).ToList());
+            _employeeRepository.CreateOrUpdateRange(_mapper.Map<List<ShortEmployeeDto>, List<Employee>>(list));
             _employeeRepository.SaveChanges();
         }
     }

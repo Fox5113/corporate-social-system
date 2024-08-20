@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BusinessLogic.Services.Implementations")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc444402e5e80b91278d5d1f1984c0d4bbbd2741")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9066028e431fdcc695b29d408168f18a32492f2d")]
 [assembly: System.Reflection.AssemblyProductAttribute("BusinessLogic.Services.Implementations")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BusinessLogic.Services.Implementations")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
