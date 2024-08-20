@@ -24,3 +24,18 @@
 /Services/NewsFeed/DataAccess.Entities/obj
 /Services/NewsFeed/DataAccess.Repositories.Abstractions/obj
 /Services/NewsFeed/DataAccess.Repositories.Implementations/obj
+/Services/NewsFeed/BusinessLogic.Contracts
+/Services/NewsFeed/DataAccess.Repositories.Implementations
+/Services/NewsFeed/BusinessLogic.Services.Abstractions
+/Services/NewsFeed/BusinessLogic.Services.Implementations
+/Services/NewsFeed/DataAccess.Common
+/Services/NewsFeed/DataAccess.Context
+/Services/NewsFeed/DataAccess.Entities
+/Services/NewsFeed/DataAccess.Repositories.Abstractions
+/Services/NewsFeed/BLL/BusinessLogic.Contracts/BusinessLogic - Backup.Contracts.csproj
+/Services/NewsFeed/BLL/BusinessLogic.Services.Abstractions/BusinessLogic - Backup.Services.Abstractions.csproj
+/Services/NewsFeed/BLL/BusinessLogic.Services.Implementations/BusinessLogic - Backup.Services.Implementations.csproj
+/Services/NewsFeed/DAL/DataAccess.Context/Migrations
+/Services/NewsFeed/DAL/DataAccess.Entities/DataAccess - Backup.Entities.csproj
+/Services/NewsFeed/DAL/DataAccess.Repositories.Abstractions/DataAccess - Backup.Repositories.Abstractions.csproj
+/Services/NewsFeed/DAL/DataAccess.Repositories.Implementations/DataAccess - Backup.Repositories.Implementations.csproj
