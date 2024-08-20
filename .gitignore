@@ -39,3 +39,15 @@
 /Services/NewsFeed/DAL/DataAccess.Entities/DataAccess - Backup.Entities.csproj
 /Services/NewsFeed/DAL/DataAccess.Repositories.Abstractions/DataAccess - Backup.Repositories.Abstractions.csproj
 /Services/NewsFeed/DAL/DataAccess.Repositories.Implementations/DataAccess - Backup.Repositories.Implementations.csproj
+/Services/NewsFeed/WebApi/obj
+/Services/NewsFeed/WebApi/WebApi - Backup.csproj
+/Services/NewsFeed/WebApi/bin
+/Services/NewsFeed/DAL/DataAccess.Repositories.Implementations/DataAccess.Repositories.Implementations.csproj.user
+/Services/NewsFeed/DAL/DataAccess.Repositories.Abstractions/DataAccess.Repositories.Abstractions.csproj.user
+/Services/NewsFeed/DAL/DataAccess.Entities/DataAccess.Entities.csproj.user
+/Services/NewsFeed/DAL/DataAccess.Context/DataAccess.Context.csproj.user
+/Services/NewsFeed/DAL/DataAccess.Common/DataAccess.Common.csproj.user
+/Services/NewsFeed/BLL/BusinessLogic.Contracts/BusinessLogic.Contracts.csproj.user
+/Services/NewsFeed/BLL/BusinessLogic.Services.Abstractions/BusinessLogic.Services.Abstractions.csproj.user
+/Services/NewsFeed/BLL/BusinessLogic.Services.Implementations/BusinessLogic.Services.Implementations.csproj.user
+/Services/NewsFeed/WebApi/WebApi.csproj.user
