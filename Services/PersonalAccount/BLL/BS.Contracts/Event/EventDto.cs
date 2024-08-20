@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Event
 {
-    internal class EventDto
+    class EventDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

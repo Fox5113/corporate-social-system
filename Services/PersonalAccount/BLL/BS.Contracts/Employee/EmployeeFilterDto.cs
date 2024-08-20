@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Employee
 {
-    internal class EmployeeFilterDto
+    class EmployeeFilterDto
     {
         public string Firstname { get; set; }
         public string Surname { get; set; }

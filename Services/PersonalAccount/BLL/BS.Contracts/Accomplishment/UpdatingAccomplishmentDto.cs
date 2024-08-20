@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Accomplishment
 {
-    internal class UpdatingAccomplishmentDto
+    class UpdatingAccomplishmentDto
     {
         public int Type { get; set; }
         public string Description { get; set; }

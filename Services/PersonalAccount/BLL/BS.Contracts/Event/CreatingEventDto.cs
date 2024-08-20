@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Event
 {
-    internal class CreatingEventDto
+    class CreatingEventDto
     {
         public string Name { get; set; }
         public string Description { get; set; }

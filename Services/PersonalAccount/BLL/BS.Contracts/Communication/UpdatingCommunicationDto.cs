@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Communication
 {
-    internal class UpdatingCommunicationDto
+    class UpdatingCommunicationDto
     {
         public string Value { get; set; }
     }

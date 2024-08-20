@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Employee
 {
-    internal class EmployeeDto
+    class EmployeeDto
     {
         public Guid Id { get; set; }
         public string Firstname { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Skill
 {
-    internal class SkillFilterDto
+    class SkillFilterDto
     {
         public int Type { get; set; }
         public string Description { get; set; }

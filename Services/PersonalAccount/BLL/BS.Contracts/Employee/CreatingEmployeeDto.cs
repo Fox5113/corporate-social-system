@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Employee
 {
-    internal class CreatingEmployeeDto
+    class CreatingEmployeeDto
     {
         public Guid Id { get; set; }
         public string Firstname { get; set; }

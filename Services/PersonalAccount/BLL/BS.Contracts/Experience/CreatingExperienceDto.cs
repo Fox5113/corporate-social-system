@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Experience
 {
-    internal class CreatingExperienceDto
+    class CreatingExperienceDto
     {
         public string Company { get; set; }
         public DateTime EmployementDate { get; set; }

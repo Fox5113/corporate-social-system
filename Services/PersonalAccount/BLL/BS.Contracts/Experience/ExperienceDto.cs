@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BS.Contracts.Experience
 {
-    internal class ExperienceDto
+    class ExperienceDto
     {
         public Guid Id { get; set; }
         public string Company { get; set; }
