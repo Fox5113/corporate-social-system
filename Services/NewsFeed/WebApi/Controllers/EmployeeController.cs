@@ -38,7 +38,7 @@ namespace WebApi.Controllers
         }
 
         [Route("GetListAsync")]
-        [HttpGet("list/{page}/{itemsPerPage}")]
+        [HttpGet]
         public async Task<IActionResult> GetListAsync(int page, int itemsPerPage)
         {
             return Ok(_mapper.Map<List<EmployeeModel>>(await _service.GetPagedAsync(page, itemsPerPage)));
