@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
@@ -17,10 +19,12 @@ namespace WebApi.RabbitMq
         private IConnection _connection;
         private IModel _channel;
         private ApplicationSettings _applicationSettings;
+        private readonly ILogger<RabbitMqListener> _logger;
 
-        public RabbitMqListener()
+        public RabbitMqListener(ILogger<RabbitMqListener> logger)
         {
             _applicationSettings = new ApplicationSettings();
+            _logger = logger;
 
             var factory = new ConnectionFactory { HostName = _applicationSettings.HostName };
             _connection = factory.CreateConnection();
@@ -35,15 +39,18 @@ namespace WebApi.RabbitMq
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (ch, ea) =>
             {
-                var body = ea.Body;
-                var message = Encoding.UTF8.GetString(body.ToArray());
-
-                if (!string.IsNullOrEmpty(message))
+                try
                 {
-                    RedirectToAnotherAction(message);
-                }
+                    var body = ea.Body;
+                    var message = Encoding.UTF8.GetString(body.ToArray());
 
-                _channel.BasicAck(ea.DeliveryTag, false);
+                    if (!string.IsNullOrEmpty(message) && RedirectToAnotherAction(message))
+                        _channel.BasicAck(ea.DeliveryTag, false);
+                }
+                catch (Exception ex) 
+                {
+                    _logger.LogError(ex.Message);
+                }
             };
 
             _channel.BasicConsume(_applicationSettings.RabbitMqQueue, false, consumer);
@@ -51,7 +58,7 @@ namespace WebApi.RabbitMq
             return Task.CompletedTask;
         }
 
-        private void RedirectToAnotherAction(string message)
+        private bool RedirectToAnotherAction(string message)
         {
             if(JsonSerializer.Deserialize<List<ShortEmployeeModel>>(message) != null)
             {
@@ -59,7 +66,11 @@ namespace WebApi.RabbitMq
                 var request = new RestRequest("Employee/CreateOrUpdateEmployeeRange");
                 request.AddParameter("jsonData", message);
                 var response = client.Post(request);
+
+                return response != null && response.IsSuccessful;
             }
+
+            return false;
         } 
 
         public override void Dispose()
