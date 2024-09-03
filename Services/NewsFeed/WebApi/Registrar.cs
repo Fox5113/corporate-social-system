@@ -15,6 +15,12 @@ namespace WebApi
     /// </summary>
     public static class Registrar
     {
+        /// <summary>
+        /// Метод расширения. Вызов цепочки методов IServiceCollection
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             var applicationSettings = configuration.Get<ApplicationSettings>();
@@ -25,6 +31,11 @@ namespace WebApi
                 .InstallRepositories();
         }
 
+        /// <summary>
+        /// Метод расширения. Регистрация сервисов
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        /// <returns></returns>
         private static IServiceCollection InstallServices(this IServiceCollection serviceCollection)
         {
             serviceCollection
@@ -37,6 +48,11 @@ namespace WebApi
             return serviceCollection;
         }
 
+        /// <summary>
+        /// Метод расширения. Регистрация репозиториев
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        /// <returns></returns>
         private static IServiceCollection InstallRepositories(this IServiceCollection serviceCollection)
         {
             serviceCollection
