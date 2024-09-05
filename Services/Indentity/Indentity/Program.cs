@@ -2,8 +2,11 @@ using DataAccess.Entities;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using Indentity;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

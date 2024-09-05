@@ -1,4 +1,5 @@
-﻿using DataAccess.Entities.Entities;
+﻿using System.Threading.Tasks;
+using DataAccess.Entities.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace BusinessLogic.Interfaces;

@@ -1,4 +1,6 @@
-﻿namespace BusinessLogic.Dtos;
+﻿using System;
+
+namespace BusinessLogic.Dtos;
 
 public class UserDto
 {
