@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "BusinessLogic.Services/1.0.0": {
         "dependencies": {
+          "BusinessLogic.Dtos": "1.0.0",
           "BusinessLogic.Interfaces": "1.0.0",
           "DataAccess.Entities": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.7"
@@ -286,8 +287,17 @@
         }
       },
       "System.Text.Encodings.Web/4.7.0": {},
+      "BusinessLogic.Dtos/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.7"
+        },
+        "runtime": {
+          "BusinessLogic.Dtos.dll": {}
+        }
+      },
       "BusinessLogic.Interfaces/1.0.0": {
         "dependencies": {
+          "BusinessLogic.Dtos": "1.0.0",
           "DataAccess.Entities": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.7"
         },
@@ -523,6 +533,11 @@
       "sha512": "sha512-IJanJWPQvya2sbGStt3Fkdy4IaomUBSadAfYWeJDQw0zclMk9ixSvMeei6cSmTTQ6ZkGIIAbhHZVCoLR7GgX7Q==",
       "path": "system.text.encodings.web/4.7.0",
       "hashPath": "system.text.encodings.web.4.7.0.nupkg.sha512"
+    },
+    "BusinessLogic.Dtos/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "BusinessLogic.Interfaces/1.0.0": {
       "type": "project",

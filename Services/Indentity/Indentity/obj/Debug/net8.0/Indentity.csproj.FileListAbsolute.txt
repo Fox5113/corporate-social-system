@@ -67,3 +67,5 @@ C:\OTUS\corporate-social-system\Services\Indentity\Indentity\bin\Debug\net8.0\Bu
 C:\OTUS\corporate-social-system\Services\Indentity\Indentity\bin\Debug\net8.0\BusinessLogic.Dtos.pdb
 C:\OTUS\corporate-social-system\Services\Indentity\Indentity\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\OTUS\corporate-social-system\Services\Indentity\Indentity\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\OTUS\corporate-social-system\Services\Indentity\Indentity\bin\Debug\net8.0\DataAccess.Repositories.dll
+C:\OTUS\corporate-social-system\Services\Indentity\Indentity\bin\Debug\net8.0\DataAccess.Repositories.pdb

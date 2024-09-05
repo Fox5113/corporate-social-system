@@ -12,6 +12,7 @@
           "BusinessLogic.Interfaces": "1.0.0",
           "BusinessLogic.Services": "1.0.0",
           "DataAccess.Context": "1.0.0",
+          "DataAccess.Repositories": "1.0.0",
           "IdentityServer4": "4.1.2",
           "IdentityServer4.AspNetIdentity": "4.1.2",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.7",
@@ -417,6 +418,7 @@
       },
       "BusinessLogic.Interfaces/1.0.0": {
         "dependencies": {
+          "BusinessLogic.Dtos": "1.0.0",
           "DataAccess.Entities": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.7"
         },
@@ -426,6 +428,7 @@
       },
       "BusinessLogic.Services/1.0.0": {
         "dependencies": {
+          "BusinessLogic.Dtos": "1.0.0",
           "BusinessLogic.Interfaces": "1.0.0",
           "DataAccess.Entities": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.7"
@@ -454,6 +457,15 @@
         },
         "runtime": {
           "DataAccess.Entities.dll": {}
+        }
+      },
+      "DataAccess.Repositories/1.0.0": {
+        "dependencies": {
+          "BusinessLogic.Interfaces": "1.0.0",
+          "DataAccess.Context": "1.0.0"
+        },
+        "runtime": {
+          "DataAccess.Repositories.dll": {}
         }
       }
     }
@@ -779,6 +791,11 @@
       "sha512": ""
     },
     "DataAccess.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DataAccess.Repositories/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

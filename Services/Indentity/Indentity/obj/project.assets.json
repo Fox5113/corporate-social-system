@@ -726,6 +726,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "BusinessLogic.Dtos": "1.0.0",
           "DataAccess.Entities": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.7"
         },
@@ -740,6 +741,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "BusinessLogic.Dtos": "1.0.0",
           "BusinessLogic.Interfaces": "1.0.0",
           "DataAccess.Entities": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.7"
@@ -781,6 +783,20 @@
         },
         "runtime": {
           "bin/placeholder/DataAccess.Entities.dll": {}
+        }
+      },
+      "DataAccess.Repositories/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "BusinessLogic.Interfaces": "1.0.0",
+          "DataAccess.Context": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DataAccess.Repositories.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DataAccess.Repositories.dll": {}
         }
       }
     }
@@ -1984,6 +2000,11 @@
       "type": "project",
       "path": "../DAL/DataAccess.Entities/DataAccess.Entities.csproj",
       "msbuildProject": "../DAL/DataAccess.Entities/DataAccess.Entities.csproj"
+    },
+    "DataAccess.Repositories/1.0.0": {
+      "type": "project",
+      "path": "../DAL/DataAccess.Repositories/DataAccess.Repositories.csproj",
+      "msbuildProject": "../DAL/DataAccess.Repositories/DataAccess.Repositories.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1992,6 +2013,7 @@
       "BusinessLogic.Interfaces >= 1.0.0",
       "BusinessLogic.Services >= 1.0.0",
       "DataAccess.Context >= 1.0.0",
+      "DataAccess.Repositories >= 1.0.0",
       "IdentityServer4 >= 4.1.2",
       "IdentityServer4.AspNetIdentity >= 4.1.2",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.7",
@@ -2042,6 +2064,9 @@
             },
             "C:\\OTUS\\corporate-social-system\\Services\\Indentity\\DAL\\DataAccess.Context\\DataAccess.Context.csproj": {
               "projectPath": "C:\\OTUS\\corporate-social-system\\Services\\Indentity\\DAL\\DataAccess.Context\\DataAccess.Context.csproj"
+            },
+            "C:\\OTUS\\corporate-social-system\\Services\\Indentity\\DAL\\DataAccess.Repositories\\DataAccess.Repositories.csproj": {
+              "projectPath": "C:\\OTUS\\corporate-social-system\\Services\\Indentity\\DAL\\DataAccess.Repositories\\DataAccess.Repositories.csproj"
             }
           }
         }

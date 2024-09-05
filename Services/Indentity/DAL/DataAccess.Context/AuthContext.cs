@@ -1,5 +1,6 @@
 ﻿using DataAccess.Entities;
 using DataAccess.Entities.Configurations;
+using DataAccess.Entities.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

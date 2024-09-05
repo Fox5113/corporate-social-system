@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BusinessLogic.Interfaces")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a770e04159fb3d506fde9280471647a9f4622887")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7594185f0b9732acab7267f8bffb495481afda9f")]
 [assembly: System.Reflection.AssemblyProductAttribute("BusinessLogic.Interfaces")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BusinessLogic.Interfaces")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

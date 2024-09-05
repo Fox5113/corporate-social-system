@@ -29,5 +29,6 @@
         <ProjectReference Include="..\BusinessLogic.Services\BusinessLogic.Services.csproj" />
         <ProjectReference Include="..\BusinessLogic.Dtos\BusinessLogic.Dtos.csproj" />
         <ProjectReference Include="..\DAL\DataAccess.Context\DataAccess.Context.csproj" />
+        <ProjectReference Include="..\DAL\DataAccess.Repositories\DataAccess.Repositories.csproj" />
     </ItemGroup>
 </Project>

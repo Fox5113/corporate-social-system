@@ -16,3 +16,5 @@ C:\OTUS\corporate-social-system\Services\Indentity\BusinessLogic.Services\obj\De
 C:\OTUS\corporate-social-system\Services\Indentity\BusinessLogic.Services\obj\Debug\net8.0\refint\BusinessLogic.Services.dll
 C:\OTUS\corporate-social-system\Services\Indentity\BusinessLogic.Services\obj\Debug\net8.0\BusinessLogic.Services.pdb
 C:\OTUS\corporate-social-system\Services\Indentity\BusinessLogic.Services\obj\Debug\net8.0\ref\BusinessLogic.Services.dll
+C:\OTUS\corporate-social-system\Services\Indentity\BusinessLogic.Services\bin\Debug\net8.0\BusinessLogic.Dtos.dll
+C:\OTUS\corporate-social-system\Services\Indentity\BusinessLogic.Services\bin\Debug\net8.0\BusinessLogic.Dtos.pdb

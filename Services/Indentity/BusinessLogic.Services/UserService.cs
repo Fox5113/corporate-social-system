@@ -2,71 +2,64 @@
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
+using BusinessLogic.Dtos;
+using DataAccess.Entities.Entities;
 
 namespace BusinessLogic.Services;
 
 public class UserService : IUserService
 {
-    private readonly UserManager<User> _userManager;
+    private readonly IUserRepository _userRepository;
+    private readonly SignInManager<User> _signInManager;
 
-    public UserService(UserManager<User> userManager)
+    public UserService(SignInManager<User> signInManager, IUserRepository userRepository)
     {
-        _userManager = userManager;
+        _signInManager = signInManager;
+        _userRepository = userRepository;
     }
 
-    public async Task<IdentityResult> RegisterUserAsync(User user, string password)
+    public async Task<IdentityResult> RegisterUserAsync(string userName, string password)
     {
-        try
-        {
-            return await _userManager.CreateAsync(user, password);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("An error occurred while registering the user", ex);
-        }
+        var user = new User { UserName = userName };
+        return await _userRepository.CreateUserAsync(user, password);
     }
 
-    public async Task<User> GetUserByIdAsync(string userName)
+    public async Task<User> GetUserByIdAsync(string userId)
     {
-        try
-        {
-            return await _userManager.FindByNameAsync(userName);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("An error occurred while fetching the user", ex);
-        }
+        return await _userRepository.GetUserByIdAsync(userId);
     }
 
     public async Task<IdentityResult> UpdateUserAsync(User user)
     {
-        try
-        {
-            return await _userManager.UpdateAsync(user);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("An error occurred while updating the user", ex);
-        }
+        return await _userRepository.UpdateUserAsync(user);
     }
 
     public async Task<IdentityResult> DeleteUserAsync(string userId)
     {
-        try
+        var user = await _userRepository.GetUserByIdAsync(userId);
+        if (user != null)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user != null)
-            {
-                return await _userManager.DeleteAsync(user);
-            }
-            else
-            {
-                throw new Exception("User not found");
-            }
+            return await _userRepository.DeleteUserAsync(user);
         }
-        catch (Exception ex)
+        else
         {
-            throw new Exception("An error occurred while deleting the user", ex);
+            throw new Exception("User not found");
         }
+    }
+
+    public async Task SignInAsync(UserDto userDto)
+    {
+        var user = new User { UserName = userDto.UserName };
+        await _signInManager.SignInAsync(user, false);
+    }
+
+    public async Task SignOutAsync()
+    {
+        await _signInManager.SignOutAsync();
+    }
+
+    public async Task<SignInResult> PasswordSignInAsync(UserRegistrationDto userDto)
+    {
+        return await _signInManager.PasswordSignInAsync(userDto.UserName, userDto.Password, false, false);
     }
 }

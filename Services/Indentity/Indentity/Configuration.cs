@@ -2,7 +2,8 @@
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using DataAccess.Context;
-using DataAccess.Entities;
+using DataAccess.Entities.Entities;
+using DataAccess.Repositories;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
@@ -141,16 +142,17 @@ public class Configuration
             options.RequireHttpsMetadata = false;
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
+                ValidateIssuer = false,
+                ValidateAudience = false,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = "http://localhost:5169",
-                ValidAudience = "CssWebAPI",
+                // ValidIssuer = "http://localhost:5169",
+                // ValidAudience = "CssWebAPI",
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret??""))
             };
         });
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserRepository, UserRepository>();
     }
     
     
