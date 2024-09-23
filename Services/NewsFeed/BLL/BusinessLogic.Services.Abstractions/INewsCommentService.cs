@@ -48,7 +48,26 @@ namespace BusinessLogic.Abstractions
         /// Получение коллекции комментариев к Новости
         /// </summary>
         /// <param name="newsId">Id новости</param>
+        /// <param name="page">Страница</param>
+        /// <param name="itemsPerPage">Количество на странице</param>
         /// <returns>Коллекция комментариев по новости</returns>
-        Task<List<NewsCommentDto>> GetCollectionByNewsId(Guid newsId);
+        Task<List<NewsCommentDto>> GetCollectionByNewsId(Guid newsId, int page, int itemsPerPage);
+
+        /// <summary>
+        /// Получение коллекции комментариев по сотруднику
+        /// </summary>
+        /// <param name="employeeId">Id сотрудника</param>
+        /// <param name="page">Страница</param>
+        /// <param name="itemsPerPage">Количество на странице</param>
+        /// <returns>Коллекция комментариев по сотруднику</returns>
+        Task<List<NewsCommentDto>> GetCollectionByEmployeeId(Guid employeeId, int page, int itemsPerPage);
+
+        /// <summary>
+        /// Получение коллекции данных по комментариям
+        /// </summary>
+        /// <param name="employeeId">Id сотрудника, запросившего инфо</param>
+        /// <param name="newsIds">Коллекция Id новостей</param>
+        /// <returns>Коллекция данных по комментариям</returns>
+        Task<List<NewsCommentInfoDto>> CheckIsAuthor(Guid employeeId, ICollection<Guid> newsIds);
     }
 }

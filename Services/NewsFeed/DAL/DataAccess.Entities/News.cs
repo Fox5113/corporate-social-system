@@ -15,7 +15,6 @@ namespace DataAccess.Entities
         public bool IsArchived { get; set; }
         public bool IsPublished { get; set; }
         public virtual Employee Author { get; set; }
-        public int Likes { get; set; }
         public virtual ICollection<NewsComment> NewsCommentList { get; set; }
         public virtual ICollection<HashtagNews> HashtagNewsList { get; set; }
 

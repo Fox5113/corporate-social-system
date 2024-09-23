@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
 using WebApi.Models.HashtagNews;
+using BusinessLogic.Contracts.Hashtag;
+using WebApi.Models.Hashtag;
 
 namespace WebApi.Controllers
 {
@@ -29,22 +31,66 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            return Ok(_mapper.Map<HashtagNewsModel>(await _service.GetByIdAsync(id)));
+            if (id == Guid.Empty)
+            {
+                _logger.LogError("HashtagNewsController.GetAsync: id is empty.");
+                return BadRequest(GetBadRequestObject("HashtagNewsController.GetAsync: id is empty."));
+            }
+
+            try
+            {
+                return Ok(_mapper.Map<HashtagNewsModel>(await _service.GetByIdAsync(id)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HashtagNewsController.GetAsync: {ex}."));
+            }
         }
 
         [Route("CreateAsync")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CreatingHashtagNewsModel HashtagNewsModel)
+        public async Task<IActionResult> CreateAsync(CreatingHashtagNewsModel hashtagNewsModel)
         {
-            return Ok(await _service.CreateAsync(_mapper.Map<CreatingHashtagNewsDto>(HashtagNewsModel)));
+            if (hashtagNewsModel == null)
+            {
+                _logger.LogError("HashtagNewsController.CreateAsync: hashtagNewsModel is null.");
+                return BadRequest(GetBadRequestObject("HashtagNewsController.CreateAsync: hashtagNewsModel is null."));
+            }
+
+            try
+            {
+                return Ok(await _service.CreateAsync(_mapper.Map<CreatingHashtagNewsDto>(hashtagNewsModel)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HashtagNewsController.CreateAsync: {ex}"));
+            }
         }
 
         [Route("Delete")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            await _service.DeleteAsync(id);
-            return Ok();
+            if (id == Guid.Empty)
+            {
+                _logger.LogError("HashtagNewsController.DeleteAsync: id is empty.");
+                return BadRequest(GetBadRequestObject("HashtagNewsController.DeleteAsync: id is empty."));
+            }
+
+            try
+            {
+                await _service.DeleteAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HashtagNewsController.DeleteAsync: {ex}."));
+            }
+        }
+
+        private object GetBadRequestObject(string error)
+        {
+            return new { Status = "400", Error = error };
         }
     }
 }

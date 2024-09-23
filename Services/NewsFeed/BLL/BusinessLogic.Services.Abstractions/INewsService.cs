@@ -1,6 +1,8 @@
 ﻿using BusinessLogic.Contracts.Hashtag;
+using BusinessLogic.Contracts.LikedNews;
 using BusinessLogic.Contracts.News;
 using DataAccess.Common;
+using DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -52,5 +54,37 @@ namespace BusinessLogic.Abstractions
         /// </summary>
         /// <param name="id"> Идентификатор. </param>
         Task DeleteAsync(Guid id);
+
+        /// <summary>
+        /// Лайкнуть новость
+        /// </summary>
+        /// <param name="id">Id Новости</param>
+        /// <param name="employeeId">Id Сотрудника</param>
+        /// <returns></returns>
+        Task Like(Guid id, Guid employeeId);
+
+        /// <summary>
+        /// Получить инфо по лайкам
+        /// </summary>
+        /// <param name="newsIds">Список новостей</param>
+        /// <param name="currentEmployeeId">Пользователь, запросивший инфо</param>
+        /// <returns>Инфо по лайкам с учетом лайков конкретного пользовател</returns>
+        Task<ICollection<LikedNewsInfoDto>> GetLikes(ICollection<Guid> newsIds, Guid currentEmployeeId);
+
+        /// <summary>
+        /// Получить инфо по лайкам пользователя
+        /// </summary>
+        /// <param name="employeeId">Id Пользовател</param>
+        /// <param name="page">Станица</param>
+        /// <param name="itemsPerPage">Количество записей</param>
+        /// <returns>Инфо по лайкам конкретного пользователя</returns>
+        Task<ICollection<NewsDto>> GetLikedNewsByEmployee(Guid employeeId, int page, int itemsPerPage);
+
+        /// <summary>
+        /// Добавить стопку новостей
+        /// </summary>
+        /// <param name="entities">Список новостей</param>
+        /// <returns></returns>
+        Task AddRangeAsync(ICollection<CreatingNewsDto> entities);
     }
 }

@@ -20,19 +20,38 @@ namespace DataAccess.Repositories.Abstractions
         /// Получение коллекции комментариев к Новости
         /// </summary>
         /// <param name="newsId">Id новости</param>
+        /// <param name="page">Страница</param>
+        /// <param name="itemsPerPage">Количество на странице</param>
         /// <returns>Коллекция комментариев по новости</returns>
-        Task<List<NewsComment>> GetCollectionByNewsId(Guid newsId);
+        Task<List<NewsComment>> GetCollectionByNewsId(Guid newsId, int page, int itemsPerPage);
+
+        /// <summary>
+        /// Получение коллекции комментариев по сотруднику
+        /// </summary>
+        /// <param name="employeeId">Id сотрудника</param>
+        /// <param name="page">Страница</param>
+        /// <param name="itemsPerPage">Количество на странице</param>
+        /// <returns>Коллекция комментариев по сотруднику</returns>
+        Task<List<NewsComment>> GetCollectionByEmployeeId(Guid employeeId, int page, int itemsPerPage);
 
         /// <summary>
         /// Удаление комментариев по новости
         /// </summary>
         /// <param name="newsId">Id новости</param>
-        void DeleteByNewsId(Guid newsId);
+        Task DeleteByNewsId(Guid newsId);
 
         /// <summary>
         /// Удаление комментариев по автору.
         /// </summary>
         /// <param name="authorId">Id автора</param>
-        void DeleteByAuthorId(Guid authorId);
+        Task DeleteByAuthorId(Guid authorId);
+
+        /// <summary>
+        /// Получение коллекции данных по комментариям
+        /// </summary>
+        /// <param name="employeeId">Id сотрудника, запросившего инфо</param>
+        /// <param name="newsIds">Коллекция Id новостей</param>
+        /// <returns>Коллекция данных по комментариям</returns>
+        Task<List<NewsCommentInfo>> CheckIsAuthor(Guid employeeId, ICollection<Guid> newsIds);
     }
 }

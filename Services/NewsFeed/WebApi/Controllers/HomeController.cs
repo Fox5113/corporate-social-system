@@ -6,13 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading.Tasks;
-using WebApi.Models.Employee;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class HomeController : ControllerBase
     {
         private readonly IBaseService _service;
@@ -33,93 +30,156 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetSomeCollectionFromMapping([FromBody] MappingQuery mapping)
         {
-            if (mapping == null || string.IsNullOrEmpty(mapping.MainTableName))
-                return NotFound();
+            try
+            {
+                if (mapping == null || string.IsNullOrEmpty(mapping.MainTableName))
+                {
+                    _logger.LogError("HomeController.GetSomeCollectionFromMapping: mapping or main table name is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.GetSomeCollectionFromMapping: mapping or main table name is null."));
+                }
 
-            if(!Constants.TableAndRepositoryPath.ContainsKey(mapping.MainTableName))
-                return NotFound();
+                var servicePath = "";
+                Constants.TableAndRepositoryPath.TryGetValue(mapping.MainTableName, out servicePath);
 
-            var servicePath = Constants.TableAndRepositoryPath[mapping.MainTableName];
+                if (string.IsNullOrEmpty(servicePath))
+                {
+                    _logger.LogError("HomeController.GetSomeCollectionFromMapping: service path is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.GetSomeCollectionFromMapping: service path is null."));
+                }
 
-            if (servicePath == null)
-                return NotFound();
-
-            return new ObjectResult(Ok(_service.GetSomeCollectionFromMapping(mapping)));
+                return new ObjectResult(Ok(_service.GetSomeCollectionFromMapping(mapping)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HomeController.GetSomeCollectionFromMapping: {ex}."));
+            }
         }
 
         [Route("GetSomeCollectionByIds")]
         [HttpGet]
         public IActionResult GetSomeCollectionByIds([FromBody] List<Guid> ids, string tableName)
         {
-            if (ids == null || ids.Count == 0 || string.IsNullOrEmpty(tableName))
-                return NotFound();
+            try
+            {
+                if (ids == null || ids.Count == 0 || string.IsNullOrEmpty(tableName))
+                {
+                    _logger.LogError("HomeController.GetSomeCollectionByIds: ids collection is null or empty or table name is empty.");
+                    return BadRequest(GetBadRequestObject("HomeController.GetSomeCollectionByIds: ids collection is null or empty or table name is empty."));
+                }
 
-            if (!Constants.TableAndRepositoryPath.ContainsKey(tableName))
-                return NotFound();
+                var servicePath = "";
+                Constants.TableAndRepositoryPath.TryGetValue(tableName, out servicePath);
 
-            var servicePath = Constants.TableAndRepositoryPath[tableName];
-            if (string.IsNullOrEmpty(servicePath))
-                return NotFound();
+                if (string.IsNullOrEmpty(servicePath))
+                {
+                    _logger.LogError("HomeController.GetSomeCollectionByIds: service path is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.GetSomeCollectionByIds: service path is null."));
+                }
 
-            return new ObjectResult(Ok(_service.GetSomeCollectionByIds(ids, tableName)));
+                return new ObjectResult(Ok(_service.GetSomeCollectionByIds(ids, tableName)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HomeController.GetSomeCollectionByIds: {ex}."));
+            }
         }
 
         [Route("GetEntity")]
         [HttpGet]
         public IActionResult GetEntity(Guid id, string tableName)
         {
-            if (id == Guid.Empty || string.IsNullOrEmpty(tableName))
-                return NotFound();
+            try
+            {
+                if (id == Guid.Empty || string.IsNullOrEmpty(tableName))
+                {
+                    _logger.LogError("HomeController.GetEntity: id or table name is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.GetEntity: id or table name is null."));
+                }
 
-            if (!Constants.TableAndRepositoryPath.ContainsKey(tableName))
-                return NotFound();
+                var servicePath = "";
+                Constants.TableAndRepositoryPath.TryGetValue(tableName, out servicePath);
 
-            var servicePath = Constants.TableAndRepositoryPath[tableName];
-            if (string.IsNullOrEmpty(servicePath))
-                return NotFound();
+                if (string.IsNullOrEmpty(servicePath))
+                {
+                    _logger.LogError("HomeController.GetEntity: service path is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.GetEntity: service path is null."));
+                }
 
-            return new ObjectResult(Ok(_service.GetEntity(id, tableName)));
+                return new ObjectResult(Ok(_service.GetEntity(id, tableName)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HomeController.GetEntity: {ex}."));
+            }
         }
 
         [Route("GetCollectionByJsonString")]
         [HttpGet]
         public IActionResult GetCollectionByJsonString(string jsonData, string jsonObjectName, string tableName)
         {
-            if (string.IsNullOrEmpty(jsonData) || string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(jsonObjectName))
-                return NotFound();
+            try
+            {
+                if (string.IsNullOrEmpty(jsonData) || string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(jsonObjectName))
+                {
+                    _logger.LogError("HomeController.GetCollectionByJsonString: jsonData or table name or jsonObjectName is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.GetCollectionByJsonString: jsonData or table name or jsonObjectName is null."));
+                }
 
-            if (!Constants.TableAndRepositoryPath.ContainsKey(tableName))
-                return NotFound();
+                var servicePath = "";
+                Constants.TableAndRepositoryPath.TryGetValue(tableName, out servicePath);
+                if (string.IsNullOrEmpty(servicePath))
+                {
+                    _logger.LogError("HomeController.GetCollectionByJsonString: service path is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.GetCollectionByJsonString: service path is null."));
+                }
 
-            var servicePath = Constants.TableAndRepositoryPath[tableName];
-            if (string.IsNullOrEmpty(servicePath))
-                return NotFound();
+                var classPath = "";
+                Constants.ClassPathByName.TryGetValue(jsonObjectName, out classPath);
+                if (string.IsNullOrEmpty(classPath))
+                {
+                    _logger.LogError("HomeController.GetCollectionByJsonString: class path is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.GetCollectionByJsonString: class path is null."));
+                }
 
-            if (!Constants.ClassPathByName.ContainsKey(jsonObjectName))
-                return NotFound();
-
-            var classPath = Constants.ClassPathByName[jsonObjectName];
-            if (string.IsNullOrEmpty(classPath))
-                return NotFound();
-
-            return new ObjectResult(Ok(_service.GetCollectionByJsonString(jsonData, jsonObjectName, tableName)));
+                return new ObjectResult(Ok(_service.GetCollectionByJsonString(jsonData, jsonObjectName, tableName)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HomeController.GetCollectionByJsonString: {ex}."));
+            }
         }
 
         [Route("Delete")]
         [HttpDelete]
         public IActionResult Delete([FromBody] List<FieldFilter> filters, string tableName)
         {
-            if (filters == null || filters.Count == 0 || string.IsNullOrEmpty(tableName))
-                return NotFound();
+            try
+            {
+                if (filters == null || filters.Count == 0 || string.IsNullOrEmpty(tableName))
+                {
+                    _logger.LogError("HomeController.Delete: filters or table name is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.Delete: filters or table name is null."));
+                }
 
-            if (!Constants.TableAndRepositoryPath.ContainsKey(tableName))
-                return NotFound();
+                var servicePath = "";
+                Constants.TableAndRepositoryPath.TryGetValue(tableName, out servicePath);
+                if (string.IsNullOrEmpty(servicePath))
+                {
+                    _logger.LogError("HomeController.Delete: service path is null.");
+                    return BadRequest(GetBadRequestObject("HomeController.Delete: service path is null."));
+                }
 
-            var servicePath = Constants.TableAndRepositoryPath[tableName];
-            if (string.IsNullOrEmpty(servicePath))
-                return NotFound();
+                return new ObjectResult(Ok(_service.Delete(filters, tableName)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HomeController.Delete: {ex}."));
+            }
+        }
 
-            return new ObjectResult(Ok(_service.Delete(filters, tableName)));
+        private object GetBadRequestObject(string error)
+        {
+            return new { Status = "400", Error = error };
         }
     }
 }

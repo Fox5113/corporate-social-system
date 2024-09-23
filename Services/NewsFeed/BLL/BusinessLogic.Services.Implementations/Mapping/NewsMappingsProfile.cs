@@ -17,7 +17,6 @@ namespace BusinessLogic.Services.Mapping
                 .ForMember(d => d.CreatedAt, map => map.Ignore())
                 .ForMember(d => d.IsPublished, map => map.Ignore())
                 .ForMember(d => d.IsArchived, map => map.Ignore())
-                .ForMember(d => d.Likes, map => map.Ignore())
                 .ForMember(d => d.NewsCommentList, map => map.Ignore());
 
             CreateMap<UpdatingNewsDto, News>()

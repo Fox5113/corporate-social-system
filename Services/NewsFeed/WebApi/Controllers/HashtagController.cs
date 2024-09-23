@@ -31,14 +31,45 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            return Ok(_mapper.Map<HashtagModel>(await _service.GetByIdAsync(id)));
+            if(id ==  Guid.Empty)
+            {
+                _logger.LogError("HashtagController.GetAsync: id is empty.");
+                return BadRequest(GetBadRequestObject("HashtagController.GetAsync: id is empty."));
+            }
+
+            try
+            {
+                return Ok(_mapper.Map<HashtagModel>(await _service.GetByIdAsync(id)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HashtagController.GetAsync: {ex}."));
+            }
         }
 
         [Route("CreateAsync")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CreatingHashtagModel HashtagModel)
+        public async Task<IActionResult> CreateAsync(CreatingHashtagModel hashtagModel)
         {
-            return Ok(await _service.CreateAsync(_mapper.Map<CreatingHashtagDto>(HashtagModel)));
+            if (hashtagModel == null)
+            {
+                _logger.LogError("HashtagController.CreateAsync: hashtagModel is null.");
+                return BadRequest(GetBadRequestObject("HashtagController.CreateAsync: hashtagModel is null."));
+            }
+
+            try
+            {
+                return Ok(await _service.CreateAsync(_mapper.Map<CreatingHashtagDto>(hashtagModel)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HashtagController.CreateAsync: {ex}"));
+            }
+        }
+
+        private object GetBadRequestObject(string error)
+        {
+            return new { Status = "400", Error = error };
         }
     }
 }

@@ -11,6 +11,7 @@ namespace DataAccess.EntityFramework
         public DbSet<Hashtag> Hashtag { get; set; }
         public DbSet<NewsComment> NewsComment { get; set; }
         public DbSet<HashtagNews> HashtagNews { get; set; }
+        public DbSet<LikedNews> LikedNews { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -46,10 +47,6 @@ namespace DataAccess.EntityFramework
                 .HasForeignKey(hn => hn.HashtagId);
 
             modelBuilder.Entity<News>()
-                .Property(news => news.Likes)
-                .HasDefaultValue(0);
-
-            modelBuilder.Entity<News>()
                 .Property(news => news.CreatedAt)
                 .HasDefaultValue(DateTime.Now);
 
@@ -83,6 +80,10 @@ namespace DataAccess.EntityFramework
 
             modelBuilder.Entity<Employee>()
                 .Property(e => e.Id)
+                .HasDefaultValue(Guid.NewGuid());
+
+            modelBuilder.Entity<LikedNews>()
+                .Property(ln => ln.Id)
                 .HasDefaultValue(Guid.NewGuid());
 
             base.OnModelCreating(modelBuilder);

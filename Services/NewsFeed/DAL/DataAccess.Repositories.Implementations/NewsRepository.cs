@@ -254,6 +254,92 @@ namespace DataAccess.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Лайкнуть новость
+        /// </summary>
+        /// <param name="id">Id Новости</param>
+        /// <param name="employeeId">Id Сотрудника</param>
+        /// <returns></returns>
+        public async Task Like(Guid id, Guid employeeId)
+        {
+            var repoLN = new LikedNewsRepository(_dataContext);
+            var query = repoLN.GetAll();
+            var likes = query.Where(x => x.NewsId == id && x.EmployeeId == employeeId).ToList();
+            if(likes == null || likes.Count == 0)
+            {
+                await repoLN.AddAsync(new LikedNews() { NewsId = id, EmployeeId = employeeId });
+            }
+            else
+            {
+                repoLN.DeleteRange(likes);
+            }
+        }
+
+        /// <summary>
+        /// Получить инфо по лайкам
+        /// </summary>
+        /// <param name="newsIds">Список новостей</param>
+        /// <param name="currentEmployeeId">Пользователь, запросивший инфо</param>
+        /// <returns>Инфо по лайкам с учетом лайков конкретного пользовател</returns>
+        public async Task<ICollection<LikedNewsInfo>> GetLikes(ICollection<Guid> newsIds, Guid currentEmployeeId)
+        {
+            var likes = await GetLikesByNews(newsIds);
+            var list = new List<LikedNewsInfo>();
+            foreach(var id in newsIds)
+            {
+                var count = likes.Where(x => x.NewsId == id).ToArray().Length;
+                list.Add(new LikedNewsInfo() { 
+                    NewsId = id, 
+                    LikesCount = count, 
+                    IsLiked = likes.FirstOrDefault(x => x.NewsId == id && x.EmployeeId == currentEmployeeId) != null });
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Получить инфо по лайкам пользователя
+        /// </summary>
+        /// <param name="employeeId">Id сотрудника</param>
+        /// <param name="page">Номер страницы</param>
+        /// <param name="itemsPerPage">Количество элементов на странице</param>
+        /// <returns></returns>
+        public async Task<ICollection<News>> GetLikedNewsByEmployee(Guid employeeId, int page, int itemsPerPage)
+        {
+            var likedNews = await GetLikesByEmployee(employeeId);
+            var newsList = likedNews.Select(x => x.NewsId).ToList();
+            var query = GetAll();
+            return await query
+                .Where(x => newsList.Contains(x.Id))
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Получить список лайков
+        /// </summary>
+        /// <param name="newsIds">Id Новостей</param>
+        /// <returns>Список лайков</returns>
+        public async Task<ICollection<LikedNews>> GetLikesByNews(ICollection<Guid> newsIds)
+        {
+            var repoLN = new LikedNewsRepository(_dataContext);
+            var query = repoLN.GetAll();
+            return await query.Where(x => newsIds.Contains(x.NewsId)).ToListAsync();
+        }
+
+        /// <summary>
+        /// Получить список лайков по сотруднику
+        /// </summary>
+        /// <param name="employeeId">Id сотрудника</param>
+        /// <returns>Список лайков</returns>
+        public async Task<ICollection<LikedNews>> GetLikesByEmployee(Guid employeeId)
+        {
+            var repoLN = new LikedNewsRepository(_dataContext);
+            var query = repoLN.GetAll();
+            return await query.Where(x => x.EmployeeId == employeeId).ToListAsync();
+        }
+
         #region Private
 
         /// <summary>
