@@ -18,7 +18,6 @@ namespace BusinessLogic.Contracts.News
         public bool IsArchived { get; set; }
         public bool IsPublished { get; set; }
         public  EmployeeDto Author { get; set; }
-        public int Likes { get; set; }
         public List<NewsCommentDto> NewsCommentList { get; set; }
         public List<HashtagNewsDto> HashtagNewsList { get; set; }
     }

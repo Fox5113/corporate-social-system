@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.Abstractions;
 using BusinessLogic.Contracts.HashtagNews;
+using BusinessLogic.Contracts.LikedNews;
 using BusinessLogic.Contracts.News;
 using DataAccess.Common;
 using DataAccess.Entities;
@@ -85,6 +86,43 @@ namespace BusinessLogic.Services
             await _newsRepository.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Лайкнуть новость
+        /// </summary>
+        /// <param name="id">Id Новости</param>
+        /// <param name="employeeId">Id Сотрудника</param>
+        /// <returns></returns>
+        public async Task Like(Guid id, Guid employeeId)
+        {
+            await _newsRepository.Like(id, employeeId);
+            _newsRepository.SaveChanges();
+        }
+
+        /// <summary>
+        /// Получить инфо по лайкам
+        /// </summary>
+        /// <param name="newsIds">Список новостей</param>
+        /// <param name="currentEmployeeId">Пользователь, запросивший инфо</param>
+        /// <returns>Инфо по лайкам с учетом лайков конкретного пользовател</returns>
+        public async Task<ICollection<LikedNewsInfoDto>> GetLikes(ICollection<Guid> newsIds, Guid currentEmployeeId)
+        {
+            return _mapper.Map<ICollection<LikedNewsInfo>, ICollection<LikedNewsInfoDto>>(await _newsRepository.GetLikes(newsIds, currentEmployeeId));
+        }
+
+        /// <summary>
+        /// Получить инфо по лайкам пользователя
+        /// </summary>
+        /// <param name="employeeId">Id Пользовател</param>
+        /// <param name="page">Станица</param>
+        /// <param name="itemsPerPage">Количество записей</param>
+        /// <returns>Инфо по лайкам конкретного пользователя</returns>
+        public async Task<ICollection<NewsDto>> GetLikedNewsByEmployee(Guid employeeId, int page, int itemsPerPage)
+        {
+            ICollection<News> entities = await _newsRepository.GetLikedNewsByEmployee(employeeId, page, itemsPerPage);
+            _newsRepository.JoinEntities(entities);
+            return _mapper.Map<ICollection<News>, ICollection<NewsDto>>(entities);
+        }
+
         /// /// <summary>
         /// Изменить новость.
         /// </summary>
@@ -102,7 +140,6 @@ namespace BusinessLogic.Services
             news.Title = updatingNewsDto.Title;
             news.ShortDescription = updatingNewsDto.ShortDescription;
             news.Content = updatingNewsDto.Content;
-            news.Likes = updatingNewsDto.Likes;
             news.UpdatedAt = DateTime.Now;
             news.IsArchived = updatingNewsDto.IsArchived;
             news.IsPublished = updatingNewsDto.IsPublished;
@@ -115,6 +152,17 @@ namespace BusinessLogic.Services
 
             _newsRepository.Update(news);
             await _newsRepository.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Добавить стопку новостей
+        /// </summary>
+        /// <param name="entities">Список новостей</param>
+        /// <returns></returns>
+        public async Task AddRangeAsync(ICollection<CreatingNewsDto> entities)
+        {
+            await _newsRepository.AddRangeAsync(_mapper.Map<ICollection<CreatingNewsDto>, ICollection<News>>(entities));
+            _newsRepository.SaveChanges();
         }
     }
 }

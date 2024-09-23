@@ -18,7 +18,6 @@ namespace WebApi.Models.News
         public bool IsArchived { get; set; }
         public bool IsPublished { get; set; }
         public EmployeeModel Author { get; set; }
-        public int Likes { get; set; }
         public List<NewsCommentModel> NewsCommentList { get; set; }
         public List<HashtagNewsModel> HashtagNewsList { get; set; }
     }

@@ -12,6 +12,5 @@ namespace BusinessLogic.Contracts.News
         public Guid AuthorId { get; set; }
         public int ItemsPerPage { get; set; }
         public int Page { get; set; }
-        public int Likes { get; set; }
     }
 }

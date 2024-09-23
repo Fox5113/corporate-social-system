@@ -61,7 +61,8 @@ namespace WebApi
                 .AddTransient<IHashtagNewsRepository, HashtagNewsRepository>()
                 .AddTransient<IHashtagRepository, HashtagRepository>()
                 .AddTransient<IEmployeeRepository, EmployeeRepository>()
-                .AddTransient<IBaseRepository, BaseRepository>();
+                .AddTransient<IBaseRepository, BaseRepository>()
+                .AddTransient<ILikedNewsRepository, LikedNewsRepository>();
             return serviceCollection;
         }
     }

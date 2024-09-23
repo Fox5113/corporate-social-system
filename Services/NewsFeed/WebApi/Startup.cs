@@ -92,11 +92,15 @@ namespace WebApi
                 cfg.AddProfile<EmployeeMappingsProfile>();
                 cfg.AddProfile<HashtagNewsMappingsProfile>();
                 cfg.AddProfile<HashtagMappingsProfile>();
+                cfg.AddProfile<LikedNewsInfoMappingsProfile>();
+                cfg.AddProfile<NewsCommentInfoMappingsProfile>();
                 cfg.AddProfile<BusinessLogic.Services.Mapping.NewsMappingsProfile>();
                 cfg.AddProfile<BusinessLogic.Services.Mapping.NewsCommentMappingsProfile>();
                 cfg.AddProfile<BusinessLogic.Services.Mapping.EmployeeMappingsProfile>();
                 cfg.AddProfile<BusinessLogic.Services.Mapping.HashtagNewsMappingsProfile>();
                 cfg.AddProfile<BusinessLogic.Services.Mapping.HashtagMappingsProfile>();
+                cfg.AddProfile<BusinessLogic.Services.Mapping.LikedNewsInfoMappingsProfile>();
+                cfg.AddProfile<BusinessLogic.Services.Mapping.NewsCommentInfoMappingsProfile>();
             });
             configuration.AssertConfigurationIsValid();
             return configuration;

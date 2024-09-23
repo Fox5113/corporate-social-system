@@ -88,11 +88,38 @@ namespace BusinessLogic.Services
         /// Получение коллекции комментариев к Новости
         /// </summary>
         /// <param name="newsId">Id новости</param>
+        /// <param name="page">Страница</param>
+        /// <param name="itemsPerPage">Количество на странице</param>
         /// <returns>Коллекция комментариев по новости</returns>
-        public async Task<List<NewsCommentDto>> GetCollectionByNewsId(Guid newsId)
+        public async Task<List<NewsCommentDto>> GetCollectionByNewsId(Guid newsId, int page, int itemsPerPage)
         {
-            var news = await _newsCommentRepository.GetCollectionByNewsId(newsId);
+            var news = await _newsCommentRepository.GetCollectionByNewsId(newsId, page, itemsPerPage);
             return _mapper.Map<List<NewsCommentDto>>(news);
+        }
+
+        /// <summary>
+        /// Получение коллекции комментариев к Новости
+        /// </summary>
+        /// <param name="employeeId">Id новости</param>
+        /// <param name="page">Страница</param>
+        /// <param name="itemsPerPage">Количество на странице</param>
+        /// <returns>Коллекция комментариев по новости</returns>
+        public async Task<List<NewsCommentDto>> GetCollectionByEmployeeId(Guid employeeId, int page, int itemsPerPage)
+        {
+            var news = await _newsCommentRepository.GetCollectionByEmployeeId(employeeId, page, itemsPerPage);
+            return _mapper.Map<List<NewsCommentDto>>(news);
+        }
+
+        /// <summary>
+        /// Получение коллекции данных по комментариям
+        /// </summary>
+        /// <param name="employeeId">Id сотрудника, запросившего инфо</param>
+        /// <param name="newsIds">Коллекция Id новостей</param>
+        /// <returns>Коллекция данных по комментариям</returns>
+        public async Task<List<NewsCommentInfoDto>> CheckIsAuthor(Guid employeeId, ICollection<Guid> newsIds)
+        {
+            var result = await _newsCommentRepository.CheckIsAuthor(employeeId, newsIds);
+            return _mapper.Map<List<NewsCommentInfoDto>>(result);
         }
     }
 }
