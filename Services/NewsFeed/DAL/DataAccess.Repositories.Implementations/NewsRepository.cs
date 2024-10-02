@@ -260,19 +260,30 @@ namespace DataAccess.Repositories
         /// <param name="id">Id Новости</param>
         /// <param name="employeeId">Id Сотрудника</param>
         /// <returns></returns>
-        public async Task Like(Guid id, Guid employeeId)
+        public async Task<LikedNewsInfo> Like(Guid id, Guid employeeId)
         {
             var repoLN = new LikedNewsRepository(_dataContext);
             var query = repoLN.GetAll();
             var likes = query.Where(x => x.NewsId == id && x.EmployeeId == employeeId).ToList();
-            if(likes == null || likes.Count == 0)
+            var count = query.Where(x => x.NewsId == id).ToList().Count;
+            var newsInfo = new LikedNewsInfo()
+            {
+                NewsId = id,
+                LikesCount = count,
+            };
+            if (likes == null || likes.Count == 0)
             {
                 await repoLN.AddAsync(new LikedNews() { NewsId = id, EmployeeId = employeeId });
+                newsInfo.IsLiked = true;
+                newsInfo.LikesCount += 1;
             }
             else
             {
                 repoLN.DeleteRange(likes);
+                newsInfo.IsLiked = false;
+                newsInfo.LikesCount = newsInfo.LikesCount > 0 ? newsInfo.LikesCount - 1 : 0;
             }
+            return newsInfo;
         }
 
         /// <summary>

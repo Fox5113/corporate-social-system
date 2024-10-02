@@ -62,7 +62,7 @@ namespace DataAccess.Repositories.Abstractions
         /// <param name="id">Id Новости</param>
         /// <param name="employeeId">Id Сотрудника</param>
         /// <returns></returns>
-        Task Like(Guid id, Guid employeeId);
+        Task<LikedNewsInfo> Like(Guid id, Guid employeeId);
 
         /// <summary>
         /// Получить инфо по лайкам
@@ -71,6 +71,7 @@ namespace DataAccess.Repositories.Abstractions
         /// <param name="currentEmployeeId">Пользователь, запросивший инфо</param>
         /// <returns>Инфо по лайкам с учетом лайков конкретного пользовател</returns>
         Task<ICollection<LikedNewsInfo>> GetLikes(ICollection<Guid> newsIds, Guid currentEmployeeId);
+
         Task<ICollection<News>> GetLikedNewsByEmployee(Guid employeeId, int page, int itemsPerPage);
     }
 }

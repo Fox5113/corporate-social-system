@@ -50,7 +50,7 @@ namespace WebApi.Controllers
 
         [Route("CreateAsync")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] CreatingNewsModel newsModel)
+        public async Task<IActionResult> CreateAsync(CreatingNewsModel newsModel)
         {
             if (newsModel == null)
             {
@@ -69,7 +69,7 @@ namespace WebApi.Controllers
 
         [Route("Publish")]
         [HttpPut]
-        public async Task<IActionResult> Publish(Guid id, [FromBody] UpdatingNewsModel newsModel)
+        public async Task<IActionResult> Publish(Guid id, UpdatingNewsModel newsModel)
         {
             if (!CheckParams(id, newsModel, "NewsController.Publish"))
                 return BadRequest(GetBadRequestObject("NewsController.Publish: id is empty or object is null."));
@@ -91,7 +91,7 @@ namespace WebApi.Controllers
 
         [Route("Cancel")]
         [HttpPut]
-        public async Task<IActionResult> Cancel(Guid id, [FromBody] UpdatingNewsModel newsModel)
+        public async Task<IActionResult> Cancel(Guid id, UpdatingNewsModel newsModel)
         {
             if (!CheckParams(id, newsModel, "NewsController.Cancel"))
                 return BadRequest(GetBadRequestObject("NewsController.Cancel: id is empty or object is null."));
@@ -113,7 +113,7 @@ namespace WebApi.Controllers
 
         [Route("Archive")]
         [HttpPut]
-        public async Task<IActionResult> Archive(Guid id, [FromBody] UpdatingNewsModel newsModel)
+        public async Task<IActionResult> Archive(Guid id, UpdatingNewsModel newsModel)
         {
             if (!CheckParams(id, newsModel, "NewsController.Archive"))
                 return BadRequest(GetBadRequestObject("NewsController.Archive: id is empty or object is null."));
@@ -134,7 +134,7 @@ namespace WebApi.Controllers
 
         [Route("SendOnModeration")]
         [HttpPut]
-        public async Task<IActionResult> SendOnModeration(Guid id, [FromBody] UpdatingNewsModel newsModel)
+        public async Task<IActionResult> SendOnModeration(Guid id, UpdatingNewsModel newsModel)
         {
             if (!CheckParams(id, newsModel, "NewsController.SendOnModeration"))
                 return BadRequest(GetBadRequestObject("NewsController.SendOnModeration: id is empty or object is null."));
@@ -297,8 +297,7 @@ namespace WebApi.Controllers
 
             try
             {
-                await _service.Like(newsId, employeeId);
-                return Ok();
+                return Ok(_mapper.Map<LikedNewsInfoModel>(await _service.Like(newsId, employeeId)));
             }
             catch (Exception ex)
             {
@@ -308,7 +307,7 @@ namespace WebApi.Controllers
 
         [Route("GetLikes")]
         [HttpPost]
-        public async Task<IActionResult> GetLikes(Guid currentEmployeeId, [FromBody] ICollection<Guid> newsIds)
+        public async Task<IActionResult> GetLikes(Guid currentEmployeeId, ICollection<Guid> newsIds)
         {
             if (currentEmployeeId == Guid.Empty)
             {
