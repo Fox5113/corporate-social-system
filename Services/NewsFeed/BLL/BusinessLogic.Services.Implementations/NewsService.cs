@@ -92,10 +92,12 @@ namespace BusinessLogic.Services
         /// <param name="id">Id Новости</param>
         /// <param name="employeeId">Id Сотрудника</param>
         /// <returns></returns>
-        public async Task Like(Guid id, Guid employeeId)
+        public async Task<LikedNewsInfoDto> Like(Guid id, Guid employeeId)
         {
-            await _newsRepository.Like(id, employeeId);
+            var result = await _newsRepository.Like(id, employeeId);
             _newsRepository.SaveChanges();
+
+            return _mapper.Map<LikedNewsInfo, LikedNewsInfoDto>(result);
         }
 
         /// <summary>

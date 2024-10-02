@@ -61,7 +61,7 @@ namespace BusinessLogic.Abstractions
         /// <param name="id">Id Новости</param>
         /// <param name="employeeId">Id Сотрудника</param>
         /// <returns></returns>
-        Task Like(Guid id, Guid employeeId);
+        Task<LikedNewsInfoDto> Like(Guid id, Guid employeeId);
 
         /// <summary>
         /// Получить инфо по лайкам
