@@ -75,7 +75,7 @@ namespace DataAccess.Repositories
         /// Удаление связанных сущностей.
         /// </summary>
         /// <param name="newsId"> Id новости </param>
-        public void DeleteRelatedEntities(Guid newsId)
+        public async void DeleteRelatedEntities(Guid newsId)
         {
             if (newsId == Guid.Empty)
                 return;
@@ -84,7 +84,7 @@ namespace DataAccess.Repositories
             hashtagsNewsRep.DeleteByNewsId(newsId);
 
             var newsCommentRep = new NewsCommentRepository(_dataContext);
-            newsCommentRep.DeleteByNewsId(newsId);
+            await newsCommentRep.DeleteByNewsId(newsId);
         }
 
         /// <summary>
