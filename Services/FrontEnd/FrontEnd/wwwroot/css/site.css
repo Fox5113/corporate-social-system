@@ -127,7 +127,7 @@ a:has(.home-page-btn) {
         padding: 10px 15px;
         text-decoration: none;
         font-size: 25px;
-        color: #fff;
+        color: #0077cc;
         display: block;
         transition: 0.3s;
     }
@@ -164,4 +164,12 @@ a:has(.home-page-btn) {
     border: none;
     color: #333;
     padding: 10px;
+}
+
+.week-selector-container {
+    margin-top: 50px;
+}
+
+.week-container {
+    display: inline-flex;
 }

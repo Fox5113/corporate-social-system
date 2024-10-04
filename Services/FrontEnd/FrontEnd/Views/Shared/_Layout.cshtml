@@ -27,7 +27,7 @@
                                 <div class="home-page-btn">
                                     <img src="~/home-page-icon.svg" alt="Icon" />
                                 </div>
-                                <h2>Корпоративная социальная система</h2>
+                                <h2>@ViewData["PageTitle"]</h2>
                             </a>
                         </li>
                     </ul>
@@ -58,11 +58,9 @@
         </nav>
     </header>
 
-    <div id="mySidebar" class="sidebar">
+    <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
-        <a href="#">Кнопка 1</a>
-        <a href="#">Кнопка 2</a>
-        <a href="#">Кнопка 3</a>
+        <a asp-area="" asp-controller="Home" asp-action="Timesheet">Таймшит</a>
     </div>
 
     <div class="container">
@@ -97,11 +95,11 @@
         });
 
         function openSidebar() {
-            document.getElementById("mySidebar").classList.add('sidebar-open');
+            document.getElementById("sidebar").classList.add('sidebar-open');
         }
 
         function closeSidebar() {
-            document.getElementById("mySidebar").classList.remove('sidebar-open');
+            document.getElementById("sidebar").classList.remove('sidebar-open');
         }
     </script>
     @await RenderSectionAsync("Scripts", required: false)
