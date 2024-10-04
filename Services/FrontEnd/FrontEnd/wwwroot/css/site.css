@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -27,20 +27,26 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    overflow-x: hidden;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
+header {
+    position: fixed;
+    z-index: 1000;
+    width: 100vw;
+    top: 0;
+    left: 0;
+}
+
+a:has(.home-page-btn) {
+    display: inline-flex;
+    gap: 24px;
 }
 
 .user-menu {
     position: relative;
+    margin-right: 40px;
 }
 
 .user-btn {
@@ -101,4 +107,61 @@ body {
 
 .user-dropdown.show {
     display: block;
+}
+
+.sidebar {
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
+    width: 0;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    background: linear-gradient(107deg, #ddecf0 0%, #ffffff 25%, #a1d3e4 80%, #c8c9d7 100%);
+    padding-top: 60px;
+    box-shadow: 2px 0px 10px 0px #aaaaaa;
+}
+
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #fff;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .sidebar a:hover {
+            background-color: #cacaca75;
+        }
+
+    .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        line-height: 0.5;
+        padding: 10px 8px;
+    }
+
+    .sidebar a:not(.closebtn) {
+        border-bottom: 1px solid lightgray;
+    }
+
+        .sidebar a:not(.closebtn):last-child {
+            border-bottom: unset;
+        }
+
+
+.sidebar-open {
+    width: 15%;
+}
+
+.open-sidebar-btn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: #333;
+    padding: 10px;
 }

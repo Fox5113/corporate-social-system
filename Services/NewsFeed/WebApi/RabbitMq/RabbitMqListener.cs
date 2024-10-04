@@ -26,15 +26,15 @@ namespace WebApi.RabbitMq
             _applicationSettings = new ApplicationSettings();
             _logger = logger;
 
-            var factory = new ConnectionFactory { HostName = _applicationSettings.HostName };
+            /*var factory = new ConnectionFactory { HostName = _applicationSettings.HostName };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
-            _channel.QueueDeclare(queue: _applicationSettings.RabbitMqQueue, durable: true, exclusive: false, autoDelete: false, arguments: null);
+            _channel.QueueDeclare(queue: _applicationSettings.RabbitMqQueue, durable: true, exclusive: false, autoDelete: false, arguments: null);*/
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            stoppingToken.ThrowIfCancellationRequested();
+            /*stoppingToken.ThrowIfCancellationRequested();
 
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (ch, ea) =>
@@ -53,7 +53,7 @@ namespace WebApi.RabbitMq
                 }
             };
 
-            _channel.BasicConsume(_applicationSettings.RabbitMqQueue, false, consumer);
+            _channel.BasicConsume(_applicationSettings.RabbitMqQueue, false, consumer);*/
 
             return Task.CompletedTask;
         }

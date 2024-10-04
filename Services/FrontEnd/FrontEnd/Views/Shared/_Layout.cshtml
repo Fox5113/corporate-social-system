@@ -20,10 +20,14 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <button class="open-sidebar-btn" onclick="openSidebar()">&#9776;</button>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
                                 <div class="home-page-btn">
                                     <img src="~/home-page-icon.svg" alt="Icon" />
                                 </div>
+                                <h2>Корпоративная социальная система</h2>
                             </a>
                         </li>
                     </ul>
@@ -53,6 +57,14 @@
             </div>
         </nav>
     </header>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
+        <a href="#">Кнопка 1</a>
+        <a href="#">Кнопка 2</a>
+        <a href="#">Кнопка 3</a>
+    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -83,6 +95,14 @@
                 dropdown.classList.remove("show");
             }
         });
+
+        function openSidebar() {
+            document.getElementById("mySidebar").classList.add('sidebar-open');
+        }
+
+        function closeSidebar() {
+            document.getElementById("mySidebar").classList.remove('sidebar-open');
+        }
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
