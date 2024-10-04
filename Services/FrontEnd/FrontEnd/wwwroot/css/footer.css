@@ -1,4 +1,5 @@
 ﻿.footer {
+    line-height: 60px;
     position: fixed;
     bottom: -100px;
     left: 0;

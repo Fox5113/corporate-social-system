@@ -44,7 +44,7 @@ namespace FrontEnd.Controllers
 
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, username) // или другие необходимые данные
+                        new Claim(ClaimTypes.Name, username)
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -65,6 +65,20 @@ namespace FrontEnd.Controllers
                 ViewBag.ErrorMessage = "Сервис авторизации недоступен, приносим свои извинения.";
                 return View("~/Views/Login/Login.cshtml");
             }
+        }
+
+        [HttpPost("/Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var token = HttpContext.Request.Cookies["jwtToken"];
+
+            // await _authService.LogoutAsync(userId, token); Временно не работает, так как в микросервисе авторизации нет возможности получения Id пользователя.
+
+            HttpContext.Response.Cookies.Delete("jwtToken");
+
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Login");
         }
     }
 }
