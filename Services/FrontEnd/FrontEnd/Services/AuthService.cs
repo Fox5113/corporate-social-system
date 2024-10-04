@@ -1,8 +1,4 @@
-﻿using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-
-namespace FrontEnd.Services
+﻿namespace FrontEnd.Services
 {
     public class AuthService
     {
@@ -16,7 +12,7 @@ namespace FrontEnd.Services
         public async Task<string> AuthenticateAsync(string username, string password)
         {
             var requestBody = new { username, password };
-            var response = await _httpClient.PostAsJsonAsync("https://your-auth-microservice-url/login", requestBody);
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7192/api/User/login", requestBody);
 
             if (response.IsSuccessStatusCode)
             {

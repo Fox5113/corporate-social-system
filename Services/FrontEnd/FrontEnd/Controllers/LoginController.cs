@@ -1,5 +1,8 @@
 ﻿using FrontEnd.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FrontEnd.Controllers
 {
@@ -15,6 +18,11 @@ namespace FrontEnd.Controllers
         [HttpGet("/Login")]
         public IActionResult Login()
         {
+            if (User.Identity != default && User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View("~/Views/Login/Login.cshtml");
         }
 
@@ -27,18 +35,34 @@ namespace FrontEnd.Controllers
 
                 if (token != null)
                 {
-                    HttpContext.Response.Cookies.Append("jwtToken", token);
+                    HttpContext.Response.Cookies.Append("jwtToken", token, new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        Expires = DateTime.UtcNow.AddMinutes(30)
+                    });
+
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, username) // или другие необходимые данные
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Invalid credentials";
+                    ViewBag.ErrorMessage = "Неправильные учетные данные!";
                     return View("~/Views/Login/Login.cshtml");
                 }
             }
             catch (HttpRequestException)
             {
-                ViewBag.ErrorMessage = "Authorization service is not available.";
+                ViewBag.ErrorMessage = "Сервис авторизации недоступен, приносим свои извинения.";
                 return View("~/Views/Login/Login.cshtml");
             }
         }
