@@ -11,7 +11,8 @@ using WebApi.Models.Employee;
 
 namespace WebApi.Controllers
 {
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _service;
@@ -29,7 +30,7 @@ namespace WebApi.Controllers
         }
 
         [Route("GetAsync")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             if (id == Guid.Empty)

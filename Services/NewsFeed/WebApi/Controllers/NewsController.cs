@@ -13,7 +13,7 @@ using WebApi.Models.News;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class NewsController : ControllerBase
     {
         private readonly INewsService _service;
@@ -30,7 +30,8 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
+        [Route("GetAsync")]
+        [HttpGet]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             if(id == Guid.Empty)
@@ -153,7 +154,8 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [Route("DeleteAsync")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             if (id == Guid.Empty)

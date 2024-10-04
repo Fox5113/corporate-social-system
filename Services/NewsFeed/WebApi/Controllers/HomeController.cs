@@ -9,7 +9,8 @@ using System.Collections.Generic;
 
 namespace WebApi.Controllers
 {
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class HomeController : ControllerBase
     {
         private readonly IBaseService _service;
