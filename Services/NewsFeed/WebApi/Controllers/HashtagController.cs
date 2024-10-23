@@ -10,7 +10,7 @@ using BusinessLogic.Services.Abstractions;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class HashtagController : ControllerBase
     {
         private readonly IHashtagService _service;
@@ -28,7 +28,7 @@ namespace WebApi.Controllers
         }
 
         [Route("GetAsync")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             if(id ==  Guid.Empty)

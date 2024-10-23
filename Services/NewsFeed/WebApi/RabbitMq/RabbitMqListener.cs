@@ -47,7 +47,7 @@ namespace WebApi.RabbitMq
                     if (!string.IsNullOrEmpty(message) && RedirectToAnotherAction(message))
                         _channel.BasicAck(ea.DeliveryTag, false);
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     _logger.LogError(ex.Message);
                 }

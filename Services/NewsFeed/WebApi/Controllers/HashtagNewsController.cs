@@ -11,6 +11,8 @@ using WebApi.Models.Hashtag;
 
 namespace WebApi.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class HashtagNewsController : ControllerBase
     {
         private readonly IHashtagNewsService _service;
@@ -28,7 +30,7 @@ namespace WebApi.Controllers
         }
 
         [Route("GetAsync")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             if (id == Guid.Empty)
@@ -68,7 +70,7 @@ namespace WebApi.Controllers
         }
 
         [Route("Delete")]
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             if (id == Guid.Empty)

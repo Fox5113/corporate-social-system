@@ -11,7 +11,7 @@ using WebApi.Models.NewsComment;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class NewsCommentController : ControllerBase
     {
         private readonly INewsCommentService _service;
@@ -29,7 +29,7 @@ namespace WebApi.Controllers
         }
 
         [Route("GetAsync")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             if (id == Guid.Empty)
@@ -69,7 +69,7 @@ namespace WebApi.Controllers
         }
 
         [Route("EditAsync")]
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> EditAsync(Guid id, UpdatingNewsCommentModel newsCommentModel)
         {
             if (id == Guid.Empty)
@@ -95,7 +95,7 @@ namespace WebApi.Controllers
         }
 
         [Route("Delete")]
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             if (id == Guid.Empty)
