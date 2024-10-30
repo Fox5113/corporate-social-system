@@ -16,7 +16,9 @@ namespace BS.Services.Implementations.Mapping
         {
             CreateMap<Skill, SkillDto>();
 
-            CreateMap<SkillDto, Skill>();
+            CreateMap<SkillDto, Skill>()
+                .ForMember(d => d.CreatedAt, map => map.Ignore())
+                .ForMember(d => d.UpdatedAt, map => map.Ignore());
         }
     }
 }

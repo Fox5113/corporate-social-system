@@ -16,7 +16,9 @@ namespace BS.Services.Implementations.Mapping
         {
             CreateMap<Experience, ExperienceDto>();
 
-            CreateMap<ExperienceDto, Experience>();
+            CreateMap<ExperienceDto, Experience>()
+                .ForMember(d => d.CreatedAt, map => map.Ignore())
+                .ForMember(d => d.UpdatedAt, map => map.Ignore());
         }
     }
 }

@@ -15,12 +15,19 @@ namespace BS.Services.Implementations.Mapping
         {
             CreateMap<Employee, EmployeeDto>();
 
-            CreateMap<ShortEmployeeDto, Employee>()
+            CreateMap<EmployeeDto, Employee>()
                 .ForMember(d => d.SkillsList, map => map.Ignore())
                 .ForMember(d => d.EventList, map => map.Ignore())
                 .ForMember(d => d.AccomplishmentsList, map => map.Ignore())
                 .ForMember(d => d.CommunicationsList, map => map.Ignore())
-                .ForMember(d => d.ExperienceList, map => map.Ignore());
+                .ForMember(d => d.ExperienceList, map => map.Ignore())
+                .ForMember(d => d.CreatedAt, map => map.Ignore())
+                .ForMember(d => d.UpdatedAt, map => map.Ignore());
         }
+
+        /*
+         *         public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        */
     }
 }

@@ -16,7 +16,9 @@ namespace BS.Services.Implementations.Mapping
         {
             CreateMap<Accomplishment, AccomplishmentDto>();
 
-            CreateMap<AccomplishmentDto, Accomplishment>();
+            CreateMap<AccomplishmentDto, Accomplishment>()
+                .ForMember(d => d.CreatedAt, map => map.Ignore())
+                .ForMember(d => d.UpdatedAt, map => map.Ignore());
         }
     }
 }

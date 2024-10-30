@@ -4,7 +4,7 @@ using PersonalAccountV2.Models.Employee;
 
 namespace PersonalAccountV2.Models.Communication
 {
-    public class CommunicationModel
+    public class CommunicationModel //SkillModel
     {
         public Guid Id { get; set; }
         public TypeCommunication Type { get; set; }

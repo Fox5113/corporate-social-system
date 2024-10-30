@@ -16,14 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mapping\" />
-    <Folder Include="Models\Accomplishment\" />
-    <Folder Include="Models\Event\" />
-    <Folder Include="Models\Experience\" />
-    <Folder Include="Models\Skill\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BLL\BS.Contracts\BS.Contracts.csproj" />
     <ProjectReference Include="..\BLL\BS.Services.Abstractions\BS.Services.Abstractions.csproj" />
     <ProjectReference Include="..\BLL\BS.Services.Implementations\BS.Services.Implementations.csproj" />

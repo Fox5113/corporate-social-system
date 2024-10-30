@@ -17,7 +17,9 @@ namespace BS.Services.Implementations.Mapping
         {
             CreateMap<Event, EventDto>();
 
-            CreateMap<EventDto, Event>();
+            CreateMap<EventDto, Event>()
+                .ForMember(d => d.CreatedAt, map => map.Ignore())
+                .ForMember(d => d.UpdatedAt, map => map.Ignore());
         }
     }
 }

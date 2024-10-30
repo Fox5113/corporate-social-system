@@ -17,7 +17,9 @@ namespace BS.Services.Implementations.Mapping
         {
             CreateMap<Communication, CommunicationDto>();
 
-            CreateMap<CommunicationDto, Communication>();
+            CreateMap<CommunicationDto, Communication>()
+                .ForMember(d => d.CreatedAt, map => map.Ignore())
+                .ForMember(d => d.UpdatedAt, map => map.Ignore());
         }
     }
 }
