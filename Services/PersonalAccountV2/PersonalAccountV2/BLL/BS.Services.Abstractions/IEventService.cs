@@ -14,6 +14,6 @@ namespace BS.Services.Abstractions
 
         Task<EventDto> GetByIdAsync(Guid id);
 
-        public void CreateOrUpdate(EventDto eventEmployee);
+        public Task<Guid> CreateOrUpdate(EventDto eventEmployee);
     }
 }

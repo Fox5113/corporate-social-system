@@ -15,22 +15,20 @@ namespace DA.Repositories.Implementations
         public CommunicationRepository(DataContext context) : base(context)
         {
         }
-        public void CreateOrUpdateRange(List<Communication> communications)
+        public async Task<Guid> CreateOrUpdate(Communication communication)
         {
-            foreach (var communication in communications)
-            {
-                var com = Get(communication.Id);
+            var com = Get(communication.Id);
 
-                if (com != null)
-                {
-                    com.Value = communication.Value;
-                    com.UpdatedAt = DateTime.Now;
-                    Update(com);
-                }
-                else
-                {
-                    Add(communication);
-                }
+            if (com != null)
+            {
+                com.Value = communication.Value;
+                com.UpdatedAt = DateTime.Now;
+                Update(com);
+                return com.Id;
+            }
+            else
+            {
+                return Add(communication).Id;
             }
         }
 

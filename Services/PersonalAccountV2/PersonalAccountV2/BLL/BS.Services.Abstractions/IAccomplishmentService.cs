@@ -15,6 +15,6 @@ namespace BS.Services.Abstractions
 
         Task<AccomplishmentDto> GetByIdAsync(Guid id);
 
-        public void CreateOrUpdate(AccomplishmentDto accomplishmentEmployee);
+        public Task<Guid> CreateOrUpdate(AccomplishmentDto accomplishmentEmployee);
     }
 }

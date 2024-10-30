@@ -12,6 +12,6 @@ namespace DA.Repositories.Abstractions
 
         Task<List<Skill>> GetAllSkillEmployee(Guid employee);
         Task<Skill> GetByIdAsync(Guid id);
-        void CreateOrUpdateRange(List<Skill> skills);
+        Task<Guid> CreateOrUpdate(Skill skill);
     }
 }

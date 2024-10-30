@@ -33,30 +33,27 @@ namespace DA.Repositories.Implementations
             return collection;
         }
 
-        public void CreateOrUpdateRange(List<Employee> employees)
+        public async Task<Guid> CreateOrUpdate(Employee employee)
         {
-            foreach (var employee in employees)
+            var emp = Get(employee.Id);
+
+            if (emp != null)
             {
-                var emp = Get(employee.Id);
+                emp.Surname = employee.Surname;
+                emp.Firstname = employee.Firstname;
+                emp.Position = employee.Position;
+                emp.Birthdate = employee.Birthdate;
+                emp.OfficeAddress = employee.OfficeAddress;
+                emp.UpdatedAt = DateTime.Now;
+                emp.About = employee.About;
+                emp.MainEmail = employee.MainEmail;
+                emp.MainTelephoneNumber = employee.MainTelephoneNumber;
 
-                if (emp != null)
-                {
-                    emp.Surname = employee.Surname;
-                    emp.Firstname = employee.Firstname;
-                    emp.Position = employee.Position;
-                    emp.Birthdate = employee.Birthdate;
-                    emp.OfficeAddress = employee.OfficeAddress;
-                    emp.UpdatedAt = DateTime.Now;
-                    emp.About = employee.About;
-                    emp.MainEmail = employee.MainEmail;
-                    emp.MainTelephoneNumber = employee.MainTelephoneNumber;
-
-                    Update(emp);
-                }
-                else
-                {
-                    Add(employee);
-                }
+                return emp.Id;
+            }
+            else
+            {
+                return Add(employee).Id;
             }
         }
 

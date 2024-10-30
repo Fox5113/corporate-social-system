@@ -12,6 +12,6 @@ namespace DA.Repositories.Abstractions
 
         Task<List<Communication>> GetAllCommunicationEmployee(Guid employee);
         Task<Communication> GetByIdAsync(Guid id);
-        void CreateOrUpdateRange(List<Communication> communications);
+        Task<Guid> CreateOrUpdate(Communication communication);
     }
 }

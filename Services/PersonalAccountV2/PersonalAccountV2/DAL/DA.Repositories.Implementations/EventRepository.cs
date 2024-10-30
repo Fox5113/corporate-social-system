@@ -16,23 +16,22 @@ namespace DA.Repositories.Implementations
         public EventRepository(DataContext context) : base(context)
         {
         }
-        public void CreateOrUpdateRange(List<Event> events)
+        public async Task<Guid> CreateOrUpdate(Event _event)
         {
-            foreach (var item in events)
-            {
-                var even = Get(item.Id);
+                var even = Get(_event.Id);
 
                 if (even != null)
                 {
-                    even.IsAcrive = item.IsAcrive;
+                    even.IsAcrive = _event.IsAcrive;
                     even.UpdatedAt = DateTime.Now;
                     Update(even);
+                    return even.Id;
                 }
                 else
                 {
-                    Add(item);
+                    return Add(_event).Id;
                 }
-            }
+            
         }
 
         public async Task<List<Event>> GetAllEventEmployee(Guid employee)

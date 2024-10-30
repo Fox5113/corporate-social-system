@@ -15,22 +15,20 @@ namespace DA.Repositories.Implementations
         public SkillRepository(DataContext context) : base(context)
         {
         }
-        public void CreateOrUpdateRange(List<Skill> skills)
+        public async Task<Guid> CreateOrUpdate(Skill skill)
         {
-            foreach (var item in skills)
-            {
-                var sk = Get(item.Id);
+            var sk = Get(skill.Id);
 
-                if (sk != null)
-                {
-                    sk.Description = item.Description;
-                    sk.UpdatedAt = DateTime.Now;
-                    Update(sk);
-                }
-                else
-                {
-                    Add(item);
-                }
+            if (sk != null)
+            {
+                sk.Description = skill.Description;
+                sk.UpdatedAt = DateTime.Now;
+                Update(sk);
+                return sk.Id;
+            }
+            else
+            {
+                return Add(skill).Id;
             }
         }
 
@@ -40,7 +38,7 @@ namespace DA.Repositories.Implementations
             return await query.Where(x => x.EmployeeId == employee).ToListAsync<Skill>();
         }
 
-        public Task<Skill> GetByIdAsync(Guid id)
+        public async Task<Skill> GetByIdAsync(Guid id)
         {
             var query = GetAll();
             return (await query.Where(x => x.Id == id).ToListAsync<Skill>()).FirstOrDefault();

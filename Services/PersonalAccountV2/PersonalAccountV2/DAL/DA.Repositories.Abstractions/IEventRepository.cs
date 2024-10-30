@@ -12,6 +12,6 @@ namespace DA.Repositories.Abstractions
 
         Task<List<Event>> GetAllEventEmployee(Guid employee);
         Task<Event> GetByIdAsync(Guid id);
-        void CreateOrUpdateRange(List<Event> events);
+        Task<Guid> CreateOrUpdate(Event _event);
     }
 }

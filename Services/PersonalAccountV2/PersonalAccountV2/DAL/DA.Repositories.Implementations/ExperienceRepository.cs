@@ -17,27 +17,24 @@ namespace DA.Repositories.Implementations
         {
         }
 
-        public void CreateOrUpdateRange(List<Experience> experiences)
+        public async Task<Guid> CreateOrUpdate(Experience experience)
         {
-            foreach (var item in experiences)
+            var exp = Get(experience.Id);
+            if (exp != null)
             {
-                var exp = Get(item.Id);
-
-                if (exp != null)
-                {
-                    exp.Company = item.Company;
-                    exp.EmployementDate = item.EmployementDate;
-                    exp.DescriptionWork = item.DescriptionWork;
-                    exp.DismissalDate = item.DismissalDate;
-                    exp.DescriptionCompany = item.DescriptionCompany;
-                    exp.DescriptionWork = item.DescriptionWork.ToString();
-                    exp.UpdatedAt = DateTime.Now;
-                    Update(exp);
-                }
-                else
-                {
-                    Add(item);
-                }
+                exp.Company = experience.Company;
+                exp.EmployementDate = experience.EmployementDate;
+                exp.DescriptionWork = experience.DescriptionWork;
+                exp.DismissalDate = experience.DismissalDate;
+                exp.DescriptionCompany = experience.DescriptionCompany;
+                exp.DescriptionWork = experience.DescriptionWork.ToString();
+                exp.UpdatedAt = DateTime.Now;
+                Update(exp);
+                return exp.Id;
+            }
+            else
+            {
+                return Add(experience).Id;
             }
         }
 

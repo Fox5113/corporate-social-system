@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\BLL\BS.Contracts\BS.Contracts.csproj" />
+    <ProjectReference Include="..\..\BLL\BS.Services.Abstractions\BS.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\..\BLL\BS.Services.Implementations\BS.Services.Implementations.csproj" />
+    <ProjectReference Include="..\DA.Common\DA.Common.csproj" />
+    <ProjectReference Include="..\DA.Context\DA.Context.csproj" />
+    <ProjectReference Include="..\DA.Entities\DA.Entities.csproj" />
+    <ProjectReference Include="..\DA.Repositories.Abstractions\DA.Repositories.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -14,6 +14,6 @@ namespace BS.Services.Abstractions
 
         Task<CommunicationDto> GetByIdAsync(Guid id);
 
-        public void CreateOrUpdate(CommunicationDto communicationEmployee);
+        public Task<Guid> CreateOrUpdate(CommunicationDto communicationEmployee);
     }
 }

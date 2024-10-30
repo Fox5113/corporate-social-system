@@ -13,6 +13,6 @@ namespace DA.Repositories.Abstractions
 
         Task<List<Employee>> GetAllEmployee();
         Task<Employee> GetByIdAsync(Guid id);
-        void CreateOrUpdateRange(List<Employee> employees);
+        Task<Guid> CreateOrUpdate(Employee employee);
     }
 }

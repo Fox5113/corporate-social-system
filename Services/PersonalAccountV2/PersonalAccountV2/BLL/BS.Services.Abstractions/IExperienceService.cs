@@ -14,6 +14,6 @@ namespace BS.Services.Abstractions
 
         Task<ExperienceDto> GetByIdAsync(Guid id);
 
-        public void CreateOrUpdate(ExperienceDto experienceEmployee);
+        public Task<Guid> CreateOrUpdate(ExperienceDto experienceEmployee);
     }
 }

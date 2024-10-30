@@ -12,6 +12,6 @@ namespace DA.Repositories.Abstractions
 
         Task<List<Experience>> GetAllExperienceEmployee(Guid employee);
         Task<Experience> GetByIdAsync(Guid id);
-        void CreateOrUpdateRange(List<Experience> experiences);
+        Task<Guid> CreateOrUpdate(Experience experience);
     }
 }

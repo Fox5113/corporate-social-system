@@ -28,10 +28,8 @@ namespace DA.Repositories.Implementations
             return (await query.Where(x => x.Id == id).ToListAsync<Accomplishment>()).FirstOrDefault();
         }
 
-        public  void CreateOrUpdateRange(List<Accomplishment> accomplishments)
+        public async Task<Guid> CreateOrUpdate(Accomplishment accomplishment)
         {
-            foreach (var accomplishment in accomplishments)
-            {
                 var acc = Get(accomplishment.Id);
 
                 if (acc != null)
@@ -40,12 +38,13 @@ namespace DA.Repositories.Implementations
                     acc.Date = accomplishment.Date;
                     acc.UpdatedAt = DateTime.Now;
                     Update(acc);
+                    return acc.Id;
                 }
                 else
                 {
-                    Add(accomplishment);
+                    return Add(accomplishment).Id;
+                
                 }
-            }
         }
     }
 }

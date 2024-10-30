@@ -12,6 +12,6 @@ namespace DA.Repositories.Abstractions
 
         Task<List<Accomplishment>> GetAllAccomplishmentEmployee(Guid employee);
         Task<Accomplishment> GetByIdAsync(Guid id);
-        void CreateOrUpdateRange(List<Accomplishment> accomplishments);
+        Task<Guid> CreateOrUpdate(Accomplishment accomplishments);
     }
 }
