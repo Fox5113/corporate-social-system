@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BS.Contracts.Employee
+﻿namespace BS.Contracts.Employee
 {
     public class EmployeeFilterDto
     {
@@ -16,5 +10,8 @@ namespace BS.Contracts.Employee
         public string About { get; set; }
         public DateTime Birthdate { get; set; }
         public string OfficeAddress { get; set; }
+        public DateTime EmploymentDate { get; set; }
+        public bool IsDeleted { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

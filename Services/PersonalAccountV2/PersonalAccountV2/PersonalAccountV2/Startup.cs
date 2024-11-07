@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.OpenApi.Models;
 using PersonalAccountV2.Mapping;
 using PersonalAccountV2.RabbitMq;
 
@@ -22,7 +23,11 @@ namespace PersonalAccountV2
             services.AddControllers();
             services.AddCors();
             // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PersonalAccountV2Api", Version = "v1" });
+
+            }); ;
             services.AddHostedService<RabbitMqListener>();
         }
 

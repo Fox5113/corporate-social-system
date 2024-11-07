@@ -1,6 +1,5 @@
 ﻿using DA.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 namespace DA.Context
 {
     public class DataContext : DbContext

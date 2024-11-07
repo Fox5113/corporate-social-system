@@ -2,11 +2,6 @@
 using DA.Entities;
 using DA.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DA.Repositories.Implementations
 {
@@ -17,7 +12,9 @@ namespace DA.Repositories.Implementations
         }
         public async Task<Guid> CreateOrUpdate(Communication communication)
         {
-            var com = Get(communication.Id);
+            Communication com = null;
+            if(communication.Id != Guid.Empty)
+                com = Get(communication.Id);
 
             if (com != null)
             {
@@ -28,7 +25,7 @@ namespace DA.Repositories.Implementations
             }
             else
             {
-                return Add(communication).Id;
+                return (await AddAsync(communication)).Id; //vmukhametova
             }
         }
 
@@ -36,12 +33,6 @@ namespace DA.Repositories.Implementations
         {
             var query = GetAll();
             return await query.Where(x => x.EmployeeId == employee).ToListAsync<Communication>();
-        }
-
-        public async Task<Communication> GetByIdAsync(Guid id)
-        {
-            var query = GetAll();
-            return (await query.Where(x => x.Id == id).ToListAsync<Communication>()).FirstOrDefault();
         }
     }
 }

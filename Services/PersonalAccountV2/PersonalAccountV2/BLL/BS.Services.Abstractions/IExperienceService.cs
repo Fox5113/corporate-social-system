@@ -1,10 +1,4 @@
 ﻿using BS.Contracts.Experience;
-using BS.Contracts.Skill;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BS.Services.Abstractions
 {
@@ -14,6 +8,6 @@ namespace BS.Services.Abstractions
 
         Task<ExperienceDto> GetByIdAsync(Guid id);
 
-        public Task<Guid> CreateOrUpdate(ExperienceDto experienceEmployee);
+        public Task<Guid> CreateOrUpdate(CreatingOrUpdatingExperienceDto experienceEmployee);
     }
 }

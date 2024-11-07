@@ -1,11 +1,4 @@
-﻿using BS.Contracts.Employee;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BS.Contracts.Event
+﻿namespace BS.Contracts.Event
 {
     public class ShortEventDto
     {

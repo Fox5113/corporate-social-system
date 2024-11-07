@@ -2,12 +2,6 @@
 using DA.Entities;
 using DA.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DA.Repositories.Implementations
 {
@@ -19,7 +13,9 @@ namespace DA.Repositories.Implementations
 
         public async Task<Guid> CreateOrUpdate(Experience experience)
         {
-            var exp = Get(experience.Id);
+            Experience exp = null;
+            if(experience.Id != Guid.Empty)
+                exp = Get(experience.Id);
             if (exp != null)
             {
                 exp.Company = experience.Company;
@@ -34,7 +30,7 @@ namespace DA.Repositories.Implementations
             }
             else
             {
-                return Add(experience).Id;
+                return (await AddAsync(experience)).Id; //vmukhametova
             }
         }
 
@@ -42,12 +38,6 @@ namespace DA.Repositories.Implementations
         {
             var query = GetAll();
             return await query.Where(x => x.EmployeeId == employee).ToListAsync<Experience>();
-        }
-
-        public async Task<Experience> GetByIdAsync(Guid id)
-        {
-            var query = GetAll();
-            return (await query.Where(x => x.Id == id).ToListAsync<Experience>()).FirstOrDefault();
         }
     }
 }

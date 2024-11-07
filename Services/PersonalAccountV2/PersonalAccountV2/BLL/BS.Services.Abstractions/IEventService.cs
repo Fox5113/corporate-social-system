@@ -1,10 +1,4 @@
-﻿using BS.Contracts.Employee;
-using BS.Contracts.Event;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BS.Contracts.Event;
 
 namespace BS.Services.Abstractions
 {
@@ -14,6 +8,6 @@ namespace BS.Services.Abstractions
 
         Task<EventDto> GetByIdAsync(Guid id);
 
-        public Task<Guid> CreateOrUpdate(EventDto eventEmployee);
+        public Task<Guid> CreateOrUpdate(CreatingOrUpdatingEventDto eventEmployee);
     }
 }

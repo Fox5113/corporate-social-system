@@ -1,5 +1,4 @@
-﻿using BS.Contracts.Employee;
-using PersonalAccountV2.Models.Employee;
+﻿using PersonalAccountV2.Models.Employee;
 
 namespace PersonalAccountV2.Models.Event
 {
@@ -8,11 +7,11 @@ namespace PersonalAccountV2.Models.Event
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsAcrive { get; set; }
-        public EmployeeModel Employee { get; set; }
+        public EmployeeModel? Employee { get; set; }
         public Guid EmployeeId { get; set; }
 
     }

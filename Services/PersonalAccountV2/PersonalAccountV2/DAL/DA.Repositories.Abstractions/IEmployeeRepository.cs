@@ -1,10 +1,4 @@
-﻿using BS.Contracts.Employee;
-using DA.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DA.Entities;
 
 namespace DA.Repositories.Abstractions
 {
@@ -12,7 +6,7 @@ namespace DA.Repositories.Abstractions
     {
 
         Task<List<Employee>> GetAllEmployee();
-        Task<Employee> GetByIdAsync(Guid id);
-        Task<Guid> CreateOrUpdate(Employee employee);
+        void CreateOrUpdateRange(ICollection<Employee> employees);
+        Task<Guid> UpdateEmployee(Employee employee);
     }
 }

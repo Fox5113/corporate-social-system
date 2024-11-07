@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace PersonalAccountV2.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _service;
@@ -25,7 +25,7 @@ namespace PersonalAccountV2.Controllers
         }
 
         [Route("GetAsync")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             if (id == Guid.Empty)
@@ -59,27 +59,47 @@ namespace PersonalAccountV2.Controllers
             }
         }
 
-        [Route("CreateOrUpdateEmployeeRange")]
+        [Route("Update")]
         [HttpPost]
-        public IActionResult CreateOrUpdateEmployeeRange(string jsonData)
+        public async Task<IActionResult> Update(UpdatingEmployeeModel model)
         {
-            if (jsonData == null)
-                return BadRequest("EmployeeController.CreateOrUpdateEmployeeRange: jsonData is null.");
+            if (model == null) 
+            {
+                return BadRequest("EmployeeController.Update: object is null.");
+            }
 
             try
             {
-                var employees = JsonSerializer.Deserialize<ShortEmployeeModel>(jsonData);
+                return Ok(await _service.Update(_mapper.Map<UpdatingEmployeeModel, UpdatingEmployeeDto>(model)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"EmployeeController.Update: {ex}."));
+            }
+        }
+
+        [Route("CreateOrUpdate")]
+        [HttpPost]
+        public IActionResult CreateOrUpdate(string jsonData)
+        {
+            if (jsonData == null)
+                return BadRequest("EmployeeController.CreateOrUpdate: jsonData is null.");
+
+            try
+            {
+                var employees = JsonSerializer.Deserialize<List<ShortEmployeeModel>>(jsonData);
 
                 if (employees == null)
-                    return BadRequest("EmployeeController.CreateOrUpdateEmployeeRange: employees collection is null.");
+                    return BadRequest("EmployeeController.CreateOrUpdate: employees collection is null.");
 
-                if (employees != null) _service.CreateOrUpdate(_mapper.Map<ShortEmployeeModel, EmployeeDto>(employees));
+                if (employees.Count > 0) 
+                    _service.CreateOrUpdateRange(_mapper.Map<List<ShortEmployeeModel>, List<ShortEmployeeDto>>(employees));
 
                 return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(GetBadRequestObject($"EmployeeController.CreateOrUpdateEmployeeRange: {ex}."));
+                return BadRequest(GetBadRequestObject($"EmployeeController.CreateOrUpdate: {ex}."));
             }
         }
 
@@ -96,7 +116,7 @@ namespace PersonalAccountV2.Controllers
             try
             {
                 var employee = _mapper.Map<EmployeeModel>(await _service.GetByIdAsync(employeeId));
-                return Ok(employee != null);
+                return Ok(employee != null && employee.IsAdmin);
             }
             catch (Exception ex)
             {

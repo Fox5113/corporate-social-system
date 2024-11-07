@@ -9,7 +9,7 @@
 
         public ApplicationSettings()
         {
-            ConnectionString = "Server=localhost;Database=PersonalAccount;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true;encrypt=false;";
+            ConnectionString = "Server=localhost;Database=PersonalAccountV2;MultipleActiveResultSets=true;encrypt=false;User ID=bpm;Password=bpm;";
             SiteUrl = "https://localhost:5201";
             HostName = "localhost";
             RabbitMqQueue = "MyQueue";

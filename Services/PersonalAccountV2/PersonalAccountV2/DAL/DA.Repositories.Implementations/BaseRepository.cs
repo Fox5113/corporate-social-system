@@ -1,12 +1,9 @@
 ﻿using DA.Common;
 using DA.Common.Sql;
 using DA.Common.Sql.MSsql;
-using DA.Repositories.Abstractions;
-using DA.Repositories.Implementations;
 using DA.Context;
+using DA.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace DA.Repositories.Implementations

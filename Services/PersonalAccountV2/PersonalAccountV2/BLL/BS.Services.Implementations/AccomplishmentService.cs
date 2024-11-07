@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using BS.Contracts.Accomplishment;
-using BS.Contracts.Employee;
 using BS.Services.Abstractions;
 using DA.Entities;
 using DA.Repositories.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BS.Services.Implementations
 {
@@ -23,9 +17,9 @@ namespace BS.Services.Implementations
             _accomplishmentRepository = accomplishmentRepository;
         }
 
-        public async Task<Guid> CreateOrUpdate(AccomplishmentDto accomplishmentEmployee)
+        public async Task<Guid> CreateOrUpdate(CreatingOrUpdatingAccomplishmentDto accomplishmentEmployee)
         {
-            var item = _mapper.Map<AccomplishmentDto, Accomplishment>(accomplishmentEmployee);
+            var item = _mapper.Map<CreatingOrUpdatingAccomplishmentDto, Accomplishment>(accomplishmentEmployee);
             var id = await _accomplishmentRepository.CreateOrUpdate(item);
             await _accomplishmentRepository.SaveChangesAsync();
             return id;
@@ -33,14 +27,14 @@ namespace BS.Services.Implementations
 
         public async Task<ICollection<AccomplishmentDto>> GetAllAccomplishmentEmployee(Guid employee)
         {
-            var AllAccomplishment = await _accomplishmentRepository.GetAllAccomplishmentEmployee(employee);
-            return _mapper.Map<ICollection<Accomplishment>, ICollection<AccomplishmentDto>>(AllAccomplishment);
+            var allAccomplishment = await _accomplishmentRepository.GetAllAccomplishmentEmployee(employee);
+            return _mapper.Map<ICollection<Accomplishment>, ICollection<AccomplishmentDto>>(allAccomplishment);
         }
 
         public async Task<AccomplishmentDto> GetByIdAsync(Guid id)
         {
-            var Employee = await _accomplishmentRepository.GetAsync(id);
-            return _mapper.Map<AccomplishmentDto>(Employee);
+            var employee = await _accomplishmentRepository.GetAsync(id);
+            return _mapper.Map<AccomplishmentDto>(employee);
         }
     }
 }

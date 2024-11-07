@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
-using BS.Contracts.Event;
 using BS.Contracts.Experience;
 using BS.Services.Abstractions;
 using DA.Entities;
 using DA.Repositories.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BS.Services.Implementations
 {
@@ -24,9 +18,9 @@ namespace BS.Services.Implementations
             _experienceRepository = experienceRepository;
         }
 
-        public async Task<Guid> CreateOrUpdate(ExperienceDto experienceEmployee)
+        public async Task<Guid> CreateOrUpdate(CreatingOrUpdatingExperienceDto experienceEmployee)
         {
-            var item = _mapper.Map<ExperienceDto, Experience>(experienceEmployee);
+            var item = _mapper.Map<CreatingOrUpdatingExperienceDto, Experience>(experienceEmployee);
             var id = await _experienceRepository.CreateOrUpdate(item);
             await _experienceRepository.SaveChangesAsync();
             return id;
@@ -34,14 +28,14 @@ namespace BS.Services.Implementations
 
         public async Task<ICollection<ExperienceDto>> GetAllExperienceEmployee(Guid employee)
         {
-            var AllExperience = await _experienceRepository.GetAllExperienceEmployee(employee);
-            return _mapper.Map<ICollection<Experience>, ICollection<ExperienceDto>>(AllExperience);
+            var allExperience = await _experienceRepository.GetAllExperienceEmployee(employee);
+            return _mapper.Map<ICollection<Experience>, ICollection<ExperienceDto>>(allExperience);
         }
 
         public  async Task<ExperienceDto> GetByIdAsync(Guid id)
         {
-            var _event = await _experienceRepository.GetAsync(id);
-            return _mapper.Map<ExperienceDto>(_event);
+            var experience = await _experienceRepository.GetAsync(id);
+            return _mapper.Map<ExperienceDto>(experience);
         }
     }
 }

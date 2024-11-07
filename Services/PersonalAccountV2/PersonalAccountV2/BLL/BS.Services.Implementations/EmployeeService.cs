@@ -3,11 +3,6 @@ using BS.Contracts.Employee;
 using BS.Services.Abstractions;
 using DA.Entities;
 using DA.Repositories.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BS.Services.Implementations
 {
@@ -22,24 +17,28 @@ namespace BS.Services.Implementations
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<Guid> CreateOrUpdate(EmployeeDto employees)
+        public async Task CreateOrUpdateRange(ICollection<ShortEmployeeDto> employees)
         {
-            var employeeItem = _mapper.Map<EmployeeDto, Employee>(employees);
-            var id = await _employeeRepository.CreateOrUpdate(employeeItem);
+            var employeeItem = _mapper.Map<ICollection<ShortEmployeeDto>, ICollection<Employee>>(employees);
+            _employeeRepository.CreateOrUpdateRange(employeeItem);
             await _employeeRepository.SaveChangesAsync();
-            return id;
         }
 
         public async Task<ICollection<EmployeeDto>> GetAllEmployee()
         {
-            var AllEmployee = await _employeeRepository.GetAllEmployee();
-            return _mapper.Map<ICollection<Employee>, ICollection<EmployeeDto>>(AllEmployee);
+            return _mapper.Map<ICollection<Employee>, ICollection<EmployeeDto>>(await _employeeRepository.GetAllEmployee());
         }
 
         public async Task<EmployeeDto> GetByIdAsync(Guid id)
         {
-            var Employee = await _employeeRepository.GetAsync(id);
-            return _mapper.Map<EmployeeDto>(Employee);
+            return _mapper.Map<EmployeeDto>(await _employeeRepository.GetAsync(id));
+        }
+
+        public async Task<Guid> Update(UpdatingEmployeeDto employee)
+        {
+            var id = await _employeeRepository.UpdateEmployee(_mapper.Map<UpdatingEmployeeDto, Employee>(employee));
+            await _employeeRepository.SaveChangesAsync();
+            return id;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace DA.Context
         {
             services
                 .AddDbContext<DataContext>(o => o
-                    .UseSqlServer(connectionString));
+                    .UseSqlServer(connectionString, b => b.MigrationsAssembly("PersonalAccountV2")));
             return services;
         }
     }

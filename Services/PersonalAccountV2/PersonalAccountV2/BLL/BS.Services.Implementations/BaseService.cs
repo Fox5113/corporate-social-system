@@ -1,10 +1,8 @@
-﻿using BS.Services.Abstractions;
-using AutoMapper;
-using System;
-using System.Collections.Generic;
-using DA.Repositories.Abstractions;
-using DA.Common.Sql;
+﻿using AutoMapper;
+using BS.Services.Abstractions;
 using DA.Common;
+using DA.Common.Sql;
+using DA.Repositories.Abstractions;
 
 namespace BS.Services.Implementations
 {

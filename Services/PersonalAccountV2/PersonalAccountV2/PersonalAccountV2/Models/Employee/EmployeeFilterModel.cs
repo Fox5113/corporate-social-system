@@ -11,5 +11,7 @@
         public DateTime Birthdate { get; set; }
         public string OfficeAddress { get; set; }
         public DateTime EmploymentDate { get; set; }
+        public bool IsDeleted { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

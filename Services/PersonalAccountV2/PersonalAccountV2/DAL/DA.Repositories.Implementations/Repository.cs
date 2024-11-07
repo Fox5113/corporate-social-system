@@ -1,12 +1,7 @@
-﻿using DA.Common.Sql.MSsql;
-using DA.Common.Sql;
+﻿using DA.Common.Sql;
+using DA.Common.Sql.MSsql;
 using DA.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DA.Repositories.Implementations
 {

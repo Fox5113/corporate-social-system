@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
-using BS.Contracts.Accomplishment;
 using BS.Contracts.Event;
 using BS.Services.Abstractions;
 using DA.Entities;
 using DA.Repositories.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BS.Services.Implementations
 {
@@ -23,9 +17,9 @@ namespace BS.Services.Implementations
             _eventRepository = eventRepository;
         }
 
-        public async Task<Guid> CreateOrUpdate(EventDto eventEmployee)
+        public async Task<Guid> CreateOrUpdate(CreatingOrUpdatingEventDto eventEmployee)
         {
-            var item = _mapper.Map<EventDto, Event>(eventEmployee);
+            var item = _mapper.Map<CreatingOrUpdatingEventDto, Event>(eventEmployee);
             var id = await _eventRepository.CreateOrUpdate(item);
             await _eventRepository.SaveChangesAsync();
             return id;
@@ -33,14 +27,14 @@ namespace BS.Services.Implementations
 
         public async Task<ICollection<EventDto>> GetAllEventEmployee(Guid employee)
         {
-            var AllEvent = await _eventRepository.GetAllEventEmployee(employee);
-            return _mapper.Map<ICollection<Event>, ICollection<EventDto>>(AllEvent);
+            var allEvent = await _eventRepository.GetAllEventEmployee(employee);
+            return _mapper.Map<ICollection<Event>, ICollection<EventDto>>(allEvent);
         }
 
         public async Task<EventDto> GetByIdAsync(Guid id)
         {
-            var _event = await _eventRepository.GetAsync(id);
-            return _mapper.Map<EventDto>(_event);
+            var entity = await _eventRepository.GetAsync(id);
+            return _mapper.Map<EventDto>(entity);
         }
     }
 }

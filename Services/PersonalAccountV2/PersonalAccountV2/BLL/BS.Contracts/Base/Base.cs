@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BS.Contracts.Base
+﻿namespace BS.Contracts.Base
 {
     public enum TypeSkill
     {

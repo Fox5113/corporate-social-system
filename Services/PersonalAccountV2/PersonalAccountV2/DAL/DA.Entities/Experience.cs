@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DA.Entities
+﻿namespace DA.Entities
 {
     public class Experience : IEntity<Guid>
     {

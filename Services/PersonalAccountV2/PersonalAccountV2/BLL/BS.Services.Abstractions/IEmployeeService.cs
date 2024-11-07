@@ -9,6 +9,7 @@ namespace BS.Services.Abstractions
 
         Task<EmployeeDto> GetByIdAsync(Guid id);
 
-        public Task<Guid> CreateOrUpdate(EmployeeDto employees);
+        public Task CreateOrUpdateRange(ICollection<ShortEmployeeDto> employees);
+        public Task<Guid> Update(UpdatingEmployeeDto employee);
     }
 }

@@ -2,11 +2,6 @@
 using DA.Entities;
 using DA.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DA.Repositories.Implementations
 {
@@ -17,7 +12,11 @@ namespace DA.Repositories.Implementations
         }
         public async Task<Guid> CreateOrUpdate(Skill skill)
         {
-            var sk = Get(skill.Id);
+            Skill sk = null;
+            if (skill.Id != Guid.Empty)
+            {
+                sk = Get(skill.Id);
+            }
 
             if (sk != null)
             {
@@ -28,7 +27,7 @@ namespace DA.Repositories.Implementations
             }
             else
             {
-                return Add(skill).Id;
+                return (await AddAsync(skill)).Id; //vmukhametova
             }
         }
 
@@ -36,12 +35,6 @@ namespace DA.Repositories.Implementations
         {
             var query = GetAll();
             return await query.Where(x => x.EmployeeId == employee).ToListAsync<Skill>();
-        }
-
-        public async Task<Skill> GetByIdAsync(Guid id)
-        {
-            var query = GetAll();
-            return (await query.Where(x => x.Id == id).ToListAsync<Skill>()).FirstOrDefault();
         }
     }
 }

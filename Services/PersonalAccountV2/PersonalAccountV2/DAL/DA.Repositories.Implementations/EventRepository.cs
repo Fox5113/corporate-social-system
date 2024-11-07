@@ -2,11 +2,6 @@
 using DA.Entities;
 using DA.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DA.Repositories.Implementations
 {
@@ -16,21 +11,23 @@ namespace DA.Repositories.Implementations
         public EventRepository(DataContext context) : base(context)
         {
         }
-        public async Task<Guid> CreateOrUpdate(Event _event)
+        public async Task<Guid> CreateOrUpdate(Event entity)
         {
-                var even = Get(_event.Id);
+            Event even = null;
+            if(entity.Id != Guid.Empty)
+                even = Get(entity.Id);
 
-                if (even != null)
-                {
-                    even.IsAcrive = _event.IsAcrive;
-                    even.UpdatedAt = DateTime.Now;
-                    Update(even);
-                    return even.Id;
-                }
-                else
-                {
-                    return Add(_event).Id;
-                }
+            if (even != null)
+            {
+                even.IsAcrive = entity.IsAcrive;
+                even.UpdatedAt = DateTime.Now;
+                Update(even);
+                return even.Id;
+            }
+            else
+            {
+                return (await AddAsync(entity)).Id; //vmukhametova
+            }
             
         }
 
@@ -38,12 +35,6 @@ namespace DA.Repositories.Implementations
         {
             var query = GetAll();
             return await query.Where(x => x.EmployeeId == employee).ToListAsync<Event>();
-        }
-
-        public async Task<Event> GetByIdAsync(Guid id)
-        {
-            var query = GetAll();
-            return (await query.Where(x => x.Id == id).ToListAsync<Event>()).FirstOrDefault();
         }
     }
 }

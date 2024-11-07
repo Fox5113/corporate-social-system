@@ -1,11 +1,4 @@
-﻿using BS.Contracts.Employee;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BS.Contracts.Experience
+﻿namespace BS.Contracts.Experience
 {
     public class ExperienceFilterDto
     {

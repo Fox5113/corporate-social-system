@@ -1,13 +1,7 @@
-﻿using Azure;
-using DA.Context;
+﻿using DA.Context;
 using DA.Entities;
 using DA.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DA.Repositories.Implementations
 {
@@ -33,27 +27,23 @@ namespace DA.Repositories.Implementations
             return collection;
         }
 
-        public async Task<Guid> CreateOrUpdate(Employee employee)
+        public void CreateOrUpdateRange(ICollection<Employee> employees)
         {
-            var emp = Get(employee.Id);
-
-            if (emp != null)
+            foreach (var employee in employees)
             {
-                emp.Surname = employee.Surname;
-                emp.Firstname = employee.Firstname;
-                emp.Position = employee.Position;
-                emp.Birthdate = employee.Birthdate;
-                emp.OfficeAddress = employee.OfficeAddress;
-                emp.UpdatedAt = DateTime.Now;
-                emp.About = employee.About;
-                emp.MainEmail = employee.MainEmail;
-                emp.MainTelephoneNumber = employee.MainTelephoneNumber;
+                Employee emp = null;
+                if (employee.Id != Guid.Empty)
+                    emp = Get(employee.Id);
 
-                return emp.Id;
-            }
-            else
-            {
-                return Add(employee).Id;
+                if (emp != null)
+                {
+                    emp.Surname = employee.Surname;
+                    emp.Firstname = employee.Firstname;
+                    emp.Position = employee.Position;
+                    emp.IsDeleted = employee.IsDeleted;
+                    emp.IsAdmin = employee.IsAdmin;
+                    emp.UpdatedAt = DateTime.UtcNow;
+                }
             }
         }
 
@@ -63,11 +53,32 @@ namespace DA.Repositories.Implementations
             return await query.ToListAsync<Employee>();
         }
 
-        public async Task<Employee> GetByIdAsync(Guid id)
+        public async Task<Guid> UpdateEmployee(Employee employee)
         {
-            var query = GetAll();
-            return (await query.Where(x => x.Id == id).ToListAsync<Employee>()).FirstOrDefault();
-            
+            Employee emp = null;
+            if (employee.Id != Guid.Empty)
+                emp = Get(employee.Id);
+
+            if (emp != null)
+            {
+                emp.Surname = employee.Surname;
+                emp.Firstname = employee.Firstname;
+                emp.Position = employee.Position;
+                emp.Birthdate = employee.Birthdate;
+                emp.OfficeAddress = employee.OfficeAddress;
+                emp.UpdatedAt = DateTime.UtcNow;
+                emp.About = employee.About;
+                emp.MainEmail = employee.MainEmail;
+                emp.MainTelephoneNumber = employee.MainTelephoneNumber;
+                emp.IsAdmin = employee.IsAdmin;
+                emp.IsDeleted = employee.IsDeleted;
+
+                return emp.Id;
+            }
+            else
+            {
+                return (await AddAsync(employee)).Id;
+            }
         }
     }
 }

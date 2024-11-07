@@ -11,6 +11,7 @@ namespace PersonalAccountV2.Mapping
             CreateMap<EmployeeDto, EmployeeModel>();
             CreateMap<ShortEmployeeModel, ShortEmployeeDto>();
             CreateMap<EmployeeFilterModel, EmployeeFilterDto>();
+            CreateMap<UpdatingEmployeeModel, UpdatingEmployeeDto>();
         }
     }
 }

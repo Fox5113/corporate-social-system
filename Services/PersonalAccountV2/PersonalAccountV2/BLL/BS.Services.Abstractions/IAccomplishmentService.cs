@@ -1,10 +1,4 @@
 ﻿using BS.Contracts.Accomplishment;
-using BS.Contracts.Communication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BS.Services.Abstractions
 {
@@ -15,6 +9,6 @@ namespace BS.Services.Abstractions
 
         Task<AccomplishmentDto> GetByIdAsync(Guid id);
 
-        public Task<Guid> CreateOrUpdate(AccomplishmentDto accomplishmentEmployee);
+        public Task<Guid> CreateOrUpdate(CreatingOrUpdatingAccomplishmentDto accomplishmentEmployee);
     }
 }

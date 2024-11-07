@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using BS.Contracts.Event;
 using BS.Contracts.Experience;
-using PersonalAccountV2.Models.Event;
 using PersonalAccountV2.Models.Experience;
 
 namespace PersonalAccountV2.Mapping
@@ -12,6 +10,7 @@ namespace PersonalAccountV2.Mapping
         public ExperienceMappingsProfile()
         {
             CreateMap<ExperienceDto, ExperienceModel>();
+            CreateMap<CreatingOrUpdatingExperienceModel, CreatingOrUpdatingExperienceDto>();
         }
     }
 }
