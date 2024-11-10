@@ -8,6 +8,7 @@ using System;
 using WebApi.Models.HashtagNews;
 using BusinessLogic.Contracts.Hashtag;
 using WebApi.Models.Hashtag;
+using System.Collections.Generic;
 
 namespace WebApi.Controllers
 {
@@ -66,6 +67,26 @@ namespace WebApi.Controllers
             catch (Exception ex)
             {
                 return BadRequest(GetBadRequestObject($"HashtagNewsController.CreateAsync: {ex}"));
+            }
+        }
+
+        [Route("GetCollectionByNewsIds")]
+        [HttpPost]
+        public async Task<IActionResult> GetCollectionByNewsIds(List<Guid> newsIds)
+        {
+            if (newsIds == null || newsIds.Count == 0)
+            {
+                _logger.LogError("HashtagNewsController.GetCollectionByNewsIds: ids is empty.");
+                return BadRequest(GetBadRequestObject("HashtagNewsController.GetCollectionByNewsIds: ids is empty."));
+            }
+
+            try
+            {
+                return Ok(_mapper.Map<List<HashtagNewsModel>>(await _service.GetCollectionByNewsIds(newsIds)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HashtagNewsController.GetCollectionByNewsIds: {ex}"));
             }
         }
 

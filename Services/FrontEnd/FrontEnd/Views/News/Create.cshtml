@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Новости";
+    ViewData["PageTitle"] = "Создание новости";
+}
+
+<div class="pc-tab">
+    <form id="creatingForm" method="post" asp-controller="News" asp-action="Create">
+        <div class="form-group">
+            <label for="title">Тема</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="shortDescription">Краткое описание</label>
+            <textarea class="form-control" id="shortDescription" name="shortDescription" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="content">Описание</label>
+            <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+            <div class="smiles">Тут будут смайлы</div>
+        </div>
+        <div class="form-group">
+            <label for="hashtags">Хэштеги (через пробел без решетки)</label>
+            <input type="text" class="form-control" id="hashtags" name="hashtags">
+        </div>
+        <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
+</div>
+<div class="smiles">
+	@foreach(var item in Model){
+        <span class="smile" id="@item.Emoji.Shortcode">
+            @item.EmojiString
+        </span>
+	}
+</div>
+
+<link rel="stylesheet" href="/css/news.css" />
+<link rel="stylesheet" href="/css/menu-tabs-news.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$(".smile").click(function () {
+            var id = $(this).id;
+            var smile = '';
+            var text = $.trim($("#content").val());
+            $("#content").focus().val(text + ' ' + smile + ' ');
+		});
+	});
+</script>

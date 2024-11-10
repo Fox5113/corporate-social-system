@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System;
 using WebApi.Models.Hashtag;
 using BusinessLogic.Services.Abstractions;
+using System.Collections.Generic;
+using WebApi.Models.NewsComment;
 
 namespace WebApi.Controllers
 {
@@ -64,6 +66,26 @@ namespace WebApi.Controllers
             catch (Exception ex)
             {
                 return BadRequest(GetBadRequestObject($"HashtagController.CreateAsync: {ex}"));
+            }
+        }
+
+        [Route("GetCollection")]
+        [HttpPost]
+        public IActionResult GetCollection(List<Guid> ids)
+        {
+            if (ids == null || ids.Count == 0)
+            {
+                _logger.LogError("HashtagController.GetCollection: ids is empty.");
+                return BadRequest(GetBadRequestObject("HashtagController.GetCollection: ids is empty."));
+            }
+
+            try
+            {
+                return Ok(_mapper.Map<List<HashtagModel>>(_service.GetCollection(ids)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"HashtagController.GetCollection: {ex}"));
             }
         }
 

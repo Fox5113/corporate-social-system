@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
+using Azure;
 using BusinessLogic.Contracts.HashtagNews;
+using BusinessLogic.Contracts.NewsComment;
 using BusinessLogic.Services.Abstractions;
 using DataAccess.Entities;
 using DataAccess.Repositories.Abstractions;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
@@ -50,6 +54,12 @@ namespace BusinessLogic.Services
         {
             _hashtagNewsRepository.Delete(id);
             await _hashtagNewsRepository.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<HashtagNewsDto>> GetCollectionByNewsIds(ICollection<Guid> newsIds)
+        {
+            var news = await _hashtagNewsRepository.GetCollectionByNewsId(newsIds);
+            return _mapper.Map<List<HashtagNewsDto>>(news);
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using BusinessLogic.Contracts.Hashtag;
 using System;
-using BusinessLogic.Contracts.Hashtag;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Services.Abstractions
 {
@@ -18,5 +19,7 @@ namespace BusinessLogic.Services.Abstractions
         /// </summary>
         /// <param name="creatingHashtagDto"> ДТО хештега. </param>
         Task<Guid> CreateAsync(CreatingHashtagDto creatingHashtagDto);
+
+        ICollection<HashtagDto> GetCollection(ICollection<Guid> ids);
     }
 }

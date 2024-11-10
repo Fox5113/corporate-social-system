@@ -1,0 +1,172 @@
+﻿@{
+    ViewData["Title"] = "Новости";
+    ViewData["PageTitle"] = "Новости компании";
+}
+
+<div class="pc-tab">
+    <input checked="checked" id="tab1" type="radio" name="pct" />
+    <input id="tab2" type="radio" name="pct" />
+    <input id="tab3" type="radio" name="pct" />
+    <nav>
+        <ul>
+            <li class="tab1">
+                <label for="tab1">Создать новость</label>
+            </li>
+            <li class="tab2">
+                <label for="tab2">Поиск</label>
+            </li>
+            <li class="tab3">
+                <label for="tab3">Расширенный поиск</label>
+            </li>
+        </ul>
+    </nav>
+    <section>
+        <div class="tab1">
+            <a class="more-news light-gray-button" asp-area="" asp-controller="News" asp-action="Create">Перейти к созданию новости</a>
+        </div>
+        <div class="tab2">
+            <form id="searchForm" method="post" asp-controller="News" asp-action="Search">
+                <input class="form-control" id="page" name="page" type="hidden" value="@Model.PagingInfo.CurrentPage">
+                <div class="form-group">
+                    <label for="title">Тема (частично)</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="authorName">Имя автора</label>
+                    <input type="text" class="form-control" id="authorName" name="authorName">
+                </div>
+                <div class="form-group">
+                    <label for="authorSurname">Фамилия автора</label>
+                    <input type="text" class="form-control" id="authorSurname" name="authorSurname">
+                </div>
+                <div class="form-group">
+                    <label for="start">Дата создания С</label>
+                    <input type="date" class="form-control" id="start" name="start">
+                </div>
+                <div class="form-group">
+                    <label for="end">Дата создания ПО</label>
+                    <input type="date" class="form-control" id="end" name="end">
+                </div>
+                <div class="form-group">
+                    <label for="hashtags">Хэштеги (через пробел без решетки)</label>
+                    <input type="text" class="form-control" id="hashtags" name="hashtags">
+                </div>
+                <button type="submit" class="btn btn-primary">Искать</button>
+            </form>
+        </div>
+        <div class="tab3">
+
+        </div>
+    </section>
+</div>
+
+<!-- Новости -->
+<div class="news-class-container" id="news-container">
+    <div class="row justify-content-center" id="news-row-container">
+        @foreach (var news in Model.News)
+        {
+            <div class="col-md-12 col-lg-12">
+                <div class="news-card card mb-4 shadow-sm">
+                    <!--<img class="card-img-top" src="/img/test/64559-thanks5.png" alt="News Image">-->
+                    <div class="card-body_@news.Id">
+                        <h5 class="card-title-news">@news.Title</h5>
+                        <p class="card-text-news">@news.ShortDescription</p>
+                        <input type="checkbox" id="cb_@news.Id" class="hide" />
+                        <label for="cb_@news.Id" class="light-gray-button more-text">Подробнее</label>
+                        <label for="cb_@news.Id" class="light-gray-button hide-text">Скрыть</label>
+                        <div>
+                            <p>@news.Content</p>
+                            <small>@news.Hashtags</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="col-md-11 col-lg-11">
+                                <small class="text-muted date-time-news">@news.CreatedAt</small>
+                                <small class="text-muted author-news">@news.AuthorFullName</small>
+                            </div>
+                            <div class="col-md-1 col-lg-1">
+                                <div class="news-wrapper">
+                                    <a href="javascript:void(0)" class="like-button @(news.IsLikedByCurrentUser ? "is-active" : string.Empty) news-id_@news.Id">
+                                        <i class="material-icons not-liked bouncy">favorite_border</i>
+                                        <i class="material-icons is-liked bouncy">favorite</i>
+                                        <span class="like-overlay"></span>
+                                    </a>
+                                </div>
+                                <span class="text-muted likes-count_@news.Id">@news.Likes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row justify-content-center">
+        <a class="more-news load-more light-gray-button" href="javascript:void(0)">Больше</a>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/css/news.css" />
+<link rel="stylesheet" href="/css/menu-tabs-news.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function like() {
+        $('.like-button').click(function () {
+            var btn = $(this);
+            var newsIdClass = btn[0].classList.value.split(' ').find(item => item.includes('news-id'));;
+            if (newsIdClass) {
+                var newsId = newsIdClass.split('_')[1];
+                $.ajax({
+                    type: 'POST',
+                    data: { newsId: newsId },
+                    async: true,
+                    cache: false,
+                    dataType: 'json',
+                    url: '@Url.Action("Like")',
+                    error: function (jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); },
+                    success: function (info) {
+                        btn.toggleClass('is-active');
+                        $('.likes-count_' + newsId).text(info.likesCount);
+                    }
+                });
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        like();
+
+        var p = @Model.PagingInfo.CurrentPage;
+        $('.load-more').click(function () {
+            $.ajax({
+                type: 'POST',
+                data: { page: p + 1 },
+                async: true,
+                cache: false,
+                dataType: 'json',
+                url: '@Url.Action("LoadMore")',
+                error: function (jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); },
+                success: function (data) {
+                    if (data.news.length > 0) {
+
+                        var htmlLine = "";
+                        $.each(data.news, function (index, news) {
+
+                            htmlLine += ("<div class='col-md-12 col-lg-12'><div class='news-card card mb-4 shadow-sm'><div class='card-body_" + news.id + "'><h5 class='card-title-news'>" + news.title + "</h5>" +
+                                "<p class='card-text-news'>" + news.shortDescription + "</p><input type='checkbox' id='cb_" + news.id + "' class='hide' />" +
+                                "<label for='cb_" + news.id + "' class='light-gray-button more-text'>Подробнее</label><label for='cb_" + news.id + "' class='light-gray-button hide-text'>Скрыть</label>" +
+                                "<div>" + news.content + "</div><div class='d-flex align-items-center'><div class='col-md-11 col-lg-11'><small class='text-muted date-time-news'>" + news.createdAt + "</small>" +
+                                "<small class='text-muted author-news'>" + news.authorFullName + "</small></div><div class='col-md-1 col-lg-1'>" +
+                                "<div class='news-wrapper'><a href='javascript: void(0)' class='like-button " + (news.isLikedByCurrentUser ? "is-active" : '') + " news-id_" + news.id + "'>" +
+                                "<i class='material-icons not-liked bouncy'>favorite_border</i><i class='material-icons is-liked bouncy'>favorite</i>" +
+                                "<span class='like-overlay'></span></a></div><span class='text-muted likes-count_" + news.id + "'>" + news.likes + "</span></div></div></div></div></div>");
+                        });
+                        $("#news-row-container").append(htmlLine);
+                        like();
+                        p++;
+                    }
+                }
+            });
+        })
+    })
+</script>

@@ -284,14 +284,14 @@ namespace WebApi.Controllers
 
         [Route("Like")]
         [HttpPost]
-        public async Task<IActionResult> Like(Guid newsId, Guid employeeId)
+        public async Task<IActionResult> Like(GetLikesClass data)
         {
-            if (employeeId == Guid.Empty)
+            if (data.CurrentEmployeeId == Guid.Empty)
             {
                 _logger.LogError("NewsController.Like: employeeId is empty.");
                 return BadRequest(GetBadRequestObject("NewsController.Like: employeeId is empty."));
             }
-            if (newsId == Guid.Empty)
+            if (data.NewsIds == null || data.NewsIds.Count == 0)
             {
                 _logger.LogError("NewsController.Like: newsId is empty.");
                 return BadRequest(GetBadRequestObject("NewsController.Like: newsId is empty."));
@@ -299,7 +299,7 @@ namespace WebApi.Controllers
 
             try
             {
-                return Ok(_mapper.Map<LikedNewsInfoModel>(await _service.Like(newsId, employeeId)));
+                return Ok(_mapper.Map<LikedNewsInfoModel>(await _service.Like(data.NewsIds[0], data.CurrentEmployeeId)));
             }
             catch (Exception ex)
             {
@@ -309,14 +309,14 @@ namespace WebApi.Controllers
 
         [Route("GetLikes")]
         [HttpPost]
-        public async Task<IActionResult> GetLikes(Guid currentEmployeeId, ICollection<Guid> newsIds)
+        public async Task<IActionResult> GetLikes(GetLikesClass data)
         {
-            if (currentEmployeeId == Guid.Empty)
+            if (data.CurrentEmployeeId == Guid.Empty)
             {
                 _logger.LogError("NewsController.GetLikes: employeeId is empty.");
                 return BadRequest(GetBadRequestObject("NewsController.GetLikes: employeeId is empty."));
             }
-            if (newsIds == null || newsIds.Count == 0)
+            if (data.NewsIds == null || data.NewsIds.Count == 0)
             {
                 _logger.LogError("NewsController.GetLikes: newsIds is null or empty.");
                 return BadRequest(GetBadRequestObject("NewsController.GetLikes: newsIds is null or empty."));
@@ -324,7 +324,7 @@ namespace WebApi.Controllers
 
             try
             {
-                return Ok(_mapper.Map<List<LikedNewsInfoModel>>(await _service.GetLikes(newsIds, currentEmployeeId)));
+                return Ok(_mapper.Map<List<LikedNewsInfoModel>>(await _service.GetLikes(data.NewsIds, data.CurrentEmployeeId)));
             }
             catch (Exception ex)
             {
@@ -333,7 +333,7 @@ namespace WebApi.Controllers
         }
 
         [Route("GetLikedNewsByEmployee")]
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetLikedNewsByEmployee(Guid employeeId, int page, int itemsPerPage)
         {
             if (employeeId == Guid.Empty)
