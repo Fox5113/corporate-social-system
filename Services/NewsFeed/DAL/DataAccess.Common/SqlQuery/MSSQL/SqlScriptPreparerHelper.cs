@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using static DataAccess.Common.Enums;
 
@@ -54,6 +55,8 @@ namespace DataAccess.Common.SqlQuery.MSSQL
             selectQuery.Joins = mapping.Joins == null || mapping.Joins.Count == 0 ? "" : GetJoins(mapping.Joins);
             selectQuery.Filters = mapping.TableFilter == null ? "" : GetFilters(mapping.TableFilter);
             selectQuery.OrdersBy = mapping.OrderBy == null || mapping.OrderBy.Count == 0 ? "" : GetOrderBy(mapping.OrderBy);
+            selectQuery.Offset = mapping.Offset;
+            selectQuery.Fetch = mapping.Fetch;
 
             return selectQuery.PrepareSqlString();
         }
@@ -132,9 +135,12 @@ namespace DataAccess.Common.SqlQuery.MSSQL
                 var joinValues = new List<string>();
                 foreach (var pair in join.TablePairs)
                 {
-                    joinValues.Add(pair.FirstTableName + "." + pair.FirstTableColumnName);
-                    joinValues.Add(GetOperation(pair.ComparisonType));
-                    joinValues.Add(pair.SecondTableName + "." + pair.SecondTableColumnName);
+                    var values = new List<string>();
+                    values.Add(pair.FirstTableName + "." + pair.FirstTableColumnName);
+                    values.Add(GetOperation(pair.ComparisonType));
+                    values.Add(pair.SecondTableName + "." + pair.SecondTableColumnName);
+
+                    joinValues.Add(string.Join(" ", values));
                 }
 
                 var joinStr = new List<string>();
@@ -182,7 +188,9 @@ namespace DataAccess.Common.SqlQuery.MSSQL
                         if (field.ComparisonType == (int)FilterComparisonType.Equal)
                         {
                             if (field.Data.Count == 1)
+                            {
                                 newGroup.Add(tableName + '.' + field.Name + GetOperation(field.ComparisonType) + "\'" + field.Data.First().ToString() + "\'");
+                            }
                             else
                             {
                                 var values = string.Join(", ", field.Data.Select(x => "\'" + x.ToString() + "\'").ToArray());
@@ -211,7 +219,9 @@ namespace DataAccess.Common.SqlQuery.MSSQL
                         else if (field.ComparisonType == (int)FilterComparisonType.NotEqual)
                         {
                             if (field.Data.Count == 1)
+                            {
                                 newGroup.Add(tableName + '.' + field.Name + GetOperation(field.ComparisonType) + "\'" + field.Data.First().ToString() + "\'");
+                            }
                             else
                             {
                                 var values = string.Join(", ", field.Data.Select(x => "\'" + x.ToString() + "\'").ToArray());

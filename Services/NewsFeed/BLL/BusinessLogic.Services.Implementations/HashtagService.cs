@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
+using Azure;
 using BusinessLogic.Contracts.Hashtag;
+using BusinessLogic.Contracts.NewsComment;
 using BusinessLogic.Services.Abstractions;
 using DataAccess.Entities;
 using DataAccess.Repositories.Abstractions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
@@ -40,6 +44,12 @@ namespace BusinessLogic.Services
             var createdHashtag = await _hashtagRepository.AddAsync(hashtag);
             await _hashtagRepository.SaveChangesAsync();
             return createdHashtag.Id;
+        }
+
+        public ICollection<HashtagDto> GetCollection(ICollection<Guid> ids)
+        {
+            var hashtags = _hashtagRepository.GetCollection(ids).ToList();
+            return _mapper.Map<List<HashtagDto>>(hashtags);
         }
     }
 }

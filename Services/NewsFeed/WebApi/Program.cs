@@ -19,7 +19,6 @@ namespace WebApi
                     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                     {
                     });
-                    //webBuilder.UseUrls("https://localhost:5201", "http://localhost:5200");
                 });
     }
 }

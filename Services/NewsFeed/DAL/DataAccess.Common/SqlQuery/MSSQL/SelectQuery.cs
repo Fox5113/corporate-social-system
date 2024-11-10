@@ -49,6 +49,9 @@ namespace DataAccess.Common.SqlQuery.MSSQL
             }
             if (Fetch > 0)
             {
+                if(Offset == 0)
+                    newQuery.Add($"OFFSET 0 ROWS");
+
                 newQuery.Add($"FETCH NEXT {Fetch} ROWS ONLY");
             }
 

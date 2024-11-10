@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System;
 using BusinessLogic.Contracts.HashtagNews;
+using System.Collections.Generic;
 
 namespace BusinessLogic.Services.Abstractions
 {
@@ -25,5 +26,7 @@ namespace BusinessLogic.Services.Abstractions
         /// </summary>
         /// <param name="id"> Идентификатор. </param>
         Task DeleteAsync(Guid id);
+
+        Task<ICollection<HashtagNewsDto>> GetCollectionByNewsIds(ICollection<Guid> newsIds);
     }
 }

@@ -28,8 +28,8 @@ namespace WebApi.Controllers
         }
 
         [Route("GetSomeCollectionFromMapping")]
-        [HttpGet]
-        public IActionResult GetSomeCollectionFromMapping([FromBody] MappingQuery mapping)
+        [HttpPost]
+        public IActionResult GetSomeCollectionFromMapping(MappingQuery mapping)
         {
             try
             {

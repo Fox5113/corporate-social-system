@@ -7,7 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BusinessLogic.Models\BusinessLogic.Models.csproj" />
+      <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\DataAccess.Entities\DataAccess.Entities.csproj" />
       <ProjectReference Include="..\DataAccess.Repositories\DataAccess.Repositories.csproj" />
     </ItemGroup>

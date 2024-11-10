@@ -2,39 +2,6 @@
     ViewData["Title"] = "Главная";
     ViewData["PageTitle"] = "Корпоративная социальная система";
 
-    // Временный массив новостей
-    var newsList = new List<dynamic>
-    {
-        new {
-            Title = "Фитнес-марафон в Нижнем Новгороде",
-            Description = "Коллеги из Нижнего Новгорода проводят уже третий сезон фитнес-марафона...",
-            ImageUrl = "/img/test/sber-otkryl-registraciju-na-zeljonyj-marafon-2024-v-gorodah-rossii-d66e9ee.jpg",
-            Likes = 19,
-            Date = "03.10.2024"
-        },
-        new {
-            Title = "Спартакиада Росатома",
-            Description = "В Московской области прошла спартакиада «XIII Всероссийский Кубок Атомной Промышленности»...",
-            ImageUrl = "/img/test/6E535134_7464_4BEE_A7AF_FE98C8F438A8.png",
-            Likes = 11,
-            Date = "02.10.2024"
-        },
-        new {
-            Title = "Тренинги и вебинары в первой половине октября",
-            Description = "Эксперты Лиги расскажут о стратегиях ведения переговоров и управлении конфликтами...",
-            ImageUrl = "/img/test/poster_event_1433755.jpg",
-            Likes = 5,
-            Date = "01.10.2024"
-        },
-        new {
-            Title = "Победители акции «Скажи спасибо»",
-            Description = "Подводим итоги летнего сезона акции. О важности получения слов благодарности...",
-            ImageUrl = "/img/test/64559-thanks5.png",
-            Likes = 9,
-            Date = "30.09.2024"
-        }
-    };
-
     // Временный массив элементов карусели
     var carouselItems = new List<dynamic>
     {
@@ -73,95 +40,55 @@
     <div class="swiper-pagination"></div>
 </div>
 
-<div class="container">
+<!-- Новости -->
+<div class="news-class-container" id="home-news-container">
     <div class="row justify-content-center">
-        @foreach (var news in newsList)
+        @foreach (var news in Model)
         {
-            <div class="col-md-6 col-lg-6">
-                <div class="card mb-4 shadow-sm">
-                    <img class="card-img-top" src="@news.ImageUrl" alt="News Image">
-                    <div class="card-body">
-                        <h5 class="card-title">@news.Title</h5>
-                        <p class="card-text">@news.Description</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">@news.Date</small>
-                            <small class="text-muted">❤️ @news.Likes</small>
+            <div class="col-md-12 col-lg-12">
+                <div class="news-card card mb-4 shadow-sm">
+                    <!--<img class="card-img-top" src="/img/test/64559-thanks5.png" alt="News Image">-->
+                    <div class="card-body_@news.Id">
+                        <h5 class="card-title-news">@news.Title</h5>
+                        <p class="card-text-news">@news.ShortDescription</p>
+                        <input type="checkbox" id="cb_@news.Id" class="hide" />
+                        <label for="cb_@news.Id" class="light-gray-button more-text">Подробнее</label>
+                        <label for="cb_@news.Id" class="light-gray-button hide-text">Скрыть</label>
+                        <div>
+                            <p>@news.Content</p>
+                            <small>@news.Hashtags</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="col-md-11 col-lg-11">
+                                <small class="text-muted date-time-news">@news.CreatedAt</small>
+                                <small class="text-muted author-news">@news.AuthorFullName</small>
+                            </div>
+                            <div class="col-md-1 col-lg-1">
+                                <div class="news-wrapper">
+                                    <a href="javascript:void(0)" class="like-button @(news.IsLikedByCurrentUser ? "is-active" : string.Empty) news-id_@news.Id">
+                                        <i class="material-icons not-liked bouncy">favorite_border</i>
+                                        <i class="material-icons is-liked bouncy">favorite</i>
+                                        <span class="like-overlay"></span>
+                                    </a>
+                                </div>
+                                <span class="text-muted likes-count_@news.Id">@news.Likes</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         }
+        <a class="more-news light-gray-button" asp-area="" asp-controller="News" asp-action="Index">Перейти к новостям</a>
     </div>
 </div>
 
-<style>
-    .container {
-        margin-top: 400px;
-    }
-
-    .card-img-top {
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .swiper-container {
-        left: 0;
-        top: 50px;
-        position: absolute;
-        width: 100vw;
-        height: 300px;
-        margin-top: 20px;
-    }
-
-    .swiper-slide {
-        max-width: 100vw;
-        overflow-x: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #eef1f5;
-        position: relative;
-    }
-
-    div.swiper-wrapper * {
-        width: 100%;
-        height: 100%;
-    }
-
-    .swiper-button-prev,
-    .swiper-button-next {
-        display: none !important;
-    }
-
-    .carousel-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .carousel-image {
-        width: 200px;
-        height: auto;
-        margin-right: 20px;
-    }
-
-    .carousel-text {
-        text-align: left;
-    }
-
-        .carousel-text h2 {
-            font-size: 24px;
-            margin: 0;
-            color: #333;
-        }
-
-        .carousel-text p {
-            font-size: 16px;
-            color: #666;
-        }
-</style>
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<link rel="stylesheet" href="/css/site.css" />
+<link rel="stylesheet" href="/css/news.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
     var swiper = new Swiper('.swiper-container', {
@@ -180,4 +107,30 @@
         simulateTouch: true,
         grabCursor: true,
     });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.like-button').click(function () {
+            var btn = $(this);
+            var newsIdClass = btn[0].classList.value.split(' ').find(item => item.includes('news-id'));;
+            if (newsIdClass) {
+                var newsId = newsIdClass.split('_')[1];
+                $.ajax({
+                    type: 'POST',
+                    data: { newsId: newsId },
+                    async: true,
+                    cache: false,
+                    dataType: 'json',
+                    url: '@Url.Action("Like")',
+                    error: function (jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); },
+                    success: function (info) {
+                        btn.toggleClass('is-active');
+                        $('.likes-count_' + newsId).text(info.likesCount);
+                    }
+                });
+            }
+        })
+
+    })
 </script>
