@@ -2,6 +2,7 @@
 using BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TestIdentity.Models;
 
 namespace TestIdentity.Controllers
 {
@@ -24,9 +25,11 @@ namespace TestIdentity.Controllers
 
             var loginSuccess = await _authService.LoginAsync(loginDto);
             if (!loginSuccess)
-                return Unauthorized("Invalid username or password");
+            {
+                return Unauthorized(new UserModel() { IsFound = false });
+            }
 
-            return Ok("Login successful");
+            return RedirectToAction("GetUserByName", "Users", new { name = loginDto.UserName });
         }
 
         [HttpPost("register")]
@@ -39,7 +42,7 @@ namespace TestIdentity.Controllers
             if (!registerSuccess)
                 return BadRequest("Registration failed");
 
-            return Ok("Registration successful");
+            return RedirectToAction("SendMessageAndGetUserByName", "Users", new { name = registerDto.UserName });
         }
 
         [HttpPost("logout")]

@@ -27,12 +27,12 @@ namespace PersonalAccountV2.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("664e7099-0007-41ca-bc54-02f6375c98b9"));
+                        .HasDefaultValue(new Guid("07e34d76-829c-478e-a415-2194893468c6"));
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 679, DateTimeKind.Local).AddTicks(8374));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(4457));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -50,7 +50,7 @@ namespace PersonalAccountV2.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 679, DateTimeKind.Local).AddTicks(8702));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(4857));
 
                     b.HasKey("Id");
 
@@ -64,12 +64,12 @@ namespace PersonalAccountV2.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("3d5d8c3a-51e5-41d8-87df-7550757a64de"));
+                        .HasDefaultValue(new Guid("cb36a9c3-aadc-4671-8fde-bf07d61a2f58"));
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 679, DateTimeKind.Local).AddTicks(9254));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(5471));
 
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
@@ -80,7 +80,7 @@ namespace PersonalAccountV2.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 679, DateTimeKind.Local).AddTicks(9522));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(5745));
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -98,21 +98,20 @@ namespace PersonalAccountV2.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("8094d7d3-20e6-4604-88a1-75d7b0a96981"));
+                        .HasDefaultValue(new Guid("6aa92f19-fe0d-4e46-b349-e2e7eacc2887"));
 
                     b.Property<string>("About")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Birthdate")
+                    b.Property<DateTime?>("Birthdate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 679, DateTimeKind.Local).AddTicks(7315));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(3154));
 
-                    b.Property<DateTime>("EmploymentDate")
+                    b.Property<DateTime?>("EmploymentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Firstname")
@@ -125,20 +124,19 @@ namespace PersonalAccountV2.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Language")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MainEmail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MainTelephoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OfficeAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Position")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
@@ -148,7 +146,7 @@ namespace PersonalAccountV2.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 679, DateTimeKind.Local).AddTicks(7805));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(3668));
 
                     b.HasKey("Id");
 
@@ -160,12 +158,12 @@ namespace PersonalAccountV2.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("37ef3607-5aa6-4dd8-8eb6-d18aa763f00d"));
+                        .HasDefaultValue(new Guid("73186bc0-9714-4dfd-aad5-cc1cdac206da"));
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 680, DateTimeKind.Local).AddTicks(72));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(6412));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -190,7 +188,7 @@ namespace PersonalAccountV2.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 680, DateTimeKind.Local).AddTicks(431));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(6701));
 
                     b.HasKey("Id");
 
@@ -204,7 +202,7 @@ namespace PersonalAccountV2.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("0cd96cc4-deb0-4336-8e3b-943c69440d70"));
+                        .HasDefaultValue(new Guid("1776730a-be0d-44c7-b41d-5e5ee660fc9d"));
 
                     b.Property<string>("Company")
                         .IsRequired()
@@ -213,7 +211,7 @@ namespace PersonalAccountV2.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 680, DateTimeKind.Local).AddTicks(963));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(7284));
 
                     b.Property<string>("DescriptionCompany")
                         .IsRequired()
@@ -235,7 +233,7 @@ namespace PersonalAccountV2.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 680, DateTimeKind.Local).AddTicks(1282));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(7650));
 
                     b.HasKey("Id");
 
@@ -249,12 +247,12 @@ namespace PersonalAccountV2.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("9f8d5f97-dbce-40c0-8981-c537fa4f53a6"));
+                        .HasDefaultValue(new Guid("7d3d7554-433a-4122-9b13-a05f57acabde"));
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 680, DateTimeKind.Local).AddTicks(1809));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(8202));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -273,7 +271,7 @@ namespace PersonalAccountV2.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 7, 20, 7, 20, 680, DateTimeKind.Local).AddTicks(2065));
+                        .HasDefaultValue(new DateTime(2024, 11, 13, 22, 31, 17, 544, DateTimeKind.Local).AddTicks(8479));
 
                     b.HasKey("Id");
 

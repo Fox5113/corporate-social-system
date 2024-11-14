@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using test;
+using TestIdentity.RabbitMq;
 
 namespace TestIdentity;
 
@@ -52,7 +53,8 @@ internal static class HostingExtensions
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAuthService, AuthService>();
-        
+        builder.Services.AddScoped<IRabbitMqService, RabbitMqService>();
+
         return builder.Build();
     }
     

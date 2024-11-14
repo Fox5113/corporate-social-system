@@ -14,5 +14,6 @@
         public DateTime EmploymentDate { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsAdmin { get; set; }
+        public string? Language { get; set; }
     }
 }

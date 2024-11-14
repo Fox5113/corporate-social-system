@@ -34,7 +34,7 @@ namespace WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NewsFeedApi", Version = "v1" });
 
             });
-            // services.AddHostedService<RabbitMqListener>();
+            services.AddHostedService<RabbitMqListener>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

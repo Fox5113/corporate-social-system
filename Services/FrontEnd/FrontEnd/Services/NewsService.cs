@@ -1,5 +1,7 @@
 ﻿using FrontEnd.Models;
 using FrontEnd.Models.News;
+using FrontEnd.Models.PersonalAccountModels;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using SqlQuery;
 using System.Text.Json;
 
@@ -8,10 +10,70 @@ namespace FrontEnd.Services
     public class NewsService
     {
         private readonly HttpClient _httpClient;
+        private readonly string _url = "https://localhost:7175/api/";
 
         public NewsService(HttpClient httpClient)
         {
             _httpClient = httpClient;
+        }
+
+        public async Task<NewsViewModel> GetAsync(Guid id)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"id", id.ToString()}
+            };
+
+            var queryString = string.Join("&", queryParameters
+                .Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}"));
+
+            var url = $"{_url}News/GetAsync?{queryString}";
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var newsStr = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                var news = JsonSerializer.Deserialize<NewsModel>(newsStr, options);
+                if (news != null) {
+                    var newsViewModel = new NewsViewModel()
+                    {
+                        Id = news.Id,
+                        Title = news.Title,
+                        ShortDescription = news.ShortDescription,
+                        Content = news.Content
+                    };
+
+                    if (news.HashtagNewsList != null)
+                    {
+                        newsViewModel.HashtagNewsList = news.HashtagNewsList;
+                    }
+                    else
+                    {
+                        var hashtagNews = await GetHashtagNewsByNewsIds(new List<Guid>() { news.Id });
+                        newsViewModel.HashtagNewsList = hashtagNews;
+                    }
+
+                    if (newsViewModel.HashtagNewsList != null)
+                    {
+                        var hashtagIds = newsViewModel.HashtagNewsList.Select(x => x.HashtagId).ToList();
+                        var hashtags = hashtagIds != null && hashtagIds.Count > 0 ? await GetHashtags(hashtagIds) : null;
+                        newsViewModel.HashtagList = hashtags;
+                        var names = hashtags?.Select(x => x.Name).ToList();
+                        newsViewModel.Hashtags = names != null && names.Count > 0 ? string.Join(" ", names) : "";
+                    }
+
+                    return newsViewModel;
+                }
+                else
+                    return null;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<List<NewsViewModel>> GetPublishedListAsync(int page, int itemsPerPage, Guid userId)
@@ -25,7 +87,7 @@ namespace FrontEnd.Services
             var queryString = string.Join("&", queryParameters
                 .Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}"));
 
-            var url = $"https://localhost:7175/api/News/GetPublishedListAsync?{queryString}";
+            var url = $"{_url}News/GetPublishedListAsync?{queryString}";
             var response = await _httpClient.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -58,7 +120,7 @@ namespace FrontEnd.Services
             var queryString = string.Join("&", queryParameters
                 .Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}"));
 
-            var url = $"https://localhost:7175/api/Employee/GetAsync?{queryString}";
+            var url = $"{_url}Employee/GetAsync?{queryString}";
             var response = await _httpClient.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
@@ -78,7 +140,7 @@ namespace FrontEnd.Services
         public async Task<List<LikedNewsInfoModel>> GetLikesInfo(List<Guid> newsIds, Guid currentEmployeeId)
         {
             var data = new {currentEmployeeId, newsIds};
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/News/GetLikes", data);
+            var response = await _httpClient.PostAsJsonAsync($"{_url}News/GetLikes", data);
 
             if (response.IsSuccessStatusCode)
             {
@@ -99,7 +161,7 @@ namespace FrontEnd.Services
         {
             var newsIds = new List<Guid>() { newsId };
             var data = new { currentEmployeeId, newsIds };
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/News/Like", data);
+            var response = await _httpClient.PostAsJsonAsync($"{_url}News/Like", data);
 
             if (response.IsSuccessStatusCode)
             {
@@ -118,7 +180,7 @@ namespace FrontEnd.Services
 
         public async Task<List<NewsViewModel>> Search(MappingQuery mapping, Guid userId)
         {
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/Home/GetSomeCollectionFromMapping", mapping);
+            var response = await _httpClient.PostAsJsonAsync($"{_url}Home/GetSomeCollectionFromMapping", mapping);
             if (response.IsSuccessStatusCode)
             {
                 var newsStr = await response.Content.ReadAsStringAsync();
@@ -137,13 +199,13 @@ namespace FrontEnd.Services
 
         public async Task<bool> Create(CreatingNewsModel newsModel)
         {
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/News/CreateAsync", newsModel);
+            var response = await _httpClient.PostAsJsonAsync($"{_url}News/CreateAsync", newsModel);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<List<HashtagModel>> GetHashtags(List<Guid> ids)
         {
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/Hashtag/GetCollection", ids);
+            var response = await _httpClient.PostAsJsonAsync($"{_url}Hashtag/GetCollection", ids);
 
             if (response.IsSuccessStatusCode)
             {
@@ -162,7 +224,7 @@ namespace FrontEnd.Services
 
         public async Task<List<HashtagNewsModel>> GetHashtagNewsByNewsIds(List<Guid> newsIds)
         {
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7175/api/HashtagNews/GetCollectionByNewsIds", newsIds);
+            var response = await _httpClient.PostAsJsonAsync($"{_url}HashtagNews/GetCollectionByNewsIds", newsIds);
 
             if (response.IsSuccessStatusCode)
             {
@@ -179,13 +241,112 @@ namespace FrontEnd.Services
             }
         }
 
+        public async Task<bool> Update(UpdatingNewsModel newsModel)
+        {
+            var response = await _httpClient.PutAsJsonAsync($"{_url}News/SendOnModeration", newsModel);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> Delete(Guid newsId)
+        {
+            var response = await _httpClient.DeleteAsync($"{_url}News/DeleteAsync?id={newsId}");
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> CheckIsAuthor(Guid newsId, Guid authorId)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"newsId", newsId.ToString()},
+                {"authorId", authorId.ToString()}
+            };
+
+            var queryString = string.Join("&", queryParameters
+                .Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}"));
+
+            var url = $"{_url}News/CheckIsAuthor?{queryString}";
+            var response = await _httpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var news = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<bool>(news, options);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                return false;
+            }
+            else
+            {
+                throw new HttpRequestException("News service is not available.");
+            }
+        }
+
+        public async Task<UserViewModel> GetUserByLogin(string username)
+        {
+            var response = await _httpClient.GetAsync($"https://localhost:7192/api/User/getUserByName/{username}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var user = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<UserViewModel>(user, options);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return null;
+            }
+            else
+            {
+                throw new HttpRequestException("Authorization service is not available.");
+            }
+        }
+
+        public async Task<EmployeeModelFromPA> GetPersonalAccountData(string id)
+        {
+            var response = await _httpClient.GetAsync($"http://localhost:5124/api/Employee/GetAsync?id={id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var user = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<EmployeeModelFromPA>(user, options);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return null;
+            }
+            else
+            {
+                throw new HttpRequestException("PersonalAccount service is not available.");
+            }
+        }
+
         private async Task<List<NewsViewModel>> PrepareNewsList(List<NewsModel> list, Guid userId)
         {
+            var newsIdsList = new List<Guid>();
             var likes = list.Count > 0 ? await GetLikesInfo(list.Select(x => x.Id).ToList(), userId) : null;
             var modelList = new List<NewsViewModel>();
             var employees = new List<EmployeeModel>();
             foreach (var newsItem in list)
             {
+                if (newsIdsList.Contains(newsItem.Id))
+                    continue;
+                else
+                    newsIdsList.Add(newsItem.Id);
+
                 var newNews = new NewsViewModel()
                 {
                     Id = newsItem.Id,
@@ -194,7 +355,8 @@ namespace FrontEnd.Services
                     ShortDescription = newsItem.ShortDescription,
                     CreatedAt = newsItem.CreatedAt,
                     UpdatedAt = newsItem.UpdatedAt,
-                    AuthorId = newsItem.AuthorId
+                    AuthorId = newsItem.AuthorId,
+                    IsAuthor = newsItem.AuthorId == userId
                 };
 
                 if (newsItem.Author == null)

@@ -1,0 +1,133 @@
+﻿@{
+    var dict = ((CaptionsBase)ViewData[Constants.CaptionsKey]);
+    if (dict == null)
+        dict = new CaptionsBase();
+    ViewData["Title"] = dict.TitleNewsCaption;
+    ViewData["PageTitle"] = dict.PageTitleUpdatingNewsCaption;
+
+    var createNewsViewModel = (CreateNewsViewModel)ViewData[Constants.CreateNewsViewModelKey];
+}
+
+<link rel="stylesheet" href="/css/news.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+<div class="news-menu-wrapper">
+    @if (createNewsViewModel != null && createNewsViewModel.News != null)
+    {
+        <dialog id="dialog-delete-news" style="width: 500px;height: 200px;text-align: center;border: solid #efefef 1px;border-radius: 5px;">
+            <div id="dialog-mainDiv">
+                <div id="dialog-firstDiv">
+                    <p>@dict.DeleteNewsQuestionCaption</p>
+                    <div id="dialog-button-div">
+                        <button id="dont-delete-news" class="btn">@dict.NoCaption</button>
+                        <form id='deleteNews' method='post' asp-controller='News' asp-action='DeleteNews'>
+                            <input class='form-control' id='newsId' name='newsId' type='hidden' value='@createNewsViewModel.News.Id'>
+                            <button type='submit' class='btn btn-primary'>@dict.YesCaption</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+        <div id="delete-block">
+            <button id="ask-delete-news">@dict.DeleteNewsButtonCaption</button>
+        </div>
+        <form id="updatingForm" method="post" asp-controller="News" asp-action="UpdateNews">
+            <input class="form-control" id="newsId" name="newsId" type="hidden" value="@createNewsViewModel.News.Id">
+            <div class="form-group">
+                <label for="title">@dict.CreatingNewsTitleCaption</label>
+                <input type="text" class="form-control" id="title" name="title" value="@createNewsViewModel.News.Title" required>
+            </div>
+            <div class="form-group">
+                <label for="shortDescription">@dict.CreatingNewsShortDescriptionCaption</label>
+                <textarea class="form-control" id="shortDescription" name="shortDescription" rows="5">@createNewsViewModel.News.ShortDescription</textarea>
+            </div>
+            <div class="form-group">
+                <label for="content">@dict.CreatingNewsContentCaption</label>
+                <textarea class="form-control" id="content" name="content" rows="10" required>@createNewsViewModel.News.Content</textarea>
+                <label for="toggle-smiles" id="label-for-toggle-smiles">😃</label>
+                <input type="checkbox" id="toggle-smiles">
+                <div class="smiles">
+                    @if (createNewsViewModel.Emoji != null)
+                    {
+                        @foreach (var item in createNewsViewModel.Emoji)
+                        {
+                            <span class="smile" id="@item.Hashcode">
+                                @item.EmojiString
+                            </span>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="hashtags">@dict.CreatingNewsShortDescriptionCaption</label>
+                <input type="text" class="form-control" id="hashtags" name="hashtags" value="@createNewsViewModel.News.Hashtags">
+            </div>
+            <button type="submit" class="btn btn-primary">@dict.SaveButtonCaption</button>
+        </form>
+    }
+</div>
+
+<style>
+    #dialog-mainDiv {
+        vertical-align: middle;
+        display: flex;
+        height: 100%;
+    }
+
+    #dialog-firstDiv {
+        margin: auto;
+    }
+
+    #dialog-button-div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: flex-end;
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+    }
+
+    #dont-delete-news {
+        margin: 0 10px;
+        border: solid #efefef 1px;
+    }
+
+        #dont-delete-news:hover {
+            background: #efefef;
+        }
+
+    #delete-block {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+        #delete-block #ask-delete-news {
+            padding: 5px 40px;
+            border: solid #efefef 1px;
+            border-radius: 5px;
+        }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$(".smile").click(function () {
+            var smile = this.innerText;
+            var text = $.trim($("#content").val());
+            $("#content").focus().val(text + ' ' + smile + ' ');
+		});
+
+        var dialog = document.getElementById('dialog-delete-news');
+        $("#ask-delete-news").click(function () {
+            dialog.showModal();
+        });
+        $("#dont-delete-news").click(function () {
+            dialog.close();
+        });
+	});
+</script>

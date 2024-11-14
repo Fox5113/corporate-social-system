@@ -4,6 +4,7 @@ namespace WebApi.Models.Employee
 {
     public class UpdatingEmployeeModel
     {
+        public Guid Id { get; set; }
         public string Firstname { get; set; }
         public string Surname { get; set; }
         public string Position { get; set; }

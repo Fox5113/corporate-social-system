@@ -56,26 +56,35 @@ namespace DataAccess.Repositories
         /// Создание/изменение сотрудников
         /// </summary>
         /// <param name="employees"> Список сотрудников. </param>
-        public void CreateOrUpdateRange(List<Employee> employees)
+        public async Task<bool> CreateOrUpdateRange(List<Employee> employees)
         {
-            foreach (var employee in employees)
+            try
             {
-                var empFromDb = Get(employee.Id);
-
-                if (empFromDb != null)
+                foreach (var employee in employees)
                 {
-                    empFromDb.Surname = employee.Surname;
-                    empFromDb.Firstname = employee.Firstname;
-                    empFromDb.Position = employee.Position;
-                    empFromDb.IsDeleted = employee.IsDeleted;
-                    empFromDb.IsAdmin = employee.IsAdmin;
+                    var empFromDb = Get(employee.Id);
 
-                    Update(empFromDb);
+                    if (empFromDb != null)
+                    {
+                        empFromDb.Surname = employee.Surname;
+                        empFromDb.Firstname = employee.Firstname;
+                        empFromDb.Position = employee.Position;
+                        empFromDb.IsDeleted = employee.IsDeleted;
+                        empFromDb.IsAdmin = employee.IsAdmin;
+
+                        Update(empFromDb);
+                    }
+                    else
+                    {
+                        await AddAsync(employee);
+                    }
                 }
-                else
-                {
-                    Add(employee);
-                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

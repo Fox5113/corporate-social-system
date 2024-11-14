@@ -51,28 +51,32 @@ namespace BusinessLogic.Services
             return createdEmployee.Id;
         }
 
-        public async Task UpdateAsync(Guid id, UpdatingEmployeeDto updatingEmployeeDto)
+        public async Task UpdateAsync(UpdatingEmployeeDto updatingEmployeeDto)
         {
-            var employee = await _employeeRepository.GetAsync(id);
+            var employee = await _employeeRepository.GetAsync(updatingEmployeeDto.Id);
             if (employee == null)
             {
-                throw new Exception($"Сотрудник с идентификатором {id} не найден.");
+                var employeeNew = _mapper.Map<UpdatingEmployeeDto, Employee>(updatingEmployeeDto);
+                await _employeeRepository.AddAsync(employeeNew);
+                await _employeeRepository.SaveChangesAsync();
             }
+            else
+            {
+                employee.Firstname = updatingEmployeeDto.Firstname;
+                employee.EmploymentDate = updatingEmployeeDto.EmploymentDate;
+                employee.Birthdate = updatingEmployeeDto.Birthdate;
+                employee.Surname = updatingEmployeeDto.Surname;
+                employee.Position = updatingEmployeeDto.Position;
+                employee.IsAdmin = updatingEmployeeDto.IsAdmin;
+                employee.IsDeleted = updatingEmployeeDto.IsDeleted;
+                employee.About = updatingEmployeeDto.About;
+                employee.MainEmail = updatingEmployeeDto.MainEmail;
+                employee.MainTelephoneNumber = updatingEmployeeDto.MainTelephoneNumber;
+                employee.OfficeAddress = updatingEmployeeDto.OfficeAddress;
 
-            employee.Firstname = updatingEmployeeDto.Firstname;
-            employee.EmploymentDate = updatingEmployeeDto.EmploymentDate;
-            employee.Birthdate = updatingEmployeeDto.Birthdate;
-            employee.Surname = updatingEmployeeDto.Surname;
-            employee.Position = updatingEmployeeDto.Position;
-            employee.IsAdmin = updatingEmployeeDto.IsAdmin;
-            employee.IsDeleted = updatingEmployeeDto.IsDeleted;
-            employee.About = updatingEmployeeDto.About;
-            employee.MainEmail = updatingEmployeeDto.MainEmail;
-            employee.MainTelephoneNumber = updatingEmployeeDto.MainTelephoneNumber;
-            employee.OfficeAddress = updatingEmployeeDto.OfficeAddress;
-
-            _employeeRepository.Update(employee);
-            await _employeeRepository.SaveChangesAsync();
+                _employeeRepository.Update(employee);
+                await _employeeRepository.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteAsync(Guid id)

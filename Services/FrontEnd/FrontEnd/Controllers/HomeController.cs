@@ -18,38 +18,114 @@ namespace FrontEnd.Controllers
             _newsService = newsService;
         }
 
+        private async Task InitSessionData()
+        {
+            try
+            {
+                if(HttpContext?.Request?.Cookies[Constants.UserIdCookieKey] != null)
+                {
+                    try
+                    {
+                        var userModel = await _newsService.GetPersonalAccountData(HttpContext.Request.Cookies[Constants.UserIdCookieKey].ToString());
+                        ViewData[Constants.PersonalAccountDataKey] = userModel;
+                        HttpContext.Session.SetString(User.Identity.Name, userModel.Id.ToString());
+                        HttpContext.Session.SetString(User.Identity.Name + Constants.FullNamePrefix, userModel.Firstname + " " + userModel.Surname);
+                        HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, !String.IsNullOrEmpty(userModel.Language) ? userModel.Language : Constants.LanguageBase);
+                    }
+                    catch(Exception ex) { }
+                }
+                
+                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
+                {
+                    var userModel = await _newsService.GetUserByLogin(User.Identity.Name);
+                    if (userModel != null)
+                    {
+                        HttpContext.Session.SetString(User.Identity.Name, userModel.Id.ToString());
+                        HttpContext.Session.SetString(User.Identity.Name + Constants.FullNamePrefix, userModel.Name);
+                        HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, Constants.LanguageBase);
+                    }
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void InitViewData()
+        {
+            var lang = HttpContext.Session.GetString(User.Identity.Name + Constants.LanguagePrefix);
+            if (!String.IsNullOrEmpty(User?.Identity?.Name) && !String.IsNullOrEmpty(lang))
+            {
+                ViewData[Constants.CaptionsKey] = Constants.Dictionaries[lang];
+            }
+
+            if (ViewData[Constants.CaptionsKey] == null)
+            {
+                ViewData[Constants.CaptionsKey] = Constants.Dictionaries[Constants.LanguageBase];
+            }
+
+            ViewData[Constants.UserFullNameKey] = HttpContext.Session.GetString(User?.Identity?.Name + Constants.FullNamePrefix);
+        }
+
         public async Task<IActionResult> Index()
         {
             try
             {
-                var newsList = await _newsService.GetPublishedListAsync(1, 10, new Guid("35044f8e-065d-4b59-9d4c-f393ea8a90b6"));
-                return View(newsList);
+                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
+                {
+                    await InitSessionData();
+                }
+                InitViewData();
+
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                {
+                    try
+                    {
+                        var newsList = await _newsService.GetPublishedListAsync(1, 10, userId);
+                        ViewData[Constants.NewsFeedListViewDataKey] = newsList;
+                    }
+                    catch (Exception ex) { }
+                }
+                return View();
             }
             catch (Exception ex)
             {
-                return View(new List<NewsViewModel>());
+                return View();
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> Like(string newsId)
         {
-            if (!string.IsNullOrEmpty(newsId) && Guid.TryParse(newsId, out var id)) {
-
-                var likesInfo = await _newsService.Like(id, new Guid("35044f8e-065d-4b59-9d4c-f393ea8a90b6"));
-                return Ok(likesInfo);
+            try
+            {
+                if (!string.IsNullOrEmpty(newsId) && Guid.TryParse(newsId, out var id))
+                {
+                    if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                    {
+                        var likesInfo = await _newsService.Like(id, userId);
+                        return Ok(likesInfo);
+                    }
+                }
             }
+            catch (Exception ex) { }
 
             return Ok();
         }
 
         public IActionResult Privacy()
         {
+            if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
+            {
+                InitSessionData();
+            }
             return View();
         }
 
         public IActionResult Timesheet()
         {
+            if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
+            {
+                InitSessionData();
+            }
             return View();
         }
 

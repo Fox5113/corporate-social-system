@@ -11,9 +11,9 @@
         public string HostName { get; set; }
 
         public ApplicationSettings() {
-            //SiteUrl = "https://localhost:5201";
+            SiteUrl = "https://localhost:7175";
             HostName = "localhost";
-            RabbitMqQueue = "MyQueue";
+            RabbitMqQueue = "EmployeeRangeForNewsFeed";
         }
     }
 }

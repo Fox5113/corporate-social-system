@@ -6,7 +6,7 @@ namespace DA.Repositories.Abstractions
     {
 
         Task<List<Employee>> GetAllEmployee();
-        void CreateOrUpdateRange(ICollection<Employee> employees);
+        Task CreateOrUpdateRange(ICollection<Employee> employees);
         Task<Guid> UpdateEmployee(Employee employee);
     }
 }

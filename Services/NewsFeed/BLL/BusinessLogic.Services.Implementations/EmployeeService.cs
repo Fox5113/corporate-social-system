@@ -48,12 +48,14 @@ namespace BusinessLogic.Services
         /// Создание/изменение сотрудников
         /// </summary>
         /// <param name="employees"> Список сотрудников. </param>
-        public void CreateOrUpdateRange(List<ShortEmployeeDto> employees)
+        public async Task<bool> CreateOrUpdateRange(List<ShortEmployeeDto> employees)
         {
             var list = employees.Where(x => x != null && x.Id != Guid.Empty).ToList();
             
-            _employeeRepository.CreateOrUpdateRange(_mapper.Map<List<ShortEmployeeDto>, List<Employee>>(list));
-            _employeeRepository.SaveChanges();
+            var result = await _employeeRepository.CreateOrUpdateRange(_mapper.Map<List<ShortEmployeeDto>, List<Employee>>(list));
+            await _employeeRepository.SaveChangesAsync();
+
+            return result;
         }
     }
 }

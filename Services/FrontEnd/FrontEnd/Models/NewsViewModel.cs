@@ -16,5 +16,6 @@
         public List<HashtagNewsModel>? HashtagNewsList { get; set; }
         public List<HashtagModel>? HashtagList { get; set; }
         public string? Hashtags { get; set; }
+        public bool IsAuthor {  get; set; }
     }
 }

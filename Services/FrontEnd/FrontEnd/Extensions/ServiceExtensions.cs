@@ -11,12 +11,14 @@ namespace FrontEnd.Extensions
         {
             services.AddHttpClient<AuthService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7192/");
+                client.BaseAddress = new Uri("https://localhost:7272/");
             });
             services.AddHttpClient<NewsService>(client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7175/");
             });
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
             services.AddAuthentication(options =>
             {

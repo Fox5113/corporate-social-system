@@ -1,4 +1,29 @@
-﻿* {
+﻿.smiles {
+    display: none;
+    text-align: center;
+    max-height: 200px;
+    height: 250px;
+    overflow: auto;
+    background: #fff;
+    border: solid #efefef 1px;
+    margin: 20px 0;
+}
+
+#toggle-smiles {
+    display: none;
+}
+
+    #toggle-smiles:checked ~ .smiles {
+        display: block;
+    }
+
+#label-for-toggle-smiles {
+    top: -30px;
+    left: 8px;
+    position: relative;
+}
+
+* {
     box-sizing: border-box;
 }
 
@@ -283,10 +308,12 @@
     margin-top: 50px;
 }
 
-.smiles {
-    text-align: center;
-}
-
 .smile {
     cursor: pointer;
+}
+
+.pen-update {
+    border: none;
+    position: absolute;
+    right: 15px;
 }

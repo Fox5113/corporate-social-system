@@ -1,4 +1,7 @@
-﻿namespace WebApi.Settings
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace WebApi.Settings
 {
     /// <summary>
     /// Настройки приложения
@@ -7,14 +10,16 @@
     {
         public string ConnectionString { get; set; }
         public string SiteUrl { get; set; }
-        public string RabbitMqQueue { get; set; }
+        public List<string> Queues { get; set; }
+        public string EmployeeFromAuthServiceQueue { get; set; }
         public string HostName { get; set; }
 
         public ApplicationSettings() {
             ConnectionString = "Server=localhost;Database=Employees;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true;encrypt=false;";
-            SiteUrl = "https://localhost:5202";
+            SiteUrl = "https://localhost:7177";
             HostName = "localhost";
-            RabbitMqQueue = "MyQueue";
+            Queues = new List<string>() { "EmployeeRangeForPersonalAccount", "EmployeeRangeForNewsFeed" };
+            EmployeeFromAuthServiceQueue = "AuthUsersQueue";
         }
     }
 }

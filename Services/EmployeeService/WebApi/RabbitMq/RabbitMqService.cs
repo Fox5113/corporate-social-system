@@ -30,22 +30,25 @@ namespace WebApi.RabbitMq
             {
                 try
                 {
-                    var factory = new ConnectionFactory() { HostName = _applicationSettings.HostName };
-                    using (var connection = factory.CreateConnection())
-                    using (var channel = connection.CreateModel())
+                    foreach (var queueName in _applicationSettings.Queues)
                     {
-                        channel.QueueDeclare(queue: _applicationSettings.RabbitMqQueue,
-                                       durable: true,
-                                       exclusive: false,
-                                       autoDelete: false,
-                                       arguments: null);
+                        var factory = new ConnectionFactory() { HostName = _applicationSettings.HostName };
+                        using (var connection = factory.CreateConnection())
+                        using (var channel = connection.CreateModel())
+                        {
+                            channel.QueueDeclare(queue: queueName,
+                                           durable: true,
+                                           exclusive: false,
+                                           autoDelete: false,
+                                           arguments: null);
 
-                        var body = Encoding.UTF8.GetBytes(message);
+                            var body = Encoding.UTF8.GetBytes(message);
 
-                        channel.BasicPublish(exchange: "",
-                                       routingKey: _applicationSettings.RabbitMqQueue,
-                                       basicProperties: null,
-                                       body: body);
+                            channel.BasicPublish(exchange: "",
+                                           routingKey: queueName,
+                                           basicProperties: null,
+                                           body: body);
+                        }
                     }
                 }
                 catch (Exception ex)

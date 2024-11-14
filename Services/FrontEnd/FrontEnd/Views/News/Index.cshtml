@@ -1,7 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "Новости";
-    ViewData["PageTitle"] = "Новости компании";
+    var dict = ((CaptionsBase)ViewData[Constants.CaptionsKey]);
+    if (dict == null)
+        dict = new CaptionsBase();
+    ViewData["Title"] = dict.TitleNewsCaption;
+    ViewData["PageTitle"] = dict.PageTitleNewsCaption;
+
+    var newsListViewModel = (NewsListViewModel)ViewData[Constants.NewsListViewModelKey];
 }
+<link rel="stylesheet" href="/css/news.css" />
+<link rel="stylesheet" href="/css/menu-tabs-news.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
 <div class="pc-tab">
     <input checked="checked" id="tab1" type="radio" name="pct" />
@@ -10,48 +18,48 @@
     <nav>
         <ul>
             <li class="tab1">
-                <label for="tab1">Создать новость</label>
+                <label for="tab1">@dict.CreateNewsCaption</label>
             </li>
             <li class="tab2">
-                <label for="tab2">Поиск</label>
+                <label for="tab2">@dict.SearchNewsCaption</label>
             </li>
             <li class="tab3">
-                <label for="tab3">Расширенный поиск</label>
+                <label for="tab3">@dict.WideSearchNewsCaption</label>
             </li>
         </ul>
     </nav>
     <section>
         <div class="tab1">
-            <a class="more-news light-gray-button" asp-area="" asp-controller="News" asp-action="Create">Перейти к созданию новости</a>
+            <a class="more-news light-gray-button" asp-area="" asp-controller="News" asp-action="Create">@dict.GoToCreatingNewsCaption</a>
         </div>
         <div class="tab2">
             <form id="searchForm" method="post" asp-controller="News" asp-action="Search">
-                <input class="form-control" id="page" name="page" type="hidden" value="@Model.PagingInfo.CurrentPage">
+                <input class="form-control" id="page" name="page" type="hidden" value="@newsListViewModel.PagingInfo.CurrentPage">
                 <div class="form-group">
-                    <label for="title">Тема (частично)</label>
+                    <label for="title">@dict.SearchPlainFormTitleCaption</label>
                     <input type="text" class="form-control" id="title" name="title">
                 </div>
                 <div class="form-group">
-                    <label for="authorName">Имя автора</label>
+                    <label for="authorName">@dict.SearchPlainFormAuthorNameCaption</label>
                     <input type="text" class="form-control" id="authorName" name="authorName">
                 </div>
                 <div class="form-group">
-                    <label for="authorSurname">Фамилия автора</label>
+                    <label for="authorSurname">@dict.SearchPlainFormAuthorSurnameCaption</label>
                     <input type="text" class="form-control" id="authorSurname" name="authorSurname">
                 </div>
                 <div class="form-group">
-                    <label for="start">Дата создания С</label>
+                    <label for="start">@dict.SearchPlainFormCreatedAtStartCaption</label>
                     <input type="date" class="form-control" id="start" name="start">
                 </div>
                 <div class="form-group">
-                    <label for="end">Дата создания ПО</label>
+                    <label for="end">@dict.SearchPlainFormCreatedAtTillCaption</label>
                     <input type="date" class="form-control" id="end" name="end">
                 </div>
                 <div class="form-group">
-                    <label for="hashtags">Хэштеги (через пробел без решетки)</label>
+                    <label for="hashtags">@dict.SearchPlainFormHashtagsCaption</label>
                     <input type="text" class="form-control" id="hashtags" name="hashtags">
                 </div>
-                <button type="submit" class="btn btn-primary">Искать</button>
+                <button type="submit" class="btn btn-primary">@dict.SearchButtonCaption</button>
             </form>
         </div>
         <div class="tab3">
@@ -63,57 +71,63 @@
 <!-- Новости -->
 <div class="news-class-container" id="news-container">
     <div class="row justify-content-center" id="news-row-container">
-        @foreach (var news in Model.News)
+        @if (newsListViewModel != null && newsListViewModel.News != null)
         {
-            <div class="col-md-12 col-lg-12">
-                <div class="news-card card mb-4 shadow-sm">
-                    <!--<img class="card-img-top" src="/img/test/64559-thanks5.png" alt="News Image">-->
-                    <div class="card-body_@news.Id">
-                        <h5 class="card-title-news">@news.Title</h5>
-                        <p class="card-text-news">@news.ShortDescription</p>
-                        <input type="checkbox" id="cb_@news.Id" class="hide" />
-                        <label for="cb_@news.Id" class="light-gray-button more-text">Подробнее</label>
-                        <label for="cb_@news.Id" class="light-gray-button hide-text">Скрыть</label>
-                        <div>
-                            <p>@news.Content</p>
-                            <small>@news.Hashtags</small>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="col-md-11 col-lg-11">
-                                <small class="text-muted date-time-news">@news.CreatedAt</small>
-                                <small class="text-muted author-news">@news.AuthorFullName</small>
+            @foreach (var news in newsListViewModel.News)
+            {
+                <div class="col-md-12 col-lg-12">
+                    <div class="news-card card mb-4 shadow-sm">
+                        <!--<img class="card-img-top" src="/img/test/64559-thanks5.png" alt="News Image">-->
+                        <div class="card-body_@news.Id">
+                            @if (news.IsAuthor)
+                            {
+                                <form id='updateNews' method='post' asp-controller='News' asp-action='Update'>
+                                    <input class='form-control' id='newsId' name='newsId' type='hidden' value='@news.Id'>
+                                    <button type='submit' class='pen-update'>✏️</button>
+                                </form>
+                            }
+                            <h5 class="card-title-news">@news.Title</h5>
+                            <p class="card-text-news">@news.ShortDescription</p>
+                            <input type="checkbox" id="cb_@news.Id" class="hide" />
+                            <label for="cb_@news.Id" class="light-gray-button more-text">@dict.MoreButtonCaption</label>
+                            <label for="cb_@news.Id" class="light-gray-button hide-text">@dict.HideButtonCaption</label>
+                            <div>
+                                <p>@news.Content</p>
+                                <small>@news.Hashtags</small>
                             </div>
-                            <div class="col-md-1 col-lg-1">
-                                <div class="news-wrapper">
-                                    <a href="javascript:void(0)" class="like-button @(news.IsLikedByCurrentUser ? "is-active" : string.Empty) news-id_@news.Id">
-                                        <i class="material-icons not-liked bouncy">favorite_border</i>
-                                        <i class="material-icons is-liked bouncy">favorite</i>
-                                        <span class="like-overlay"></span>
-                                    </a>
+                            <div class="d-flex align-items-center">
+                                <div class="col-md-11 col-lg-11">
+                                    <small class="text-muted date-time-news">@news.CreatedAt</small>
+                                    <small class="text-muted author-news">@news.AuthorFullName</small>
                                 </div>
-                                <span class="text-muted likes-count_@news.Id">@news.Likes</span>
+                                <div class="col-md-1 col-lg-1">
+                                    <div class="news-wrapper">
+                                        <a href="javascript:void(0)" class="like-button @(news.IsLikedByCurrentUser ? "is-active" : string.Empty) news-id_@news.Id">
+                                            <i class="material-icons not-liked bouncy">favorite_border</i>
+                                            <i class="material-icons is-liked bouncy">favorite</i>
+                                            <span class="like-overlay"></span>
+                                        </a>
+                                    </div>
+                                    <span class="text-muted likes-count_@news.Id">@news.Likes</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
     <div class="row justify-content-center">
-        <a class="more-news load-more light-gray-button" href="javascript:void(0)">Больше</a>
+        <a class="more-news load-more light-gray-button" href="javascript:void(0)">@dict.LoadMoreCaption</a>
     </div>
 </div>
-
-<link rel="stylesheet" href="/css/news.css" />
-<link rel="stylesheet" href="/css/menu-tabs-news.css" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     function like() {
         $('.like-button').click(function () {
             var btn = $(this);
-            var newsIdClass = btn[0].classList.value.split(' ').find(item => item.includes('news-id'));;
+            var newsIdClass = btn[0].classList.value.split(' ').find(item => item.includes('news-id'));
             if (newsIdClass) {
                 var newsId = newsIdClass.split('_')[1];
                 $.ajax({
@@ -136,7 +150,7 @@
     $(document).ready(function () {
         like();
 
-        var p = @Model.PagingInfo.CurrentPage;
+        var p = @newsListViewModel?.PagingInfo.CurrentPage;
         $('.load-more').click(function () {
             $.ajax({
                 type: 'POST',
@@ -154,7 +168,7 @@
 
                             htmlLine += ("<div class='col-md-12 col-lg-12'><div class='news-card card mb-4 shadow-sm'><div class='card-body_" + news.id + "'><h5 class='card-title-news'>" + news.title + "</h5>" +
                                 "<p class='card-text-news'>" + news.shortDescription + "</p><input type='checkbox' id='cb_" + news.id + "' class='hide' />" +
-                                "<label for='cb_" + news.id + "' class='light-gray-button more-text'>Подробнее</label><label for='cb_" + news.id + "' class='light-gray-button hide-text'>Скрыть</label>" +
+                                "<label for='cb_" + news.id + "' class='light-gray-button more-text'>@dict.MoreButtonCaption</label><label for='cb_" + news.id + "' class='light-gray-button hide-text'>@dict.HideButtonCaption</label>" +
                                 "<div>" + news.content + "</div><div class='d-flex align-items-center'><div class='col-md-11 col-lg-11'><small class='text-muted date-time-news'>" + news.createdAt + "</small>" +
                                 "<small class='text-muted author-news'>" + news.authorFullName + "</small></div><div class='col-md-1 col-lg-1'>" +
                                 "<div class='news-wrapper'><a href='javascript: void(0)' class='like-button " + (news.isLikedByCurrentUser ? "is-active" : '') + " news-id_" + news.id + "'>" +
@@ -167,6 +181,6 @@
                     }
                 }
             });
-        })
+        });
     })
 </script>

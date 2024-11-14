@@ -80,20 +80,14 @@ namespace PersonalAccountV2.Controllers
 
         [Route("CreateOrUpdate")]
         [HttpPost]
-        public IActionResult CreateOrUpdate(string jsonData)
+        public async Task<IActionResult> CreateOrUpdate([FromBody] List<ShortEmployeeModel> employees)
         {
-            if (jsonData == null)
-                return BadRequest("EmployeeController.CreateOrUpdate: jsonData is null.");
-
             try
             {
-                var employees = JsonSerializer.Deserialize<List<ShortEmployeeModel>>(jsonData);
-
-                if (employees == null)
+                if (employees == null || employees.Count == 0)
                     return BadRequest("EmployeeController.CreateOrUpdate: employees collection is null.");
 
-                if (employees.Count > 0) 
-                    _service.CreateOrUpdateRange(_mapper.Map<List<ShortEmployeeModel>, List<ShortEmployeeDto>>(employees));
+                await _service.CreateOrUpdateRange(_mapper.Map<List<ShortEmployeeModel>, List<ShortEmployeeDto>>(employees));
 
                 return Ok();
             }

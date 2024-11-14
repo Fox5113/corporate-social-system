@@ -43,5 +43,10 @@ namespace DataAccess.Repositories
             var result = await _userManager.DeleteAsync(user);
             return result.Succeeded;
         }
+
+        public async Task<ApplicationUser?> GetUserByNameAsync(string userName)
+        {
+            return await _userManager.FindByNameAsync(userName);
+        }
     }
 }

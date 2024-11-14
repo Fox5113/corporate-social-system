@@ -16,6 +16,7 @@
         public DateTime? EmploymentDate { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsAdmin { get; set; }
+        public string? Language {  get; set; }
         public ICollection<Accomplishment>? AccomplishmentsList { get; set; }
         public ICollection<Skill>? SkillsList { get; set; }
         public ICollection<Communication>? CommunicationsList { get; set; }

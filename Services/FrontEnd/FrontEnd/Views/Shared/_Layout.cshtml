@@ -1,9 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var dict = ((CaptionsBase)ViewData[Constants.CaptionsKey]);
+    if (dict == null)
+        dict = new CaptionsBase();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Корпоративная социальная система</title>
+    <title>@ViewData["Title"] - @dict.CorporationSocialSystem</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/footer.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -38,20 +44,24 @@
                     <img src="https://via.placeholder.com/40" alt="User">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @User.Identity.Name
+                        @ViewData["UserFullName"]
                     }
                     else
                     {
-                        <text>Гость</text>
+                        <text>@dict.GuestCaption</text>
                     }
                 </button>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="user-dropdown" id="userDropdown">
-                        <a class="user-dropdown-item" href="/Profile">Профиль</a>
+                        <a class="user-dropdown-item" href="/Profile">@dict.ProfileCaption</a>
                         <form class="user-dropdown-item" method="post" action="/Logout">
-                            <button type="submit" style="background:none; border:none; cursor:pointer; color:#007bff; padding:0;">Выход</button>
+                            <button type="submit" style="background:none; border:none; cursor:pointer; color:#007bff; padding:0;">@dict.ExitCaption</button>
                         </form>
+                    </div>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <a href="javascript:void(0)" id="setRUbtn" class="langBtnClass" onclick="setLang()">@Constants.LangRUCaption</a>
+                        <a href="javascript:void(0)" id="setENbtn" class="langBtnClass" onclick="setLang()">@Constants.LangENCaption</a>
                     </div>
                 }
             </div>
@@ -60,8 +70,9 @@
 
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
-        <a asp-area="" asp-controller="Home" asp-action="Timesheet">Таймшит</a>
-        <a asp-area="" asp-controller="News" asp-action="Index">Новости</a>
+        <a asp-area="" asp-controller="Personal" asp-action="Index">@dict.PersonalAccountMenuCaption</a>
+        <a asp-area="" asp-controller="Home" asp-action="Timesheet">@dict.TimesheetMenuCaption</a>
+        <a asp-area="" asp-controller="News" asp-action="Index">@dict.NewsFeedMenuCaption</a>
     </div>
 
     <div class="container">

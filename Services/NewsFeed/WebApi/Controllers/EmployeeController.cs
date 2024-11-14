@@ -68,22 +68,17 @@ namespace WebApi.Controllers
 
         [Route("CreateOrUpdateEmployeeRange")]
         [HttpPost]
-        public IActionResult CreateOrUpdateEmployeeRange(string jsonData)
+        public async Task<ActionResult<bool>> CreateOrUpdateEmployeeRange(List<ShortEmployeeModel> employees)
         {
-            if (jsonData == null)
-                return BadRequest("EmployeeController.CreateOrUpdateEmployeeRange: jsonData is null.");
-
             try
             {
-                var employees = JsonSerializer.Deserialize<List<ShortEmployeeModel>>(jsonData);
-
                 if (employees == null)
                     return BadRequest("EmployeeController.CreateOrUpdateEmployeeRange: employees collection is null.");
 
                 if (employees != null && employees.Count > 0)
-                    _service.CreateOrUpdateRange(_mapper.Map<List<ShortEmployeeModel>, List<ShortEmployeeDto>>(employees));
+                    return Ok(await _service.CreateOrUpdateRange(_mapper.Map<List<ShortEmployeeModel>, List<ShortEmployeeDto>>(employees)));
 
-                return Ok();
+                return Ok(false);
             }
             catch (Exception ex)
             {

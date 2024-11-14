@@ -20,6 +20,7 @@ namespace BS.Contracts.Employee
         public DateTime? EmploymentDate { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsAdmin { get; set; }
+        public string? Language {  get; set; }
         public List<AccomplishmentDto>? AccomplishmentsList { get; set; }
         public List<SkillDto>? SkillsList { get; set; }
         public List<CommunicationDto>? CommunicationsList { get; set; }

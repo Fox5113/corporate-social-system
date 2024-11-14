@@ -27,6 +27,6 @@ namespace DataAccess.Repositories.Abstractions
         /// Создание/изменение сотрудников
         /// </summary>
         /// <param name="employees"> Список сотрудников. </param>
-        void CreateOrUpdateRange(List<Employee> employees);
+        Task<bool> CreateOrUpdateRange(List<Employee> employees);
     }
 }
