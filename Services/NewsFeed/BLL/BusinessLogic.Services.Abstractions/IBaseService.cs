@@ -1,8 +1,8 @@
-﻿using DataAccess.Common.SqlQuery;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using DataAccess.Common.SqlQuery;
 
-namespace BusinessLogic.Services.Abstractions
+namespace BusinessLogic.Abstractions
 {
     public interface IBaseService
     {

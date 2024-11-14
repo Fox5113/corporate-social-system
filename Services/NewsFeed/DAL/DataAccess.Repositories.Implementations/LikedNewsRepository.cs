@@ -1,7 +1,6 @@
 ﻿using DataAccess.Entities;
-using DataAccess.EntityFramework;
-using Infrastructure.Repositories.Implementations;
 using System;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {

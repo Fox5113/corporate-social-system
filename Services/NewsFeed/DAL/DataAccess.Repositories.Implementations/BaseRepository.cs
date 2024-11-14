@@ -1,13 +1,11 @@
 ﻿using DataAccess.Common;
 using DataAccess.Common.SqlQuery;
 using DataAccess.Common.SqlQuery.MSSQL;
-using DataAccess.EntityFramework;
-using DataAccess.Repositories.Abstractions;
-using Infrastructure.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {

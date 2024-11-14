@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DataAccess.EntityFramework
+namespace DataAccess.Context
 {
     public static class EntityFrameworkInstaller
     {

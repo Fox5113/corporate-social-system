@@ -1,13 +1,13 @@
-﻿using DataAccess.Common.SqlQuery;
-using DataAccess.Common.SqlQuery.MSSQL;
-using DataAccess.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DataAccess.Common.SqlQuery;
+using DataAccess.Common.SqlQuery.MSSQL;
+using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories.Implementations
+namespace DataAccess.Repositories
 {
     /// <summary>
     /// Репозиторий.

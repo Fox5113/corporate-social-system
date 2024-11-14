@@ -5,11 +5,11 @@ using BusinessLogic.Contracts.LikedNews;
 using BusinessLogic.Contracts.News;
 using DataAccess.Common;
 using DataAccess.Entities;
-using DataAccess.Repositories.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccess.Repositories;
 
 namespace BusinessLogic.Services
 {

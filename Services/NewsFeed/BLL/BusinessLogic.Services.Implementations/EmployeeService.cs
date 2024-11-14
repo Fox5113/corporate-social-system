@@ -4,9 +4,9 @@ using DataAccess.Entities;
 using BusinessLogic.Abstractions;
 using AutoMapper;
 using BusinessLogic.Contracts.Employee;
-using DataAccess.Repositories.Abstractions;
 using System.Threading.Tasks;
 using System.Linq;
+using DataAccess.Repositories;
 
 namespace BusinessLogic.Services
 {

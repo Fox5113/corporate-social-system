@@ -1,9 +1,7 @@
 ﻿using BusinessLogic.Abstractions;
 using BusinessLogic.Services;
-using BusinessLogic.Services.Abstractions;
-using DataAccess.EntityFramework;
+using DataAccess.Context;
 using DataAccess.Repositories;
-using DataAccess.Repositories.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.Settings;
