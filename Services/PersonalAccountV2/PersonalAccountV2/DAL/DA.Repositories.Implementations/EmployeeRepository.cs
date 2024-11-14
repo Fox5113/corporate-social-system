@@ -27,13 +27,11 @@ namespace DA.Repositories.Implementations
             return collection;
         }
 
-        public void CreateOrUpdateRange(ICollection<Employee> employees)
+        public async Task CreateOrUpdateRange(ICollection<Employee> employees)
         {
             foreach (var employee in employees)
             {
-                Employee emp = null;
-                if (employee.Id != Guid.Empty)
-                    emp = Get(employee.Id);
+                var emp = employee.Id != Guid.Empty ? Get(employee.Id) : null;
 
                 if (emp != null)
                 {
@@ -43,6 +41,12 @@ namespace DA.Repositories.Implementations
                     emp.IsDeleted = employee.IsDeleted;
                     emp.IsAdmin = employee.IsAdmin;
                     emp.UpdatedAt = DateTime.UtcNow;
+
+                    Update(emp);
+                }
+                else
+                {
+                    await AddAsync(employee);
                 }
             }
         }
@@ -50,14 +54,12 @@ namespace DA.Repositories.Implementations
         public async Task<List<Employee>> GetAllEmployee()
         {
             var query = GetAll();
-            return await query.ToListAsync<Employee>();
+            return await query.ToListAsync();
         }
 
         public async Task<Guid> UpdateEmployee(Employee employee)
         {
-            Employee emp = null;
-            if (employee.Id != Guid.Empty)
-                emp = Get(employee.Id);
+            var emp = employee.Id != Guid.Empty ? Get(employee.Id) : null;
 
             if (emp != null)
             {
@@ -72,6 +74,9 @@ namespace DA.Repositories.Implementations
                 emp.MainTelephoneNumber = employee.MainTelephoneNumber;
                 emp.IsAdmin = employee.IsAdmin;
                 emp.IsDeleted = employee.IsDeleted;
+                emp.Language = employee.Language;
+
+                Update(emp);
 
                 return emp.Id;
             }

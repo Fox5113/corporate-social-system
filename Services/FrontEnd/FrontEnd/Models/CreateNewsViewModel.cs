@@ -4,7 +4,7 @@ namespace FrontEnd.Models
 {
 	public class CreateNewsViewModel
 	{
-		public string EmojiString {  get; set; }
-		public SingleEmoji Emoji {  get; set; }
+		public NewsViewModel News { get; set; }
+		public List<EmojiViewModel> Emoji { get; set; }
     }
 }

@@ -1,17 +1,20 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using BusinessLogic.Abstractions;
 using BusinessLogic.Contracts.Employee;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Models;
 using WebApi.Models.Employee;
 using WebApi.RabbitMq;
 
 namespace WebApi.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _service;
@@ -32,7 +35,7 @@ namespace WebApi.Controllers
         }
 
         [Route("GetAsync")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             if (id == Guid.Empty)
@@ -100,11 +103,64 @@ namespace WebApi.Controllers
             }
         }
 
-        [Route("EditAsync")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditAsync(Guid id, UpdatingEmployeeModel employeeModel)
+        [Route("CreateOrUpdateEmployee")]
+        [HttpPost]
+        public async Task<ActionResult<bool>> CreateOrUpdateEmployee([FromBody] UserModel userModel)
         {
-            if (id == Guid.Empty)
+            if (userModel == null)
+            {
+                _logger.LogError("EmployeeController.CreateOrUpdateEmployee: userModel is null.");
+                return BadRequest(GetBadRequestObject("EmployeeController.CreateOrUpdateEmployee: userModel is null."));
+            }
+
+            var fio = userModel.Name?.Split(' ').Select(x => x.Trim()).ToList();
+            var name = "";
+            var surname = "";
+            if (fio != null && fio.Count > 0)
+            {
+                name = fio[0];
+                if (fio.Count > 1)
+                    surname = fio[1];
+            }
+
+            try
+            {
+                if (userModel.IsDeleted)
+                {
+                    var shortEmployeeData = new ShortEmployeeModel()
+                    {
+                        Id = userModel.Id,
+                        IsDeleted = true
+                    };
+                    _rabbitMqService.SendMessage(new List<ShortEmployeeModel>() { shortEmployeeData });
+                    await _service.DeleteAsync(userModel.Id);
+                }
+                else
+                {
+                    var shortEmployeeData = new ShortEmployeeModel()
+                    {
+                        Id = userModel.Id,
+                        Firstname = name,
+                        Surname = surname
+                    };
+                    _rabbitMqService.SendMessage(new List<ShortEmployeeModel>() { shortEmployeeData });
+                    var dto = new UpdatingEmployeeDto() { Id = userModel.Id, Firstname = name, Surname = surname, MainEmail = userModel.Email };
+                    await _service.UpdateAsync(dto);
+                }
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"EmployeeController.CreateOrUpdateEmployee: {ex}"));
+            }
+        }
+
+        [Route("EditAsync")]
+        [HttpPut]
+        public async Task<IActionResult> EditAsync(UpdatingEmployeeModel employeeModel)
+        {
+            if (employeeModel.Id == Guid.Empty)
             {
                 _logger.LogError("EmployeeController.EditAsync: id is empty.");
                 return BadRequest(GetBadRequestObject("EmployeeController.EditAsync: id is empty."));
@@ -117,10 +173,10 @@ namespace WebApi.Controllers
 
             try
             {
-                await _service.UpdateAsync(id, _mapper.Map<UpdatingEmployeeModel, UpdatingEmployeeDto>(employeeModel));
+                await _service.UpdateAsync(_mapper.Map<UpdatingEmployeeModel, UpdatingEmployeeDto>(employeeModel));
                 var shortEmployeeData = new ShortEmployeeModel()
                 {
-                    Id = id,
+                    Id = employeeModel.Id,
                     Firstname = employeeModel.Firstname,
                     Surname = employeeModel.Surname,
                     Position = employeeModel.Position,
@@ -137,7 +193,7 @@ namespace WebApi.Controllers
         }
 
         [Route("Delete")]
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             if (id == Guid.Empty)

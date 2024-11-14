@@ -36,7 +36,7 @@ namespace BusinessLogic.Abstractions
         /// </summary>
         /// <param name="id"> Иентификатор. </param>
         /// <param name="updatingEmployeeDto"> ДТО редактируемого сотрудника. </param>
-        Task UpdateAsync(Guid id, UpdatingEmployeeDto updatingEmployeeDto);
+        Task UpdateAsync(UpdatingEmployeeDto updatingEmployeeDto);
 
         /// <summary>
         /// Удалить сотрудника.

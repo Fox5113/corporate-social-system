@@ -32,7 +32,8 @@ namespace BS.Services.Implementations.Mapping
                 .ForMember(d => d.About, map => map.Ignore())
                 .ForMember(d => d.Birthdate, map => map.Ignore())
                 .ForMember(d => d.OfficeAddress, map => map.Ignore())
-                .ForMember(d => d.EmploymentDate, map => map.Ignore());
+                .ForMember(d => d.EmploymentDate, map => map.Ignore())
+                .ForMember(d => d.Language, map => map.Ignore());
         }
     }
 }

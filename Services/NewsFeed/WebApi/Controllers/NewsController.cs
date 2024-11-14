@@ -70,9 +70,9 @@ namespace WebApi.Controllers
 
         [Route("Publish")]
         [HttpPut]
-        public async Task<IActionResult> Publish(Guid id, UpdatingNewsModel newsModel)
+        public async Task<IActionResult> Publish(UpdatingNewsModel newsModel)
         {
-            if (!CheckParams(id, newsModel, "NewsController.Publish"))
+            if (!CheckParams(newsModel.Id, newsModel, "NewsController.Publish"))
                 return BadRequest(GetBadRequestObject("NewsController.Publish: id is empty or object is null."));
 
             try
@@ -81,7 +81,7 @@ namespace WebApi.Controllers
                 newsDto.IsPublished = true;
                 newsDto.IsArchived = false;
 
-                await _service.UpdateAsync(id, newsDto);
+                await _service.UpdateAsync(newsDto);
                 return Ok();
             }
             catch (Exception ex)
@@ -92,9 +92,9 @@ namespace WebApi.Controllers
 
         [Route("Cancel")]
         [HttpPut]
-        public async Task<IActionResult> Cancel(Guid id, UpdatingNewsModel newsModel)
+        public async Task<IActionResult> Cancel(UpdatingNewsModel newsModel)
         {
-            if (!CheckParams(id, newsModel, "NewsController.Cancel"))
+            if (!CheckParams(newsModel.Id, newsModel, "NewsController.Cancel"))
                 return BadRequest(GetBadRequestObject("NewsController.Cancel: id is empty or object is null."));
 
             try
@@ -103,7 +103,7 @@ namespace WebApi.Controllers
                 newsDto.IsPublished = false;
                 newsDto.IsArchived = true;
 
-                await _service.UpdateAsync(id, newsDto);
+                await _service.UpdateAsync(newsDto);
                 return Ok();
             }
             catch (Exception ex)
@@ -114,9 +114,9 @@ namespace WebApi.Controllers
 
         [Route("Archive")]
         [HttpPut]
-        public async Task<IActionResult> Archive(Guid id, UpdatingNewsModel newsModel)
+        public async Task<IActionResult> Archive(UpdatingNewsModel newsModel)
         {
-            if (!CheckParams(id, newsModel, "NewsController.Archive"))
+            if (!CheckParams(newsModel.Id, newsModel, "NewsController.Archive"))
                 return BadRequest(GetBadRequestObject("NewsController.Archive: id is empty or object is null."));
             try
             {
@@ -124,7 +124,7 @@ namespace WebApi.Controllers
                 newsDto.IsPublished = true;
                 newsDto.IsArchived = true;
 
-                await _service.UpdateAsync(id, newsDto);
+                await _service.UpdateAsync(newsDto);
                 return Ok();
             }
             catch (Exception ex)
@@ -135,9 +135,9 @@ namespace WebApi.Controllers
 
         [Route("SendOnModeration")]
         [HttpPut]
-        public async Task<IActionResult> SendOnModeration(Guid id, UpdatingNewsModel newsModel)
+        public async Task<IActionResult> SendOnModeration(UpdatingNewsModel newsModel)
         {
-            if (!CheckParams(id, newsModel, "NewsController.SendOnModeration"))
+            if (!CheckParams(newsModel.Id, newsModel, "NewsController.SendOnModeration"))
                 return BadRequest(GetBadRequestObject("NewsController.SendOnModeration: id is empty or object is null."));
             try
             {
@@ -145,7 +145,7 @@ namespace WebApi.Controllers
                 newsDto.IsPublished = false;
                 newsDto.IsArchived = false;
 
-                await _service.UpdateAsync(id, newsDto);
+                await _service.UpdateAsync(newsDto);
                 return Ok();
             }
             catch (Exception ex)

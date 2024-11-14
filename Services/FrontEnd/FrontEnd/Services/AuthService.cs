@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Headers;
+﻿using FrontEnd.Models;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace FrontEnd.Services
 {
@@ -11,15 +13,19 @@ namespace FrontEnd.Services
             _httpClient = httpClient;
         }
 
-        public async Task<string> AuthenticateAsync(string username, string password)
+        public async Task<UserViewModel> AuthenticateAsync(string username, string password)
         {
             var requestBody = new { username, password };
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7192/api/User/login", requestBody);
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7272/api/Authentication/login", requestBody);
 
             if (response.IsSuccessStatusCode)
             {
-                var token = await response.Content.ReadAsStringAsync();
-                return token;
+                var user = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<UserViewModel>(user, options);
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
@@ -31,13 +37,36 @@ namespace FrontEnd.Services
             }
         }
 
-        public async void LogoutAsync(string id, string token)
+        public async Task<UserViewModel> GetUser(string username)
+        {
+            var response = await _httpClient.GetAsync($"https://localhost:7272/api/Users/GetUserByName?name={username}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var user = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<UserViewModel>(user, options);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return null;
+            }
+            else
+            {
+                throw new HttpRequestException("Authorization service is not available.");
+            }
+        }
+
+        public async void LogoutAsync(string id)
         {
             var requestBody = new { id };
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7192/api/User/logout", requestBody);
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7272/api/Authentication/logout", requestBody);
 
             if (response.IsSuccessStatusCode)
             {

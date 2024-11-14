@@ -45,9 +45,8 @@ namespace BusinessLogic.Abstractions
         /// <summary>
         /// Изменить новость.
         /// </summary>
-        /// <param name="id"> Иентификатор. </param>
         /// <param name="updatingNewsDto"> ДТО редактируемой новости. </param>
-        Task UpdateAsync(Guid id, UpdatingNewsDto updatingNewsDto);
+        Task UpdateAsync(UpdatingNewsDto updatingNewsDto);
 
         /// <summary>
         /// Удалить новость.

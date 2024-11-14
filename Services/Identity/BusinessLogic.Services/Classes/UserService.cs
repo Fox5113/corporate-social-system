@@ -58,5 +58,11 @@ namespace BusinessLogic.Services.Classes
                 Name = userDto.Name
             };
         }
+
+        public async Task<UserDto?> GetUserByNameAsync(string userName)
+        {
+            var user = await _userRepository.GetUserByNameAsync(userName);
+            return user == null ? null : MapToUserDto(user);
+        }
     }
 }

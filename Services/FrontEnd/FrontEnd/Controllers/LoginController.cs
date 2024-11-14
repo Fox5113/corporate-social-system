@@ -1,6 +1,7 @@
-﻿using FrontEnd.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using FrontEnd.Models;
+using FrontEnd.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -20,7 +21,8 @@ namespace FrontEnd.Controllers
         {
             if (User.Identity != default && User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                if (String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
+                    return RedirectToAction("Index", "Home");
             }
 
             return View("~/Views/Login/Login.cshtml");
@@ -31,16 +33,21 @@ namespace FrontEnd.Controllers
         {
             try
             {
-                var token = await _authService.AuthenticateAsync(username, password);
+                var user = await _authService.AuthenticateAsync(username, password);
 
-                if (token != null)
+                if (user != null)
                 {
-                    HttpContext.Response.Cookies.Append("jwtToken", token, new CookieOptions
+                    if (user.IsFound)
                     {
-                        HttpOnly = true,
-                        Secure = true,
-                        Expires = DateTime.UtcNow.AddMinutes(30)
-                    });
+                        HttpContext.Session.SetString(username, user.Id.ToString());
+                        HttpContext.Session.SetString(username+Constants.FullNamePrefix, user.Name);
+                        HttpContext.Response.Cookies.Append(Constants.UserIdCookieKey, user.Id.ToString(), new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true,
+                            Expires = DateTime.UtcNow.AddMinutes(30)
+                        });
+                    }
 
                     var claims = new List<Claim>
                     {
@@ -70,11 +77,11 @@ namespace FrontEnd.Controllers
         [HttpPost("/Logout")]
         public async Task<IActionResult> Logout()
         {
-            var token = HttpContext.Request.Cookies["jwtToken"];
+            var userId = HttpContext.Request.Cookies[Constants.UserIdCookieKey];
 
-            // await _authService.LogoutAsync(userId, token); Временно не работает, так как в микросервисе авторизации нет возможности получения Id пользователя.
+            //_authService.LogoutAsync(userId);
 
-            HttpContext.Response.Cookies.Delete("jwtToken");
+            HttpContext.Response.Cookies.Delete(Constants.UserIdCookieKey);
 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 

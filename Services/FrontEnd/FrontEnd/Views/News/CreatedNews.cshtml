@@ -1,7 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Новость успешно создана";
-    ViewData["PageTitle"] = "Новость создана";
+    var dict = ((CaptionsBase)ViewData[Constants.CaptionsKey]);
+    if (dict == null)
+        dict = new CaptionsBase();
+    ViewData["Title"] = dict.TitleCreatedNewsCaption;
+    ViewData["PageTitle"] = dict.PageTitleCreatedNewsCaption;
 }
-<h1>@ViewData["Title"]</h1>
+<link rel="stylesheet" href="/css/site.css" />
+<div class="plain-div-with-margin">
+    <h1>@ViewData["Title"]</h1>
+    <img class="ok-fail-img" src="/img/ok.png" alt="Created Image">
+    <p>@dict.ItWillBeShownAfterModerationCaption</p>
+</div>
 
-<p>После прохождения модерации она отобразится в ленте новостей.</p>

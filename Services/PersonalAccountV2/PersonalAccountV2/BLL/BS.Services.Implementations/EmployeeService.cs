@@ -20,7 +20,7 @@ namespace BS.Services.Implementations
         public async Task CreateOrUpdateRange(ICollection<ShortEmployeeDto> employees)
         {
             var employeeItem = _mapper.Map<ICollection<ShortEmployeeDto>, ICollection<Employee>>(employees);
-            _employeeRepository.CreateOrUpdateRange(employeeItem);
+            await _employeeRepository.CreateOrUpdateRange(employeeItem);
             await _employeeRepository.SaveChangesAsync();
         }
 

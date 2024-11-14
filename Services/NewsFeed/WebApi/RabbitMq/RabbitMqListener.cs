@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -29,7 +29,12 @@ namespace WebApi.RabbitMq
             var factory = new ConnectionFactory { HostName = _applicationSettings.HostName };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
-            _channel.QueueDeclare(queue: _applicationSettings.RabbitMqQueue, durable: true, exclusive: false, autoDelete: false, arguments: null);
+            _channel.ExchangeDeclare(exchange: _applicationSettings.RabbitMqQueue, type: ExchangeType.Fanout, durable: true);
+            _channel.BasicQos(0, 1, false);
+            var queueName =_channel.QueueDeclare(queue: _applicationSettings.RabbitMqQueue, durable: true, exclusive: false, autoDelete: false, arguments: null);
+            _channel.QueueBind(queue: queueName,
+                    exchange: _applicationSettings.RabbitMqQueue,
+                    routingKey: "");
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -44,8 +49,10 @@ namespace WebApi.RabbitMq
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body.ToArray());
 
-                    if (!string.IsNullOrEmpty(message) && RedirectToAnotherAction(message))
+                    if (!string.IsNullOrEmpty(message) && RedirectToAnotherAction(message).Result)
                         _channel.BasicAck(ea.DeliveryTag, false);
+                    else
+                        _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, true);
                 }
                 catch (Exception ex)
                 {
@@ -58,16 +65,25 @@ namespace WebApi.RabbitMq
             return Task.CompletedTask;
         }
 
-        private bool RedirectToAnotherAction(string message)
+        private async Task<bool> RedirectToAnotherAction(string message)
         {
-            if(JsonSerializer.Deserialize<List<ShortEmployeeModel>>(message) != null)
+            var options = new JsonSerializerOptions
             {
-                var client = new RestClient(_applicationSettings.SiteUrl);
-                var request = new RestRequest("Employee/CreateOrUpdateEmployeeRange");
-                request.AddParameter("jsonData", message);
-                var response = client.Post(request);
+                PropertyNameCaseInsensitive = true
+            };
 
-                return response != null && response.IsSuccessful;
+            var employees = JsonSerializer.Deserialize<List<ShortEmployeeModel>>(message, options);
+            if (employees != null)
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.PostAsJsonAsync($"{_applicationSettings.SiteUrl}/api/Employee/CreateOrUpdateEmployeeRange", employees);
+                    if(response.IsSuccessStatusCode)
+                    {
+                        var news = await response.Content.ReadAsStringAsync();
+                        return JsonSerializer.Deserialize<bool>(news, options);
+                    }
+                }
             }
 
             return false;

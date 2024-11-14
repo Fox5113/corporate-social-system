@@ -10,9 +10,9 @@
         public ApplicationSettings()
         {
             ConnectionString = "Server=localhost;Database=PersonalAccountV2;MultipleActiveResultSets=true;encrypt=false;User ID=bpm;Password=bpm;";
-            SiteUrl = "https://localhost:5201";
+            SiteUrl = "http://localhost:5124";
             HostName = "localhost";
-            RabbitMqQueue = "MyQueue";
+            RabbitMqQueue = "EmployeeRangeForPersonalAccount";
         }
     }
 }

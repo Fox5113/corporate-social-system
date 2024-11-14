@@ -1,7 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "Ошибка при создании новости";
-    ViewData["PageTitle"] = "Ошибка";
+    var dict = ((CaptionsBase)ViewData[Constants.CaptionsKey]);
+    if (dict == null)
+        dict = new CaptionsBase();
+    ViewData["Title"] = dict.TitleFailedCreatingNewsCaption;
+    ViewData["PageTitle"] = dict.PageTitleFailedCreatingNewsCaption;
 }
-<h1>@ViewData["Title"]</h1>
-
-<p>Во время создания новости произошла ошибка. Попробуйте позднее.</p>
+<link rel="stylesheet" href="/css/site.css" />
+<div class="plain-div-with-margin">
+    <h1>@ViewData["Title"]</h1>
+    <img class="ok-fail-img" src="/img/fail.png" alt="Not created Image">
+    <p>@dict.ErrorTillCreatingNewsCaption</p>
+</div>

@@ -18,8 +18,7 @@ namespace BusinessLogic.Services.Mapping
                 .ForMember(d => d.About, map => map.Ignore())
                 .ForMember(d => d.MainEmail, map => map.Ignore());
 
-            CreateMap<UpdatingEmployeeDto, Employee>()
-                .ForMember(d => d.Id, map => map.Ignore());
+            CreateMap<UpdatingEmployeeDto, Employee>();
 
             CreateMap<CreatingEmployeeDto, Employee>()
                 .ForMember(d => d.Id, map => map.Ignore())

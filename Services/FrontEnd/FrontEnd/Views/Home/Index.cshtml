@@ -1,6 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Главная";
-    ViewData["PageTitle"] = "Корпоративная социальная система";
+    var dict = ((CaptionsBase)ViewData[Constants.CaptionsKey]);
+    if (dict == null)
+        dict = new CaptionsBase();
+    ViewData["Title"] = dict.TitleHomeCaption;
+    ViewData["PageTitle"] = dict.PageTitleHomeCaption;
 
     // Временный массив элементов карусели
     var carouselItems = new List<dynamic>
@@ -19,6 +22,11 @@
         }
     };
 }
+
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<link rel="stylesheet" href="/css/site.css" />
+<link rel="stylesheet" href="/css/news.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
 <!-- Карусель -->
 <div class="swiper-container">
@@ -43,50 +51,47 @@
 <!-- Новости -->
 <div class="news-class-container" id="home-news-container">
     <div class="row justify-content-center">
-        @foreach (var news in Model)
+        @if ((List<NewsViewModel>)ViewData[Constants.NewsFeedListViewDataKey] != null)
         {
-            <div class="col-md-12 col-lg-12">
-                <div class="news-card card mb-4 shadow-sm">
-                    <!--<img class="card-img-top" src="/img/test/64559-thanks5.png" alt="News Image">-->
-                    <div class="card-body_@news.Id">
-                        <h5 class="card-title-news">@news.Title</h5>
-                        <p class="card-text-news">@news.ShortDescription</p>
-                        <input type="checkbox" id="cb_@news.Id" class="hide" />
-                        <label for="cb_@news.Id" class="light-gray-button more-text">Подробнее</label>
-                        <label for="cb_@news.Id" class="light-gray-button hide-text">Скрыть</label>
-                        <div>
-                            <p>@news.Content</p>
-                            <small>@news.Hashtags</small>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="col-md-11 col-lg-11">
-                                <small class="text-muted date-time-news">@news.CreatedAt</small>
-                                <small class="text-muted author-news">@news.AuthorFullName</small>
+            @foreach (var news in (List<NewsViewModel>)ViewData[Constants.NewsFeedListViewDataKey])
+            {
+                <div class="col-md-12 col-lg-12">
+                    <div class="news-card card mb-4 shadow-sm">
+                        <!--<img class="card-img-top" src="/img/test/64559-thanks5.png" alt="News Image">-->
+                        <div class="card-body_@news.Id">
+                            <h5 class="card-title-news">@news.Title</h5>
+                            <p class="card-text-news">@news.ShortDescription</p>
+                            <input type="checkbox" id="cb_@news.Id" class="hide" />
+                            <label for="cb_@news.Id" class="light-gray-button more-text">@dict.MoreButtonCaption</label>
+                            <label for="cb_@news.Id" class="light-gray-button hide-text">@dict.HideButtonCaption</label>
+                            <div>
+                                <p>@news.Content</p>
+                                <small>@news.Hashtags</small>
                             </div>
-                            <div class="col-md-1 col-lg-1">
-                                <div class="news-wrapper">
-                                    <a href="javascript:void(0)" class="like-button @(news.IsLikedByCurrentUser ? "is-active" : string.Empty) news-id_@news.Id">
-                                        <i class="material-icons not-liked bouncy">favorite_border</i>
-                                        <i class="material-icons is-liked bouncy">favorite</i>
-                                        <span class="like-overlay"></span>
-                                    </a>
+                            <div class="d-flex align-items-center">
+                                <div class="col-md-11 col-lg-11">
+                                    <small class="text-muted date-time-news">@news.CreatedAt</small>
+                                    <small class="text-muted author-news">@news.AuthorFullName</small>
                                 </div>
-                                <span class="text-muted likes-count_@news.Id">@news.Likes</span>
+                                <div class="col-md-1 col-lg-1">
+                                    <div class="news-wrapper">
+                                        <a href="javascript:void(0)" class="like-button @(news.IsLikedByCurrentUser ? "is-active" : string.Empty) news-id_@news.Id">
+                                            <i class="material-icons not-liked bouncy">favorite_border</i>
+                                            <i class="material-icons is-liked bouncy">favorite</i>
+                                            <span class="like-overlay"></span>
+                                        </a>
+                                    </div>
+                                    <span class="text-muted likes-count_@news.Id">@news.Likes</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         }
-        <a class="more-news light-gray-button" asp-area="" asp-controller="News" asp-action="Index">Перейти к новостям</a>
+        <a class="more-news light-gray-button" asp-area="" asp-controller="News" asp-action="Index">@dict.GoToNewsCaption</a>
     </div>
 </div>
-
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-<link rel="stylesheet" href="/css/site.css" />
-<link rel="stylesheet" href="/css/news.css" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

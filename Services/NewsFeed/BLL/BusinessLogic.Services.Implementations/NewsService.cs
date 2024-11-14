@@ -130,12 +130,12 @@ namespace BusinessLogic.Services
         /// </summary>
         /// <param name="id"> Иентификатор. </param>
         /// <param name="updatingNewsDto"> ДТО редактируемой новости. </param>
-        public async Task UpdateAsync(Guid id, UpdatingNewsDto updatingNewsDto)
+        public async Task UpdateAsync(UpdatingNewsDto updatingNewsDto)
         {
-            var news = await _newsRepository.GetAsync(id);
+            var news = await _newsRepository.GetAsync(updatingNewsDto.Id);
             if (news == null)
             {
-                throw new Exception($"Новость с идентификатором {id} не найдена");
+                throw new Exception($"Новость с идентификатором {updatingNewsDto.Id} не найдена");
             }
             _newsRepository.JoinEntities(new List<News>() { news });
 

@@ -1,12 +1,9 @@
-﻿using EmojiCSharp;
-using FrontEnd.Models;
+﻿using FrontEnd.Models;
 using FrontEnd.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SqlQuery;
 using System.Diagnostics;
-using System.Drawing;
-using System.Xml.Linq;
 using static SqlQuery.Enums;
 
 namespace FrontEnd.Controllers
@@ -24,52 +21,197 @@ namespace FrontEnd.Controllers
             _newsService = newsService;
         }
 
-        public async Task<IActionResult> Index()
+        private async Task InitSessionData()
         {
-            var newsList = await _newsService.GetPublishedListAsync(1, _itemsPerPage, new Guid("35044f8e-065d-4b59-9d4c-f393ea8a90b6"));
-            var pagingInfo = new PagingInfo() { CurrentPage = 1, ItemsPerPage = _itemsPerPage };
-            var info = new NewsListViewModel { PagingInfo = pagingInfo, News = newsList};
-            return View(info);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> LoadMore(int page)
-        {
-            var newsList = await _newsService.GetPublishedListAsync(page, _itemsPerPage, new Guid("35044f8e-065d-4b59-9d4c-f393ea8a90b6"));
-            var pagingInfo = new PagingInfo() { CurrentPage = page, ItemsPerPage = _itemsPerPage };
-            var info = new NewsListViewModel { PagingInfo = pagingInfo, News = newsList};
-            return Ok(info);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Like(string newsId)
-        {
-            if (!string.IsNullOrEmpty(newsId) && Guid.TryParse(newsId, out var id))
+            try
             {
+                if (HttpContext?.Request?.Cookies[Constants.UserIdCookieKey] != null)
+                {
+                    try
+                    {
+                        var userModel = await _newsService.GetPersonalAccountData(HttpContext.Request.Cookies[Constants.UserIdCookieKey].ToString());
+                        ViewData[Constants.PersonalAccountDataKey] = userModel;
+                        HttpContext.Session.SetString(User.Identity.Name, userModel.Id.ToString());
+                        HttpContext.Session.SetString(User.Identity.Name + Constants.FullNamePrefix, userModel.Firstname + " " + userModel.Surname);
+                        HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, !String.IsNullOrEmpty(userModel.Language) ? userModel.Language : Constants.LanguageBase);
+                    }
+                    catch (Exception ex) { }
+                }
 
-                var likesInfo = await _newsService.Like(id, new Guid("35044f8e-065d-4b59-9d4c-f393ea8a90b6"));
-                return Ok(likesInfo);
+                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
+                {
+                    var userModel = await _newsService.GetUserByLogin(User.Identity.Name);
+                    if (userModel != null)
+                    {
+                        HttpContext.Session.SetString(User.Identity.Name, userModel.Id.ToString());
+                        HttpContext.Session.SetString(User.Identity.Name + Constants.FullNamePrefix, userModel.Name);
+                        HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, Constants.LanguageBase);
+                    }
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void InitViewData()
+        {
+            var lang = HttpContext.Session.GetString(User.Identity.Name + Constants.LanguagePrefix);
+            if (!String.IsNullOrEmpty(User?.Identity?.Name) && !String.IsNullOrEmpty(lang))
+            {
+                ViewData[Constants.CaptionsKey] = Constants.Dictionaries[lang];
             }
 
-            return Ok();
+            if (ViewData[Constants.CaptionsKey] == null)
+            {
+                ViewData[Constants.CaptionsKey] = Constants.Dictionaries[Constants.LanguageBase];
+            }
+
+            ViewData[Constants.UserFullNameKey] = HttpContext.Session.GetString(User?.Identity?.Name + Constants.FullNamePrefix);
+        }
+
+        #region View methods
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
+                {
+                    await InitSessionData();
+                }
+                InitViewData();
+
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                {
+                    try
+                    {
+                        var newsList = await _newsService.GetPublishedListAsync(1, _itemsPerPage, userId);
+                        var pagingInfo = new PagingInfo() { CurrentPage = 1, ItemsPerPage = _itemsPerPage };
+                        var info = new NewsListViewModel { PagingInfo = pagingInfo, News = newsList };
+                        ViewData[Constants.NewsListViewModelKey] = info;
+                    }
+                    catch (Exception ex) { }
+                }
+
+                return View();
+            }
+            catch (Exception ex) 
+            { 
+                return View();
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Search(int page, string title, string authorName, string authorSurname, DateTime start, DateTime end, string hashtags)
         {
-            var query = PrepareSelectQuery(page > 0 ? page - 1 : 0, title, authorName, authorSurname, start, end, hashtags);
-            var data = await _newsService.Search(query, new Guid("35044f8e-065d-4b59-9d4c-f393ea8a90b6"));
-            var pagingInfo = new PagingInfo() { CurrentPage = page, ItemsPerPage = _itemsPerPage };
-            var info = new NewsListViewModel { PagingInfo = pagingInfo, News = data, Filters = new Dictionary<string, object>() {
-                { "title", title }, { "authorName", authorName }, { "authorSurname", authorSurname }, { "start", start.ToString("yyyy-MM-dd") }, { "end", end.ToString("yyyy-MM-dd") }, { "hashtags", hashtags }
-            },
-                FiltersEmpty = false
-            };
-            if (page == 1)
-                return View(info);
+            try
+            {
+                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
+                {
+                    await InitSessionData();
+                }
+                InitViewData();
 
-            return Ok(info);
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                {
+                    var query = PrepareSelectQuery(page > 0 ? page - 1 : 0, title, authorName, authorSurname, start, end, hashtags);
+                    var data = await _newsService.Search(query, userId);
+                    var pagingInfo = new PagingInfo() { CurrentPage = page, ItemsPerPage = _itemsPerPage };
+                    var info = new NewsListViewModel
+                    {
+                        PagingInfo = pagingInfo,
+                        News = data,
+                        Filters = new Dictionary<string, object>() {
+                            { "title", title }, { "authorName", authorName }, { "authorSurname", authorSurname }, { "start", start.ToString("yyyy-MM-dd") }, { "end", end.ToString("yyyy-MM-dd") }, { "hashtags", hashtags }
+                        },
+                        FiltersEmpty = false
+                    };
+                    if (page == 1)
+                    {
+                        ViewData[Constants.NewsListViewModelKey] = info;
+                        return View();
+                    }
+
+                    return Ok(info); //ajax
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
         }
+
+        public IActionResult Create()
+        {
+            InitViewData();
+            var emoji = EmojiData.Emoji.All;
+            var model = new List<EmojiViewModel>();
+            foreach (var item in emoji)
+            {
+                model.Add(new EmojiViewModel() { EmojiString = item.ToString(), Emoji = item, Hashcode = item.Sequence.GetHashCode() });
+            }
+            ViewData[Constants.EmojiViewModelListKey] = model;
+            return View();
+        }
+
+        public IActionResult CreatedNews()
+        {
+            InitViewData();
+            return View();
+        }
+
+        public IActionResult FailedCreatingNews()
+        {
+            InitViewData();
+            return View();
+        }
+
+        public IActionResult UpdatedNews()
+        {
+            InitViewData();
+            return View();
+        }
+
+        public IActionResult FailedUpdatingNews()
+        {
+            InitViewData();
+            return View();
+        }
+
+        public IActionResult DeletedNews()
+        {
+            InitViewData();
+            return View();
+        }
+
+        public IActionResult FailedDeletingNews()
+        {
+            InitViewData();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(Guid newsId)
+        {
+            InitViewData();
+            var emoji = EmojiData.Emoji.All;
+            var list = new List<EmojiViewModel>();
+            foreach (var item in emoji)
+            {
+                var emojiViewModel = new EmojiViewModel() { EmojiString = item.ToString(), Emoji = item, Hashcode = item.Sequence.GetHashCode() };
+                list.Add(emojiViewModel);
+            }
+            var news = await _newsService.GetAsync(newsId);
+            var model = new CreateNewsViewModel()
+            {
+                Emoji = list,
+                News = news
+            };
+            ViewData[Constants.CreateNewsViewModelKey] = model;
+            return View();
+        }
+
+        #endregion
 
         [HttpPost]
         public async Task<IActionResult> Create(string title, string shortDescription, string content, string hashtags)
@@ -77,59 +219,168 @@ namespace FrontEnd.Controllers
             if (String.IsNullOrEmpty(title) || String.IsNullOrEmpty(content))
                 return View();
 
-            var hashArr = !String.IsNullOrEmpty(hashtags) ? hashtags.Split(' ')
-                .Where(x => !String.IsNullOrEmpty(x.Trim()))
-                .Select(x => x.Trim())
-                .ToList() : null;
-            var query = new CreatingNewsModel()
+            try
             {
-                Title = title,
-                AuthorId = new Guid("35044f8e-065d-4b59-9d4c-f393ea8a90b6"),
-                Content = content,
-                ShortDescription = shortDescription
-            };
-
-            if(hashArr != null && hashArr.Count > 0)
-            {
-                query.HashtagNewsList = new List<CreatingHashtagNewsModel>();
-                foreach(var item in hashArr)
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
                 {
-                    query.HashtagNewsList.Add(new CreatingHashtagNewsModel()
+                    var hashArr = !String.IsNullOrEmpty(hashtags) ? hashtags.Split(' ')
+                        .Where(x => !String.IsNullOrEmpty(x.Trim()))
+                        .Select(x => x.Trim())
+                        .ToList() : null;
+                    var query = new CreatingNewsModel()
                     {
-                        Hashtag = new CreatingHashtagModel()
+                        Title = title,
+                        AuthorId = userId,
+                        Content = content,
+                        ShortDescription = shortDescription
+                    };
+
+                    if (hashArr != null && hashArr.Count > 0)
+                    {
+                        query.HashtagNewsList = new List<CreatingHashtagNewsModel>();
+                        foreach (var item in hashArr)
                         {
-                            Name = item
+                            query.HashtagNewsList.Add(new CreatingHashtagNewsModel()
+                            {
+                                Hashtag = new CreatingHashtagModel()
+                                {
+                                    Name = item
+                                }
+                            });
                         }
-                    });
+                    }
+
+                    var success = await _newsService.Create(query);
+
+                    return success ? RedirectToAction("CreatedNews") : RedirectToAction("FailedCreatingNews");
                 }
+
+                return View();
             }
-
-            var success = await _newsService.Create(query);
-
-            return success ? RedirectToAction("CreatedNews") : RedirectToAction("FailedCreatingNews");
-        }
-
-        public IActionResult Create()
-        {
-            var emoji = EmojiData.Emoji.All;
-            var model = new List<CreateNewsViewModel>();
-            foreach(var item in emoji)
+            catch (Exception ex)
             {
-                model.Add(new CreateNewsViewModel() { EmojiString = item.ToString(), Emoji = item });
+                return View();
             }
-
-			return View(model);
         }
 
-        public IActionResult CreatedNews()
+        [HttpPost]
+        public async Task<IActionResult> UpdateNews(Guid newsId, string title, string shortDescription, string content, string hashtags)
         {
-            return View();
+            try
+            {
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                {
+                    var isAuthor = await _newsService.CheckIsAuthor(newsId, userId);
+                    if (isAuthor)
+                    {
+                        var hashArr = !String.IsNullOrEmpty(hashtags) ?
+                            hashtags.Split(' ').Where(x => !String.IsNullOrEmpty(x.Trim())).Select(x => x.Trim()).ToList() : null;
+                        var model = new UpdatingNewsModel()
+                        {
+                            Id = newsId,
+                            Title = title,
+                            Content = content,
+                            ShortDescription = shortDescription
+                        };
+                        if (hashArr != null && hashArr.Count > 0)
+                        {
+                            model.HashtagNewsList = new List<CreatingHashtagNewsModel>();
+                            foreach (var item in hashArr)
+                            {
+                                model.HashtagNewsList.Add(new CreatingHashtagNewsModel()
+                                {
+                                    Hashtag = new CreatingHashtagModel()
+                                    {
+                                        Name = item
+                                    }
+                                });
+                            }
+                        }
+                        var isUpdated = await _newsService.Update(model);
+                        return isUpdated ? RedirectToAction("UpdatedNews") : RedirectToAction("FailedUpdatingNews");
+                    }
+                    else
+                        return RedirectToAction("FailedUpdatingNews");
+                }
+                ViewData[Constants.UserFullNameKey] = HttpContext.Session.GetString(User?.Identity?.Name + Constants.FullNamePrefix);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
         }
 
-        public IActionResult FailedCreatingNews()
+        public async Task<IActionResult> DeleteNews(Guid newsId)
         {
-            return View();
+            try
+            {
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                {
+                    var isAuthor = await _newsService.CheckIsAuthor(newsId, userId);
+                    if (isAuthor)
+                    {
+                        var isDeleted = await _newsService.Delete(newsId);
+                        return isDeleted ? RedirectToAction("DeletedNews") : RedirectToAction("FailedDeletingNews");
+                    }
+                    else
+                        return RedirectToAction("FailedDeletingNews");
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
         }
+
+        #region Ajax methods
+
+        [HttpPost]
+        public async Task<IActionResult> LoadMore(int page)
+        {
+            try
+            {
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                {
+                    var newsList = await _newsService.GetPublishedListAsync(page, _itemsPerPage, userId);
+                    var pagingInfo = new PagingInfo() { CurrentPage = page, ItemsPerPage = _itemsPerPage };
+                    var info = new NewsListViewModel { PagingInfo = pagingInfo, News = newsList };
+                    return Ok(info);
+                }
+
+                return Ok(new NewsListViewModel());
+            }
+            catch (Exception ex)
+            {
+                return Ok(new NewsListViewModel());
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Like(string newsId)
+        {
+            try
+            {
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                {
+                    if (!string.IsNullOrEmpty(newsId) && Guid.TryParse(newsId, out var id))
+                    {
+
+                        var likesInfo = await _newsService.Like(id, userId);
+                        return Ok(likesInfo);
+                    }
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Ok();
+            }
+        }
+        #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

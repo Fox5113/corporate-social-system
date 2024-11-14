@@ -118,7 +118,6 @@ namespace DataAccess.Repositories
                 .ToList() : null;
 
             news.HashtagNewsList = await PrepareHashtagNews(hNames);
-            news.IsPublished = true;
             return (await _dataContext.Set<News>().AddAsync(news)).Entity;
         }
 

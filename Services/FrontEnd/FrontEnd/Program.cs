@@ -8,4 +8,6 @@ var app = builder.Build();
 
 app.ConfigureMiddleware();
 
+app.UseSession();
+
 app.Run();

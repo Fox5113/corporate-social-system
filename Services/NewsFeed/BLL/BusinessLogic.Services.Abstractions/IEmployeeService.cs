@@ -30,6 +30,6 @@ namespace BusinessLogic.Abstractions
         /// Создание/изменение сотрудников
         /// </summary>
         /// <param name="employees"> Список сотрудников. </param>
-        public void CreateOrUpdateRange(List<ShortEmployeeDto> employees);
+        Task<bool> CreateOrUpdateRange(List<ShortEmployeeDto> employees);
     }
 }
