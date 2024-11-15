@@ -1,4 +1,6 @@
+using FrontEnd.Helpers;
 using FrontEnd.Models;
+using FrontEnd.Models.PersonalAccountModels.Employee;
 using FrontEnd.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,69 +13,26 @@ namespace FrontEnd.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly NewsService _newsService;
+        private readonly PersonalAccountService _personalAccountService;
+        private readonly AuthService _authService;
 
-        public HomeController(ILogger<HomeController> logger, NewsService newsService)
+        public HomeController(ILogger<HomeController> logger, 
+            NewsService newsService, 
+            PersonalAccountService personalAccountService,
+            AuthService authService)
         {
             _logger = logger;
             _newsService = newsService;
-        }
-
-        private async Task InitSessionData()
-        {
-            try
-            {
-                if(HttpContext?.Request?.Cookies[Constants.UserIdCookieKey] != null)
-                {
-                    try
-                    {
-                        var userModel = await _newsService.GetPersonalAccountData(HttpContext.Request.Cookies[Constants.UserIdCookieKey].ToString());
-                        ViewData[Constants.PersonalAccountDataKey] = userModel;
-                        HttpContext.Session.SetString(User.Identity.Name, userModel.Id.ToString());
-                        HttpContext.Session.SetString(User.Identity.Name + Constants.FullNamePrefix, userModel.Firstname + " " + userModel.Surname);
-                        HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, !String.IsNullOrEmpty(userModel.Language) ? userModel.Language : Constants.LanguageBase);
-                    }
-                    catch(Exception ex) { }
-                }
-                
-                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
-                {
-                    var userModel = await _newsService.GetUserByLogin(User.Identity.Name);
-                    if (userModel != null)
-                    {
-                        HttpContext.Session.SetString(User.Identity.Name, userModel.Id.ToString());
-                        HttpContext.Session.SetString(User.Identity.Name + Constants.FullNamePrefix, userModel.Name);
-                        HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, Constants.LanguageBase);
-                    }
-                }
-            }
-            catch (Exception ex) { }
-        }
-
-        private void InitViewData()
-        {
-            var lang = HttpContext.Session.GetString(User.Identity.Name + Constants.LanguagePrefix);
-            if (!String.IsNullOrEmpty(User?.Identity?.Name) && !String.IsNullOrEmpty(lang))
-            {
-                ViewData[Constants.CaptionsKey] = Constants.Dictionaries[lang];
-            }
-
-            if (ViewData[Constants.CaptionsKey] == null)
-            {
-                ViewData[Constants.CaptionsKey] = Constants.Dictionaries[Constants.LanguageBase];
-            }
-
-            ViewData[Constants.UserFullNameKey] = HttpContext.Session.GetString(User?.Identity?.Name + Constants.FullNamePrefix);
+            _personalAccountService = personalAccountService;
+            _authService = authService;
         }
 
         public async Task<IActionResult> Index()
         {
             try
             {
-                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
-                {
-                    await InitSessionData();
-                }
-                InitViewData();
+                await InitDataHelper.InitSession(HttpContext, _personalAccountService, _authService, ViewData, User?.Identity?.Name);
+                InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
 
                 if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
                 {
@@ -111,21 +70,68 @@ namespace FrontEnd.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SetLang(string language)
+        {
+            try
+            {
+                if(!string.IsNullOrEmpty(language) && language != HttpContext.Session.GetString(User.Identity.Name + Constants.LanguagePrefix) && Constants.Dictionaries.ContainsKey(language))
+                {
+                    HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, language);
+                    InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
+
+                    if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                    {
+                        try
+                        {
+                            var empModel = await _personalAccountService.GetPersonalAccountData(userId.ToString());
+                            if (empModel != null)
+                            {
+                                var newModel = new UpdatingEmployeeModel()
+                                {
+                                    Id = empModel.Id,
+                                    Firstname = empModel.Firstname,
+                                    Surname = empModel.Surname,
+                                    Position = empModel.Position,
+                                    MainEmail = empModel.MainEmail,
+                                    MainTelephoneNumber = empModel.MainTelephoneNumber,
+                                    About = empModel.About,
+                                    Birthdate = empModel.Birthdate == null ? DateTime.MinValue : (DateTime)empModel.Birthdate,
+                                    OfficeAddress = empModel.OfficeAddress,
+                                    EmploymentDate = empModel.EmploymentDate == null ? DateTime.MinValue : (DateTime)empModel.EmploymentDate,
+                                    IsAdmin = empModel.IsAdmin,
+                                    IsDeleted = empModel.IsDeleted,
+                                    Language = language
+                                };
+                                empModel.Language = language;
+                                await _personalAccountService.Update(newModel);
+
+                                ViewData[Constants.PersonalAccountDataKey] = empModel;
+                            }
+                        }
+                        catch (Exception ex) { }
+                    }
+                }
+                
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
         public IActionResult Privacy()
         {
-            if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
-            {
-                InitSessionData();
-            }
+            InitDataHelper.InitSession(HttpContext, _personalAccountService, _authService, ViewData, User?.Identity?.Name);
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             return View();
         }
 
         public IActionResult Timesheet()
         {
-            if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
-            {
-                InitSessionData();
-            }
+            InitDataHelper.InitSession(HttpContext, _personalAccountService, _authService, ViewData, User?.Identity?.Name);
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             return View();
         }
 

@@ -1,4 +1,5 @@
-﻿using FrontEnd.Models;
+﻿using FrontEnd.Helpers;
+using FrontEnd.Models;
 using FrontEnd.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,58 +15,18 @@ namespace FrontEnd.Controllers
         private readonly ILogger<NewsController> _logger;
         private readonly NewsService _newsService;
         private int _itemsPerPage = 10;
+        private readonly PersonalAccountService _personalAccountService;
+        private readonly AuthService _authService;
 
-        public NewsController(ILogger<NewsController> logger, NewsService newsService)
+        public NewsController(ILogger<NewsController> logger, 
+            NewsService newsService,
+            PersonalAccountService personalAccountService,
+            AuthService authService)
         {
             _logger = logger;
             _newsService = newsService;
-        }
-
-        private async Task InitSessionData()
-        {
-            try
-            {
-                if (HttpContext?.Request?.Cookies[Constants.UserIdCookieKey] != null)
-                {
-                    try
-                    {
-                        var userModel = await _newsService.GetPersonalAccountData(HttpContext.Request.Cookies[Constants.UserIdCookieKey].ToString());
-                        ViewData[Constants.PersonalAccountDataKey] = userModel;
-                        HttpContext.Session.SetString(User.Identity.Name, userModel.Id.ToString());
-                        HttpContext.Session.SetString(User.Identity.Name + Constants.FullNamePrefix, userModel.Firstname + " " + userModel.Surname);
-                        HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, !String.IsNullOrEmpty(userModel.Language) ? userModel.Language : Constants.LanguageBase);
-                    }
-                    catch (Exception ex) { }
-                }
-
-                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
-                {
-                    var userModel = await _newsService.GetUserByLogin(User.Identity.Name);
-                    if (userModel != null)
-                    {
-                        HttpContext.Session.SetString(User.Identity.Name, userModel.Id.ToString());
-                        HttpContext.Session.SetString(User.Identity.Name + Constants.FullNamePrefix, userModel.Name);
-                        HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, Constants.LanguageBase);
-                    }
-                }
-            }
-            catch (Exception ex) { }
-        }
-
-        private void InitViewData()
-        {
-            var lang = HttpContext.Session.GetString(User.Identity.Name + Constants.LanguagePrefix);
-            if (!String.IsNullOrEmpty(User?.Identity?.Name) && !String.IsNullOrEmpty(lang))
-            {
-                ViewData[Constants.CaptionsKey] = Constants.Dictionaries[lang];
-            }
-
-            if (ViewData[Constants.CaptionsKey] == null)
-            {
-                ViewData[Constants.CaptionsKey] = Constants.Dictionaries[Constants.LanguageBase];
-            }
-
-            ViewData[Constants.UserFullNameKey] = HttpContext.Session.GetString(User?.Identity?.Name + Constants.FullNamePrefix);
+            _personalAccountService = personalAccountService;
+            _authService = authService;
         }
 
         #region View methods
@@ -73,11 +34,8 @@ namespace FrontEnd.Controllers
         {
             try
             {
-                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
-                {
-                    await InitSessionData();
-                }
-                InitViewData();
+                InitDataHelper.InitSession(HttpContext, _personalAccountService, _authService, ViewData, User?.Identity?.Name);
+                InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
 
                 if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
                 {
@@ -104,11 +62,8 @@ namespace FrontEnd.Controllers
         {
             try
             {
-                if (!String.IsNullOrEmpty(User?.Identity?.Name) && String.IsNullOrEmpty(HttpContext.Session.GetString(User.Identity.Name)))
-                {
-                    await InitSessionData();
-                }
-                InitViewData();
+                InitDataHelper.InitSession(HttpContext, _personalAccountService, _authService, ViewData, User?.Identity?.Name);
+                InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
 
                 if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
                 {
@@ -143,7 +98,7 @@ namespace FrontEnd.Controllers
 
         public IActionResult Create()
         {
-            InitViewData();
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             var emoji = EmojiData.Emoji.All;
             var model = new List<EmojiViewModel>();
             foreach (var item in emoji)
@@ -156,44 +111,44 @@ namespace FrontEnd.Controllers
 
         public IActionResult CreatedNews()
         {
-            InitViewData();
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             return View();
         }
 
         public IActionResult FailedCreatingNews()
         {
-            InitViewData();
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             return View();
         }
 
         public IActionResult UpdatedNews()
         {
-            InitViewData();
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             return View();
         }
 
         public IActionResult FailedUpdatingNews()
         {
-            InitViewData();
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             return View();
         }
 
         public IActionResult DeletedNews()
         {
-            InitViewData();
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             return View();
         }
 
         public IActionResult FailedDeletingNews()
         {
-            InitViewData();
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Update(Guid newsId)
         {
-            InitViewData();
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
             var emoji = EmojiData.Emoji.All;
             var list = new List<EmojiViewModel>();
             foreach (var item in emoji)
