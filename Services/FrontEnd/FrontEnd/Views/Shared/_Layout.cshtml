@@ -40,17 +40,20 @@
                 </div>
             </div>
             <div class="user-menu">
-                <button class="user-btn" id="userBtn">
-                    <img src="https://via.placeholder.com/40" alt="User">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        @ViewData["UserFullName"]
-                    }
-                    else
-                    {
-                        <text>@dict.GuestCaption</text>
-                    }
-                </button>
+                <div class="user-menu-buttons">
+                    <button class="user-btn" id="userBtn">
+                        <img src="https://via.placeholder.com/40" alt="User">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @ViewData["UserFullName"]
+                        }
+                        else
+                        {
+                            <text>@dict.GuestCaption</text>
+                        }
+                    </button>
+                    <button class="lang-btn" id="langBtn">@ViewData[Constants.LanguageKey]</button>
+                </div>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="user-dropdown" id="userDropdown">
@@ -60,8 +63,12 @@
                         </form>
                     </div>
                     <div class="lang-dropdown" id="langDropdown">
-                        <a href="javascript:void(0)" id="setRUbtn" class="langBtnClass" onclick="setLang()">@Constants.LangRUCaption</a>
-                        <a href="javascript:void(0)" id="setENbtn" class="langBtnClass" onclick="setLang()">@Constants.LangENCaption</a>
+                        @foreach(var languageItem in Constants.Langs)
+                        {
+                            <div class="lang-dropdown-item">
+                                @Html.ActionLink(languageItem.Value, "SetLang", "Home", new { language = languageItem.Key }, null)
+                            </div>
+                        }
                     </div>
                 }
             </div>
@@ -70,7 +77,7 @@
 
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
-        <a asp-area="" asp-controller="Personal" asp-action="Index">@dict.PersonalAccountMenuCaption</a>
+        <a asp-area="" asp-controller="PersonalAccount" asp-action="Index">@dict.PersonalAccountMenuCaption</a>
         <a asp-area="" asp-controller="Home" asp-action="Timesheet">@dict.TimesheetMenuCaption</a>
         <a asp-area="" asp-controller="News" asp-action="Index">@dict.NewsFeedMenuCaption</a>
     </div>
@@ -97,12 +104,23 @@
             dropdown.classList.toggle("show");
         });
 
+        document.getElementById("langBtn").addEventListener("click", function () {
+            const dropdown = document.getElementById("langDropdown");
+            dropdown.classList.toggle("show");
+        });
+
         window.addEventListener("click", function (event) {
             const dropdown = document.getElementById("userDropdown");
             const userBtn = document.getElementById("userBtn");
+            const dropdownLang = document.getElementById("langDropdown");
+            const langBtn = document.getElementById("langBtn");
 
             if (!userBtn.contains(event.target) && !dropdown.contains(event.target)) {
                 dropdown.classList.remove("show");
+            }
+
+            if (!langBtn.contains(event.target) && !dropdownLang.contains(event.target)) {
+                dropdownLang.classList.remove("show");
             }
         });
 

@@ -61,7 +61,7 @@ namespace PersonalAccountV2.Controllers
 
         [Route("Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(UpdatingEmployeeModel model)
+        public async Task<IActionResult> Update([FromBody] UpdatingEmployeeModel model)
         {
             if (model == null) 
             {
