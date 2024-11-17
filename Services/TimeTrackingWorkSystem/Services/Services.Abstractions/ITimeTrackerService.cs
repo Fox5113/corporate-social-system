@@ -25,6 +25,12 @@ namespace Services.Abstractions
 		Task<Guid> CreateAsync(CreatingTimeTrackerDto creatingTimeTrackerDto);
 
 		/// <summary>
+		/// Создать тайм трекер.
+		/// </summary>
+		/// <param name="creatingTimeTrackerDto"> ДТО создаваемого проекта. </param>
+		Task<ICollection<TimeTrackerDto>> CreateRangeAsync(List<CreatingTimeTrackerDto> creatingTimeTrackerDto);
+
+		/// <summary>
 		/// Изменить тайм трекер.
 		/// </summary>
 		/// <param name="id"> Иентификатор. </param>
@@ -36,6 +42,8 @@ namespace Services.Abstractions
 		/// </summary>
 		/// <param name="id"> Идентификатор. </param>
 		Task DeleteAsync(Guid id);
+
+		Task DeleteRangeAsync(List<Guid> ids);
 
 		/// <summary>
 		/// Получить постраничный список.

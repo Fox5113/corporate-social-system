@@ -1,7 +1,12 @@
-﻿namespace WebApi.Models.TimeTracking
+﻿namespace FrontEnd.Models.Timesheet
 {
-    public class CreatingTimeTrackerModel
-    {
+	public class TimeTrackerModel
+	{
+		/// <summary>
+		/// Id.
+		/// </summary>
+		public Guid Id { get; init; }
+
 		/// <summary>
 		/// Проект.
 		/// </summary>

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Services.Contracts.TimeTracker;
 using Services.Repositories.Abstractions;
 
-namespace Infrastructure.Repositories.Implementations
+namespace Infrastructure.Rep.Impl
 {
 	/// <summary>
 	/// Репозиторий работы с курсами.
@@ -37,7 +37,7 @@ namespace Infrastructure.Repositories.Implementations
 		public async Task<List<TimeTracker>> GetPagedAsync(TimeTrackerFilterDto filterDto)
 		{
 			var query = GetAll();
-			//.Include(c => c.Lessons).AsQueryable();
+
 			if (filterDto.ProjectId != default)
 			{
 				query = query.Where(c => c.ProjectId == filterDto.ProjectId);
@@ -48,9 +48,29 @@ namespace Infrastructure.Repositories.Implementations
 				query = query.Where(c => c.EmployeeId == filterDto.EmployeeId);
 			}
 
-			query = query
-				.Skip((filterDto.Page - 1) * filterDto.ItemsPerPage)
-				.Take(filterDto.ItemsPerPage);
+			if(filterDto.Page > 0)
+			{
+				query = query.Skip((filterDto.Page - 1) * filterDto.ItemsPerPage);
+			}
+			if(filterDto.ItemsPerPage > 0)
+			{
+				query = query.Take(filterDto.ItemsPerPage);
+			}
+
+			if(filterDto.Date != default)
+			{
+				query = query.Where(c => c.Date == filterDto.Date);
+			}
+
+			if (filterDto.StartDate != default) 
+			{
+				query = query.Where(c => c.Date >= filterDto.StartDate);
+			}
+
+			if (filterDto.TillDate != default)
+			{
+				query = query.Where(c => c.Date <= filterDto.TillDate);
+			}
 
 			return await query.ToListAsync();
 		}

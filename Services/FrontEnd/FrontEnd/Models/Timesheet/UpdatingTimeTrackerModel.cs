@@ -1,7 +1,7 @@
-﻿namespace Services.Contracts.TimeTracker
+﻿namespace FrontEnd.Models.Timesheet
 {
-	public class UpdatingTimeTrackerDto
-	{
+    public class UpdatingTimeTrackerModel
+    {
 		/// <summary>
 		/// Описание.
 		/// </summary>

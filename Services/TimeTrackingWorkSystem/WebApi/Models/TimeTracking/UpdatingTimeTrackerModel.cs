@@ -5,11 +5,11 @@
 		/// <summary>
 		/// Описание.
 		/// </summary>
-		public string? Description { get; init; }
+		public string? Description { get; set; }
 
 		/// <summary>
 		/// Кол-во часов
 		/// </summary>
-		public int TimeAtWork { get; init; }
+		public int TimeAtWork { get; set; }
 	}
 }

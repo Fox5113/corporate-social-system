@@ -1,7 +1,7 @@
-﻿namespace WebApi.Models.TimeTracking
+﻿namespace FrontEnd.Models.Timesheet
 {
-    public class CreatingTimeTrackerModel
-    {
+	public class CreatingTimeTrackerModel
+	{
 		/// <summary>
 		/// Проект.
 		/// </summary>
@@ -15,7 +15,7 @@
 		/// <summary>
 		/// Описание.
 		/// </summary>
-		public string? Description { get; set; }
+		public string? Description { get; init; }
 
 		/// <summary>
 		/// Дата.
@@ -25,6 +25,6 @@
 		/// <summary>
 		/// Кол-во часов
 		/// </summary>
-		public int TimeAtWork { get; set; }
+		public int TimeAtWork { get; init; }
 	}
 }

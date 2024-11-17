@@ -20,6 +20,19 @@
         public static string RuRULangCaption = "ru-RU";
         public static string EnUSLangCaption = "en-US";
         public static string LanguageKey = "Langs";
+		public static string TimeTrackingDataKey = "TimeTrackingData";
+		public static string ProjectsDataKey = "ProjectsData";
+        public static string AllProjectsDataKey = "AllProjectsData";
+        public static string WeekDaysDataKey = "WeekDaysData";
+        public static string WeeksDataKey = "WeeksData";
+        public static string CurrentTimesheetStartKey = "CurrentTimesheetStart";
+        public static string CurrentTimesheetTillKey = "CurrentTimesheetTill";
+        public static string MonthsKey = "Months";
+        public static string PrevWeekKey = "PrevWeek";
+        public static string NextWeekKey = "NextWeek";
+        public static string PrevTwoWeeksKey = "PrevTwoWeeks";
+        public static string NextTwoWeeksKey = "NextTwoWeeks";
+        public static string TimeSheetDataKey = "TimeSheetData";
 
         public static Dictionary<string, object> Dictionaries = new Dictionary<string, object>()
         {
@@ -107,7 +120,36 @@
 		public virtual string PAModerationNewsCaption { get; } = "На модерации";
 		public virtual string PAArchivedNewsCaption { get; } = "Архив";
 		public virtual string PALikedNewsCaption { get; } = "Понравившееся";
-	}
+		public virtual string TitleTimesheetCaption { get; } = "Таймшит";
+		public virtual string PageTitleTimesheetCaption { get; } = "Таймшит";
+        public virtual string MondayShortCaption { get; } = "ПН";
+        public virtual string TuesdayShortCaption { get; } = "ВТ";
+        public virtual string WednesdayShortCaption { get; } = "СР";
+        public virtual string ThursdayShortCaption { get; } = "ЧТ";
+        public virtual string FridayShortCaption { get; } = "ПТ";
+        public virtual string SaturdayShortCaption { get; } = "СБ";
+        public virtual string SundayShortCaption { get; } = "ВС";
+        public virtual string ProjectCaption { get; } = "Проект";
+        public virtual string OpenProjectsCaption { get; } = "Выбрать проект";
+        public virtual string NameProjectCaption { get; } = "Название проекта";
+        public virtual string CodeProjectCaption { get; } = "Код проекта";
+        public virtual string TotalCaption { get; } = "Итого";
+        public virtual string ActionsCaption { get; } = "Действия";
+        public virtual string HoursCaption { get; } = "ч";
+        public virtual string JanShortCaption { get; } = "Янв.";
+        public virtual string FebShortCaption { get; } = "Фев.";
+        public virtual string MarchShortCaption { get; } = "Март";
+        public virtual string AprShortCaption { get; } = "Апр.";
+        public virtual string MayShortCaption { get; } = "Май";
+        public virtual string JuneShortCaption { get; } = "Июнь";
+        public virtual string JuleShortCaption { get; } = "Июль";
+        public virtual string AugShortCaption { get; } = "Авг.";
+        public virtual string SepShortCaption { get; } = "Сен.";
+        public virtual string OctShortCaption { get; } = "Окт.";
+        public virtual string NovShortCaption { get; } = "Ноя.";
+        public virtual string DecShortCaption { get; } = "Дек.";
+        public virtual string DeleteCaption { get; } = "Удалить";
+    }
 
     public class CaptionsEN : CaptionsBase
     {

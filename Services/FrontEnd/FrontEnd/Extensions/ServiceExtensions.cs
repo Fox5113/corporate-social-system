@@ -21,8 +21,12 @@ namespace FrontEnd.Extensions
             {
                 client.BaseAddress = new Uri("http://localhost:5124/");
             });
-            
-            services.AddDistributedMemoryCache();
+			services.AddHttpClient<TimesheetService>(client =>
+			{
+				client.BaseAddress = new Uri("https://localhost:7010/");
+			});
+
+			services.AddDistributedMemoryCache();
             services.AddSession();
 
             services.AddAuthentication(options =>
