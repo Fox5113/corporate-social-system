@@ -1,7 +1,7 @@
-﻿namespace WebApi.Models.TimeTracking
+﻿namespace FrontEnd.Models.Timesheet
 {
-    public class CreatingTimeTrackerModel
-    {
+	public class TimeTrackerFilterModel
+	{
 		/// <summary>
 		/// Проект.
 		/// </summary>
@@ -23,8 +23,22 @@
 		public DateOnly Date { get; set; }
 
 		/// <summary>
+		/// Дата с которой искать.
+		/// </summary>
+		public DateOnly StartDate { get; set; }
+
+		/// <summary>
+		/// Дата до которой искать.
+		/// </summary>
+		public DateOnly TillDate { get; set; }
+
+		/// <summary>
 		/// Кол-во часов
 		/// </summary>
 		public int TimeAtWork { get; set; }
+
+		public int ItemsPerPage { get; set; }
+
+		public int Page { get; set; }
 	}
 }

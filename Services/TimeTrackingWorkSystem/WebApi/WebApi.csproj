@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -26,8 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Infrastructure.Repositories.Implementations\Infrastructure.Repositories.Implementations.csproj" />
     <ProjectReference Include="..\Services\Services.Implementations\Services.Implementations.csproj" />
+	<ProjectReference Include="..\Domain\Domain.Entities\Domain.Entities.csproj" />
+	<ProjectReference Include="..\Infrastructure\Infrastructure.Rep.Impl\Infrastructure.Rep.Impl.csproj" />
   </ItemGroup>
 
 </Project>

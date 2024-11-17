@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Services.Repositories.Abstractions;
 
-namespace Infrastructure.Repositories.Implementations
+namespace Infrastructure.Rep.Impl
 {
 	public class Repository<TEntity, TId> : IRepository<TEntity, TId> 
 		where TEntity : class, IEntity<TId>

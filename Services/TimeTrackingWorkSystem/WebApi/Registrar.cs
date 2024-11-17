@@ -1,5 +1,5 @@
 ﻿using Infrastructure.EntityFramework;
-using Infrastructure.Repositories.Implementations;
+using Infrastructure.Rep.Impl;
 using Services.Abstractions;
 using Services.Implementations;
 using Services.Repositories.Abstractions;
