@@ -288,52 +288,6 @@ namespace FrontEnd.Services
             }
         }
 
-        public async Task<UserViewModel> GetUserByLogin(string username)
-        {
-            var response = await _httpClient.GetAsync($"https://localhost:7192/api/User/getUserByName/{username}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var user = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-                return JsonSerializer.Deserialize<UserViewModel>(user, options);
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-            {
-                return null;
-            }
-            else
-            {
-                throw new HttpRequestException("Authorization service is not available.");
-            }
-        }
-
-        public async Task<EmployeeModelFromPA> GetPersonalAccountData(string id)
-        {
-            var response = await _httpClient.GetAsync($"http://localhost:5124/api/Employee/GetAsync?id={id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var user = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-                return JsonSerializer.Deserialize<EmployeeModelFromPA>(user, options);
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-            {
-                return null;
-            }
-            else
-            {
-                throw new HttpRequestException("PersonalAccount service is not available.");
-            }
-        }
-
         private async Task<List<NewsViewModel>> PrepareNewsList(List<NewsModel> list, Guid userId)
         {
             var newsIdsList = new List<Guid>();

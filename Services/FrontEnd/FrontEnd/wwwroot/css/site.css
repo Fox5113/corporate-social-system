@@ -78,20 +78,46 @@ a:has(.home-page-btn) {
     animation: slide-down 0.3s ease-out forwards;
 }
 
-    .user-dropdown .user-dropdown-item {
-        display: block;
-        padding: 10px;
-        color: black;
-        text-decoration: none;
-        border-bottom: 1px solid lightgray;
-    }
-        .user-dropdown .user-dropdown-item:last-child {
-            border-bottom: unset;
-        }
+.lang-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px 4px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    animation: slide-down 0.3s ease-out forwards;
+}
 
-        .user-dropdown .user-dropdown-item:hover {
-            background-color: #f0f0f0;
-        }
+.user-dropdown .user-dropdown-item,
+.lang-dropdown .lang-dropdown-item {
+    display: block;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    border-bottom: 1px solid lightgray;
+}
+    .user-dropdown .user-dropdown-item:last-child,
+    .lang-dropdown .lang-dropdown-item:last-child {
+        border-bottom: unset;
+    }
+
+    .user-dropdown .user-dropdown-item:hover,
+    .lang-dropdown .lang-dropdown-item:hover {
+        background-color: #f0f0f0;
+    }
+
+.lang-dropdown-item a {
+    text-decoration: none;
+    color: #000;
+}
+
+button#langBtn {
+    border: none;
+    height: fit-content;
+    margin: auto;
+}
 
 @keyframes slide-down {
     from {
@@ -105,7 +131,8 @@ a:has(.home-page-btn) {
     }
 }
 
-.user-dropdown.show {
+.user-dropdown.show,
+.lang-dropdown.show{
     display: block;
 }
 
@@ -253,4 +280,8 @@ div.swiper-wrapper * {
 .ok-fail-img{
     width: 200px;
     height: 200px;
+}
+
+.user-menu-buttons{
+    display: flex;
 }

@@ -81,5 +81,28 @@ namespace FrontEnd.Services
                 throw new HttpRequestException("Authorization service is not available.");
             }
         }
+
+        public async Task<UserViewModel> GetUserByLogin(string username)
+        {
+            var response = await _httpClient.GetAsync($"https://localhost:7192/api/User/getUserByName/{username}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var user = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<UserViewModel>(user, options);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return null;
+            }
+            else
+            {
+                throw new HttpRequestException("Authorization service is not available.");
+            }
+        }
     }
 }
