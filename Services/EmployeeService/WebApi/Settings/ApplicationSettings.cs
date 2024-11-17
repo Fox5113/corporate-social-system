@@ -18,7 +18,7 @@ namespace WebApi.Settings
             ConnectionString = "Server=localhost;Database=Employees;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true;encrypt=false;";
             SiteUrl = "https://localhost:7177";
             HostName = "localhost";
-            Queues = new List<string>() { "EmployeeRangeForPersonalAccount", "EmployeeRangeForNewsFeed" };
+            Queues = new List<string>() { "EmployeeRangeForPersonalAccount", "EmployeeRangeForNewsFeed", "EmployeeRangeForTimesheet" };
             EmployeeFromAuthServiceQueue = "AuthUsersQueue";
         }
     }

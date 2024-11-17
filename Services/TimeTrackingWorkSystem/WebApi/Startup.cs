@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MassTransit;
-using MassTransit.RabbitMqTransport;
 using Services.Implementations.Mapping;
 using TimeTrackingWorkSystem.Mapping;
 using WebApi.Mapping;
@@ -9,7 +8,7 @@ using WebApi.Settings;
 
 namespace WebApi
 {
-	public class Startup
+    public class Startup
 	{
 		public Startup(IConfiguration configuration)
 		{
@@ -37,7 +36,8 @@ namespace WebApi
 				});
 			});
 			services.AddCors();
-		}
+            services.AddHostedService<RabbitMqListener>();
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -77,6 +77,7 @@ namespace WebApi
 			{
 				cfg.AddProfile<ProjectsMappingProfile>();
 				cfg.AddProfile<TimeTrackingMappingProfile>();
+				cfg.AddProfile<EmployeeMappingProfile>();
 				cfg.AddProfile<ProjectsMapping>();
 				cfg.AddProfile<TimeTrackersMapping>();
 			});

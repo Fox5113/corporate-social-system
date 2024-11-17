@@ -13,17 +13,17 @@
 		/// <summary>
 		/// Имя.
 		/// </summary>
-		public required string FirstName { get; init; }
+		public required string FirstName { get; set; }
 		
 		/// <summary>
 		/// Фамилия.
 		/// </summary>
-		public string SurnName { get; init; }
+		public string SurnName { get; set; }
 		
 		/// <summary>
 		/// Позиция.
 		/// </summary>
-		public string Position { get; init; }
+		public string Position { get; set; }
 
 		/// <summary>
 		/// Список таймтрекеров по проекту.
