@@ -1,4 +1,5 @@
-﻿using FrontEnd.Services;
+﻿using FrontEnd.RabbitMq;
+using FrontEnd.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -54,6 +55,7 @@ namespace FrontEnd.Extensions
             });
 
             services.AddControllersWithViews();
+            services.AddScoped<IRabbitMqService, RabbitMqService>();
         }
     }
 }

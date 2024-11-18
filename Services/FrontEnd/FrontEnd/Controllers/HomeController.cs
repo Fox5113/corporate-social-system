@@ -128,13 +128,6 @@ namespace FrontEnd.Controllers
             return View();
         }
 
-        public IActionResult Timesheet()
-        {
-            InitDataHelper.InitSession(HttpContext, _personalAccountService, _authService, ViewData, User?.Identity?.Name);
-            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

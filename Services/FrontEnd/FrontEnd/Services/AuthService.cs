@@ -1,16 +1,25 @@
-﻿using FrontEnd.Models;
-using System.Net.Http.Headers;
+﻿using FrontEnd.Helpers;
+using FrontEnd.Models;
+using FrontEnd.Models.Auth;
+using FrontEnd.Models.EmployeeService;
+using FrontEnd.RabbitMq;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 using System.Text.Json;
+using TestIdentity.Models;
 
 namespace FrontEnd.Services
 {
     public class AuthService
     {
         private readonly HttpClient _httpClient;
+        private readonly IRabbitMqService _rabbitMqService;
 
-        public AuthService(HttpClient httpClient)
+        public AuthService(HttpClient httpClient, IRabbitMqService rabbitMqService)
         {
             _httpClient = httpClient;
+            _rabbitMqService = rabbitMqService;
         }
 
         public async Task<UserViewModel> AuthenticateAsync(string username, string password)
@@ -54,9 +63,37 @@ namespace FrontEnd.Services
             {
                 return null;
             }
+            else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
             else
             {
                 throw new HttpRequestException("Authorization service is not available.");
+            }
+        }
+
+        public void SendRegisterRequest(NewUserModel newUser)
+        {
+            try
+            {
+                _rabbitMqService.SendMessage(newUser, "RegisterRequestQueue");
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException("RabbitMQ service is not available.");
+            }
+        }
+
+        public void SendProblemRequest(LoginProblemRequest newUser)
+        {
+            try
+            {
+                _rabbitMqService.SendMessage(newUser, "RegisterProblemRequestQueue");
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException("RabbitMQ service is not available.");
             }
         }
 
@@ -98,6 +135,44 @@ namespace FrontEnd.Services
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 return null;
+            }
+            else
+            {
+                throw new HttpRequestException("Authorization service is not available.");
+            }
+        }
+
+        public async Task<ForgotPasswordResponseModel> ForgotPassword(ForgotPasswordModel model)
+        {
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7272/api/Authentication/forgotPassword", model);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var user = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<ForgotPasswordResponseModel>(user, options);
+            }
+            else
+            {
+                throw new HttpRequestException("Authorization service is not available.");
+            }
+        }
+
+        public async Task<ResetPasswordResponseModel> ResetPassword(ResetPasswordModel model)
+        {
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7272/api/Authentication/resetPassword", model);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var user = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<ResetPasswordResponseModel>(user, options);
             }
             else
             {
