@@ -12,6 +12,7 @@ public interface IUserManagerWrapper
     Task<IdentityResult> UpdateAsync(ApplicationUser user);
     Task<IdentityResult> DeleteAsync(ApplicationUser user);
     Task<bool> CheckPasswordAsync(ApplicationUser user, string password);
-    Task<ForgotPasswordResponseDto> ForgotPassword(ForgotPasswordDto model);
-    Task<IdentityResult> ResetPassword(ResetPasswordDto model);
+    Task<ApplicationUser?> FindByEmailAsync(string email);
+    Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user);
+    Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string code, string password);
 }

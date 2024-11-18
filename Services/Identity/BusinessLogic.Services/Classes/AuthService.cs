@@ -41,12 +41,26 @@ namespace BusinessLogic.Services.Classes
 
         public async Task<ForgotPasswordResponseDto> ForgotPassword(ForgotPasswordDto model)
         {
-            return await _userManagerWrapper.ForgotPassword(model);
+            var user = await _userManagerWrapper.FindByNameAsync(model.Login);
+            var user2 = await _userManagerWrapper.FindByEmailAsync(model.Email);
+            if (user == null || user?.Id != user2?.Id)//|| !(await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return null;
+            }
+
+            var code = await _userManagerWrapper.GeneratePasswordResetTokenAsync(user);
+            return new ForgotPasswordResponseDto() { Id = user.Id, Code = code };
         }
 
         public async Task<IdentityResult> ResetPassword(ResetPasswordDto model)
         {
-            return await _userManagerWrapper.ResetPassword(model);
+            var user = await _userManagerWrapper.FindByIdAsync(model.UserId);
+            var user2 = await _userManagerWrapper.FindByEmailAsync(model.Email);
+            if (user == null || user?.Id != user2?.Id)// || !(await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return null;
+            }
+            return await _userManagerWrapper.ResetPasswordAsync(user, model.Code, model.Password);
         }
 
         public async Task LogoutAsync()
