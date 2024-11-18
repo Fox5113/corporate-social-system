@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Infrastructure.Repositories.Implementations
+namespace DataAccess.Repositories
 {
     public class Invoker
     {

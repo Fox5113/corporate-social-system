@@ -2,10 +2,10 @@
 using BusinessLogic.Abstractions;
 using BusinessLogic.Contracts.NewsComment;
 using DataAccess.Entities;
-using DataAccess.Repositories.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DataAccess.Repositories;
 
 namespace BusinessLogic.Services
 {

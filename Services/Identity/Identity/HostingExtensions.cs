@@ -53,6 +53,8 @@ internal static class HostingExtensions
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAuthService, AuthService>();
+        builder.Services.AddScoped<IUserManagerWrapper, UserManagerWrapper>();
+        builder.Services.AddScoped<ISignInManagerWrapper, SignInManagerWrapper>();
         builder.Services.AddScoped<IRabbitMqService, RabbitMqService>();
 
         return builder.Build();
@@ -79,6 +81,10 @@ internal static class HostingExtensions
 
         // Подключение контроллеров
         app.MapControllers();
+
+        using var scope = app.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.Migrate();
 
         return app;
     }

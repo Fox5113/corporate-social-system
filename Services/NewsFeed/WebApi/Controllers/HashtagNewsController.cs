@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BusinessLogic.Contracts.HashtagNews;
-using BusinessLogic.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -9,6 +8,7 @@ using WebApi.Models.HashtagNews;
 using BusinessLogic.Contracts.Hashtag;
 using WebApi.Models.Hashtag;
 using System.Collections.Generic;
+using BusinessLogic.Abstractions;
 
 namespace WebApi.Controllers
 {

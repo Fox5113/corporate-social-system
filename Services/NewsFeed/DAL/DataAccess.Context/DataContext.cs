@@ -1,8 +1,8 @@
-﻿using DataAccess.Entities;
+﻿using System;
+using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 
-namespace DataAccess.EntityFramework
+namespace DataAccess.Context
 {
     public class DataContext : DbContext
     {

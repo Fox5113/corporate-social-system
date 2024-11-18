@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using BusinessLogic.Services.Abstractions;
 using DataAccess.Common;
 using DataAccess.Common.SqlQuery;
-using DataAccess.Repositories.Abstractions;
 using System;
 using System.Collections.Generic;
+using BusinessLogic.Abstractions;
+using DataAccess.Repositories;
 
 namespace BusinessLogic.Services
 {

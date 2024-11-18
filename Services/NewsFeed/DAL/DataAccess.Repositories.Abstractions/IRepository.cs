@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DataAccess.Common.SqlQuery;
 using DataAccess.Entities;
 
-namespace Services.Repositories.Abstractions
+namespace DataAccess.Repositories
 {
     /// <summary>
     /// Описания общих методов для всех репозиториев.

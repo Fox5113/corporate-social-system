@@ -2,13 +2,13 @@
 using Azure;
 using BusinessLogic.Contracts.Hashtag;
 using BusinessLogic.Contracts.NewsComment;
-using BusinessLogic.Services.Abstractions;
 using DataAccess.Entities;
-using DataAccess.Repositories.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic.Abstractions;
+using DataAccess.Repositories;
 
 namespace BusinessLogic.Services
 {

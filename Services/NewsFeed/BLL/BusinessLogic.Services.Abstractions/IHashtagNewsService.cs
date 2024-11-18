@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using System;
-using BusinessLogic.Contracts.HashtagNews;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using BusinessLogic.Contracts.HashtagNews;
 
-namespace BusinessLogic.Services.Abstractions
+namespace BusinessLogic.Abstractions
 {
     public interface IHashtagNewsService
     {

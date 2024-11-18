@@ -5,8 +5,8 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
 using WebApi.Models.Hashtag;
-using BusinessLogic.Services.Abstractions;
 using System.Collections.Generic;
+using BusinessLogic.Abstractions;
 using WebApi.Models.NewsComment;
 
 namespace WebApi.Controllers

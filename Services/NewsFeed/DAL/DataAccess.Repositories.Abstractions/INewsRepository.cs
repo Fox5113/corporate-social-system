@@ -1,11 +1,10 @@
-﻿using DataAccess.Common;
-using DataAccess.Entities;
-using Services.Repositories.Abstractions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DataAccess.Common;
+using DataAccess.Entities;
 
-namespace DataAccess.Repositories.Abstractions
+namespace DataAccess.Repositories
 {
     public interface INewsRepository : IRepository<News, Guid>
     {

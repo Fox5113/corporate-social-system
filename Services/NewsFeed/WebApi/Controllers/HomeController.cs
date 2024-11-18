@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using BusinessLogic.Services.Abstractions;
 using DataAccess.Common;
 using DataAccess.Common.SqlQuery;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using BusinessLogic.Abstractions;
 
 namespace WebApi.Controllers
 {

@@ -1,9 +1,9 @@
-﻿using BusinessLogic.Contracts.Hashtag;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BusinessLogic.Contracts.Hashtag;
 
-namespace BusinessLogic.Services.Abstractions
+namespace BusinessLogic.Abstractions
 {
     public interface IHashtagService
     {
