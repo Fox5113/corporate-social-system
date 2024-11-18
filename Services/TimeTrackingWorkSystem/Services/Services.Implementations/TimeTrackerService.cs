@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities;
 using Services.Abstractions;
+using Services.Contracts.Project;
 using Services.Contracts.TimeTracker;
 using Services.Repositories.Abstractions;
 
@@ -50,14 +51,24 @@ namespace Services.Implementations
 			var timeTracker = _mapper.Map<CreatingTimeTrackerDto, TimeTracker>(creatingProjectDto);
 			var createdProject = await _timeTrackerRepository.AddAsync(timeTracker);
 			await _timeTrackerRepository.SaveChangesAsync();
-			/*
-			await _busControl.Publish(new MessageDto
-			{
-				Content = $"Course {createdCourse.Id} with name {createdCourse.Name} is added"
-			});
-			*/
+
 			return createdProject.Id;
 		}
+
+		public async Task<ICollection<TimeTrackerDto>> CreateRangeAsync(List<CreatingTimeTrackerDto> creatingTimeTrackerDto)
+		{
+			var timeTracker = _mapper.Map<List<CreatingTimeTrackerDto>, List<TimeTracker>>(creatingTimeTrackerDto);
+			var result = new List<TimeTracker>();
+			foreach(var item in timeTracker)
+			{
+                result.Add(_timeTrackerRepository.Add(item));
+            }
+			
+			await _timeTrackerRepository.SaveChangesAsync();
+
+			return _mapper.Map<ICollection<TimeTracker>, ICollection<TimeTrackerDto>>(result);
+
+        }
 
 		/// <summary>
 		/// Изменить тайм трекер.
@@ -72,8 +83,8 @@ namespace Services.Implementations
 				throw new Exception($"Тайм трекер с идентфикатором {id} не найден");
 			}
 
-			//timeTracker.ProjectId = updatingTimeTracker.;
-			//timeTracker.Code = updatingTimeTracker.Code;
+			timeTracker.TimeAtWork = updatingTimeTracker.TimeAtWork;
+			timeTracker.Description = updatingTimeTracker.Description;
 			_timeTrackerRepository.Update(timeTracker);
 			await _timeTrackerRepository.SaveChangesAsync();
 		}
@@ -84,8 +95,18 @@ namespace Services.Implementations
 		/// <param name="id"> Идентификатор. </param>
 		public async Task DeleteAsync(Guid id)
 		{
-			var project = await _timeTrackerRepository.GetAsync(id, CancellationToken.None);
 			_timeTrackerRepository.Delete(id);
+            await _timeTrackerRepository.SaveChangesAsync();
+        }
+
+		public async Task DeleteRangeAsync(List<Guid> ids)
+		{
+			var range = (await _timeTrackerRepository.GetAllAsync(CancellationToken.None)).Where(x => ids.Contains(x.Id)).ToList();
+			if(range != null && range.Count > 0)
+			{
+				_timeTrackerRepository.DeleteRange(range);
+                await _timeTrackerRepository.SaveChangesAsync();
+            }
 		}
 
 		/// <summary>

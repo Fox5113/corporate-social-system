@@ -1,3 +1,4 @@
+using BusinessLogic.Models;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 
@@ -11,4 +12,6 @@ public interface IUserManagerWrapper
     Task<IdentityResult> UpdateAsync(ApplicationUser user);
     Task<IdentityResult> DeleteAsync(ApplicationUser user);
     Task<bool> CheckPasswordAsync(ApplicationUser user, string password);
+    Task<ForgotPasswordResponseDto> ForgotPassword(ForgotPasswordDto model);
+    Task<IdentityResult> ResetPassword(ResetPasswordDto model);
 }

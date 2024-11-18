@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Services.Contracts.Project;
 using Services.Repositories.Abstractions;
 
-namespace Infrastructure.Repositories.Implementations
+namespace Infrastructure.Rep.Impl
 {
 	/// <summary>
 	/// Репозиторий работы с проектами.
@@ -58,9 +58,14 @@ namespace Infrastructure.Repositories.Implementations
 				query = query.Where(c => c.Name.Contains(filterDto.Name));
 			}
 
-			query = query
-				.Skip((filterDto.Page - 1) * filterDto.ItemsPerPage)
-				.Take(filterDto.ItemsPerPage);
+			if (filterDto.Page > 0)
+			{
+				query = query.Skip((filterDto.Page - 1) * filterDto.ItemsPerPage);
+			}
+			if (filterDto.ItemsPerPage > 0)
+			{
+				query = query.Take(filterDto.ItemsPerPage);
+			}
 
 			return await query.ToListAsync();
 		}

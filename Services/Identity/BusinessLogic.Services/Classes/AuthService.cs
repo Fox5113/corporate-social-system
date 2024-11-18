@@ -1,6 +1,7 @@
-﻿using BusinessLogic.Models;
+using BusinessLogic.Models;
 using BusinessLogic.Services.Interfaces;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace BusinessLogic.Services.Classes
 {
@@ -36,6 +37,16 @@ namespace BusinessLogic.Services.Classes
 
             var result = await _userManagerWrapper.CreateAsync(user, registerDto.Password);
             return result.Succeeded;
+        }
+
+        public async Task<ForgotPasswordResponseDto> ForgotPassword(ForgotPasswordDto model)
+        {
+            return await _userManagerWrapper.ForgotPassword(model);
+        }
+
+        public async Task<IdentityResult> ResetPassword(ResetPasswordDto model)
+        {
+            return await _userManagerWrapper.ResetPassword(model);
         }
 
         public async Task LogoutAsync()

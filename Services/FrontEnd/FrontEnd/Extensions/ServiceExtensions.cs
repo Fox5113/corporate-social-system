@@ -1,4 +1,5 @@
-﻿using FrontEnd.Services;
+﻿using FrontEnd.RabbitMq;
+using FrontEnd.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -21,8 +22,12 @@ namespace FrontEnd.Extensions
             {
                 client.BaseAddress = new Uri("http://localhost:5124/");
             });
-            
-            services.AddDistributedMemoryCache();
+			services.AddHttpClient<TimesheetService>(client =>
+			{
+				client.BaseAddress = new Uri("https://localhost:7010/");
+			});
+
+			services.AddDistributedMemoryCache();
             services.AddSession();
 
             services.AddAuthentication(options =>
@@ -50,6 +55,7 @@ namespace FrontEnd.Extensions
             });
 
             services.AddControllersWithViews();
+            services.AddScoped<IRabbitMqService, RabbitMqService>();
         }
     }
 }

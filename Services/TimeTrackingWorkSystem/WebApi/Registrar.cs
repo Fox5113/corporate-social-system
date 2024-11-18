@@ -1,5 +1,5 @@
 ﻿using Infrastructure.EntityFramework;
-using Infrastructure.Repositories.Implementations;
+using Infrastructure.Rep.Impl;
 using Services.Abstractions;
 using Services.Implementations;
 using Services.Repositories.Abstractions;
@@ -27,15 +27,17 @@ namespace WebApi
 		{
 			serviceCollection
 				.AddTransient<IProjectService, ProjectsService>()
-				.AddTransient<ITimeTrackerService, TimeTrackerService>();
-			return serviceCollection;
+				.AddTransient<ITimeTrackerService, TimeTrackerService>()
+				.AddTransient<IEmployeeService, EmployeeService>();
+            return serviceCollection;
 		}
 
 		private static IServiceCollection InstallRepositories(this IServiceCollection serviceCollection)
 		{
 			serviceCollection
 				.AddTransient<IProjectRepository, ProjectRepository>()
-				.AddTransient<ITimeTrackerRepository, TimeTrackerRepository>();
+				.AddTransient<ITimeTrackerRepository, TimeTrackerRepository>()
+                .AddTransient<IEmployeeRepository, EmployeeRepository>();
 			return serviceCollection;
 		}
 	}
