@@ -2,6 +2,8 @@
 using BusinessLogic.Services.Interfaces;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.Services.Classes
 {
@@ -37,6 +39,30 @@ namespace BusinessLogic.Services.Classes
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             return result.Succeeded;
+        }
+
+        public async Task<ForgotPasswordResponseDto> ForgotPassword(ForgotPasswordDto model)
+        {
+            var user = await _userManager.FindByNameAsync(model.Login);
+            var user2 = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null || user?.Id != user2?.Id)//|| !(await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return null;
+            }
+
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            return new ForgotPasswordResponseDto() { Id = user.Id, Code = code }; 
+        }
+
+        public async Task<IdentityResult> ResetPassword(ResetPasswordDto model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            var user2 = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null || user?.Id != user2?.Id)// || !(await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return null;
+            }
+            return await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
         }
 
         public async Task LogoutAsync()

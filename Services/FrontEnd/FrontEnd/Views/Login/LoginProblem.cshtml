@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@dict.AuthCaption</title>
+    <title>@dict.RequestCaption</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/login.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/footer.css" asp-append-version="true">
@@ -18,34 +18,30 @@
 </head>
 <body class="bg">
     <div class="login-container">
-        <h1>@dict.AuthCaption</h1>
-        <form id="loginForm" method="post" action="/Login">
+        <h1>@dict.RequestCaption</h1>
+        <form id="loginForm" method="post" action="/Login/LoginProblem">
+            <div class="form-group">
+                <label for="name">@dict.EmployeeNameCaption @dict.EmployeeSurnameCaption</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">@dict.EmployeeEmailCaption</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
             <div class="form-group">
                 <label for="username">@dict.LoginCaption</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="password">@dict.PasswordCaption</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <label for="content">@dict.ProblemRequestCaption</label>
+                <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">@dict.EnterCaption</button>
+            <button type="submit" class="btn btn-primary">@dict.SendCaption</button>
             @if (ViewBag.ErrorMessage != null)
             {
                 <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
             }
         </form>
-        <div class="login-footer">
-            <div class="row">
-                <div class="col-sm-6">
-                    <a href="/Login/Register">@dict.RegisterNewCaption</a>
-                </div>
-                <div class="col-sm-6">
-                    <a href="/Login/ForgotPassword">@dict.ChangePasswordCaption</a>
-                </div>
-            </div>
-            
-            <p>@dict.EnterProblemCaption <a href="/Login/LoginProblem">@dict.TextToSupportCaption</a></p>
-        </div>
     </div>
 
     <div id="overlay"></div>

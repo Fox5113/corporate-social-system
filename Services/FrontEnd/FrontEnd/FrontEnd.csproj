@@ -18,8 +18,10 @@
     <PackageReference Include="BuildWebCompiler2022" Version="1.14.10" />
     <PackageReference Include="EmojiCSharp" Version="1.0.1" />
     <PackageReference Include="EmojiData" Version="1.1.0" />
+    <PackageReference Include="MailKit" Version="4.8.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>
 
   <ItemGroup>
