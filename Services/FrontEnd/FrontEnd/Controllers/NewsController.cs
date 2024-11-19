@@ -1,5 +1,7 @@
 ﻿using FrontEnd.Helpers;
 using FrontEnd.Models;
+using FrontEnd.Models.Picture;
+using FrontEnd.Models.ViewModels;
 using FrontEnd.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -169,25 +171,25 @@ namespace FrontEnd.Controllers
         #endregion
 
         [HttpPost]
-        public async Task<IActionResult> Create(string title, string shortDescription, string content, string hashtags)
+        public async Task<IActionResult> Create(NewNewsViewModel model)
         {
-            if (String.IsNullOrEmpty(title) || String.IsNullOrEmpty(content))
+            if (String.IsNullOrEmpty(model.Title) || String.IsNullOrEmpty(model.Content))
                 return View();
-
+            
             try
             {
                 if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
                 {
-                    var hashArr = !String.IsNullOrEmpty(hashtags) ? hashtags.Split(' ')
+                    var hashArr = !String.IsNullOrEmpty(model.Hashtags) ? model.Hashtags.Split(' ')
                         .Where(x => !String.IsNullOrEmpty(x.Trim()))
                         .Select(x => x.Trim())
                         .ToList() : null;
                     var query = new CreatingNewsModel()
                     {
-                        Title = title,
+                        Title = model.Title,
                         AuthorId = userId,
-                        Content = content,
-                        ShortDescription = shortDescription
+                        Content = model.Content,
+                        ShortDescription = model.ShortDescription
                     };
 
                     if (hashArr != null && hashArr.Count > 0)
@@ -204,6 +206,33 @@ namespace FrontEnd.Controllers
                             });
                         }
                     }
+
+                    var pictures = new List<CreatingPictureModel>();
+                    foreach (var item in model.Pictures)
+                    {
+                        var fileName = Path.GetFileName(item.FileName);
+                        var contentType = item.ContentType;
+                        long length = item.Length;
+                        if (length < 0)
+                            return BadRequest();
+
+                        using var fileStream = item.OpenReadStream();
+                        byte[] bytes = new byte[length];
+                        fileStream.Read(bytes, 0, (int)item.Length);
+
+                        pictures.Add(new CreatingPictureModel()
+                        {
+                            AuthorId = userId,
+                            Name = fileName,
+                            Format = contentType,
+                            Size = length,
+                            Data = bytes,
+                            ByteAsString = Convert.ToBase64String(bytes),
+                            Description = model.Title
+                        });
+                    }
+
+                    query.PictureList = pictures;
 
                     var success = await _newsService.Create(query);
 

@@ -17,6 +17,7 @@ namespace DataAccess.Entities
         public virtual Employee Author { get; set; }
         public virtual ICollection<NewsComment> NewsCommentList { get; set; }
         public virtual ICollection<HashtagNews> HashtagNewsList { get; set; }
+        public virtual ICollection<Picture> PictureList { get; set; }
 
     }
 }

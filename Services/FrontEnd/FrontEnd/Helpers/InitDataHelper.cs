@@ -1,5 +1,6 @@
 ﻿using FrontEnd.Models;
 using FrontEnd.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace FrontEnd.Helpers
@@ -14,27 +15,24 @@ namespace FrontEnd.Helpers
                 {
                     if (context?.Request?.Cookies[Constants.UserIdCookieKey] != null)
                     {
-                        try
-                        {
-                            var userModel = await personalAccountService.GetPersonalAccountData(context.Request.Cookies[Constants.UserIdCookieKey].ToString());
-                            viewData[Constants.PersonalAccountDataKey] = userModel;
-                            context.Session.SetString(userName, userModel.Id.ToString());
-                            context.Session.SetString(userName + Constants.FullNamePrefix, userModel.Firstname + " " + userModel.Surname);
-                            context.Session.SetString(userName + Constants.LanguagePrefix, !String.IsNullOrEmpty(userModel.Language) ? userModel.Language : Constants.LanguageBase);
-                            context.Session.SetString(userName + Constants.IsAdminPrefix, userModel.IsAdmin.ToString());
-                        }
-                        catch (Exception ex) { }
+                        var builder = new UserDataBuilderFromPA(personalAccountService, 
+                            context.Request.Cookies[Constants.UserIdCookieKey].ToString(), 
+                            userName);
+                        var ownerBuilder = new BuilderOwner(builder);
+                        ownerBuilder.Construct();
+                        var result = builder.GetResult();
+
+                        viewData[Constants.PersonalAccountDataKey] = result.UserModel;
+                        SetSession(context, result);
                     }
 
                     if (!String.IsNullOrEmpty(userName) && String.IsNullOrEmpty(context.Session.GetString(userName)))
                     {
-                        var userModel = await authService.GetUserByLogin(userName);
-                        if (userModel != null)
-                        {
-                            context.Session.SetString(userName, userModel.Id.ToString());
-                            context.Session.SetString(userName + Constants.FullNamePrefix, userModel.Name);
-                            context.Session.SetString(userName + Constants.LanguagePrefix, Constants.LanguageBase);
-                        }
+                        var builder = new UserDataBuilderFromAuth(authService, userName);
+                        var ownerBuilder = new BuilderOwner(builder);
+                        ownerBuilder.Construct();
+                        var result = builder.GetResult();
+                        SetSession(context, result);
                     }
                 }
             }
@@ -57,6 +55,18 @@ namespace FrontEnd.Helpers
             }
 
             viewData[Constants.UserFullNameKey] = context.Session.GetString(userName + Constants.FullNamePrefix);
+        }
+
+        private static void SetSession(HttpContext context, UserDataModel result)
+        {
+            if (!String.IsNullOrEmpty(result.Id))
+            {
+                context.Session.SetString(result.UserLogin, result.Id);
+                context.Session.SetString(result.UserLogin + Constants.FullNamePrefix, result.FullName);
+                context.Session.SetString(result.UserLogin + Constants.IsAdminPrefix, result.IsAdmin.ToString());
+            }
+            
+            context.Session.SetString(result.UserLogin + Constants.LanguagePrefix, result.Language);
         }
     }
 }

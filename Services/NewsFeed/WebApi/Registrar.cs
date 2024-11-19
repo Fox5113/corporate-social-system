@@ -42,7 +42,8 @@ namespace WebApi
             .AddTransient<IHashtagNewsService, HashtagNewsService>()
             .AddTransient<IHashtagService, HashtagService>()
             .AddTransient<IEmployeeService, EmployeeService>()
-            .AddTransient<IBaseService, BaseService>();
+            .AddTransient<IBaseService, BaseService>()
+            .AddTransient<IPictureService, PictureService>();
             return serviceCollection;
         }
 
@@ -60,7 +61,8 @@ namespace WebApi
                 .AddTransient<IHashtagRepository, HashtagRepository>()
                 .AddTransient<IEmployeeRepository, EmployeeRepository>()
                 .AddTransient<IBaseRepository, BaseRepository>()
-                .AddTransient<ILikedNewsRepository, LikedNewsRepository>();
+                .AddTransient<ILikedNewsRepository, LikedNewsRepository>()
+                .AddTransient<IPictureRepository, PictureRepository>();
             return serviceCollection;
         }
     }

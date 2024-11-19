@@ -13,5 +13,6 @@ namespace DataAccess.Entities
         public bool IsAdmin { get; set; }
         public virtual ICollection<News> NewsList { get; set; }
         public virtual ICollection<NewsComment> NewsCommentList { get; set; }
+        public virtual ICollection<Picture> PictureList { get; set; }
     }
 }

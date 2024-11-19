@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Contracts.HashtagNews;
+using BusinessLogic.Contracts.Picture;
 using System;
 using System.Collections.Generic;
 
@@ -13,5 +14,6 @@ namespace BusinessLogic.Contracts.News
         public bool IsPublished { get; set; }
         public bool IsArchived { get; set; }
         public List<CreatingHashtagNewsDto> HashtagNewsList { get; set; }
+        public List<UpdatingPictureDto> PictureList { get; set; }
     }
 }
