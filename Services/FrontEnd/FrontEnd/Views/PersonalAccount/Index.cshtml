@@ -15,7 +15,6 @@
 	var emojiList = (List<EmojiViewModel>)ViewData[Constants.EmojiViewModelListKey];
 }
 
-<link rel="stylesheet" href="/css/news.css" />
 <link rel="stylesheet" href="/css/personalAccount.css" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 <div class="plain-div-with-margin">
@@ -23,14 +22,14 @@
 	<div class="tabbable">
 		<ul class="nav nav-tabs padding-18">
 			<li class="active">
-				<a data-toggle="tab" href="#home">
+					<a data-toggle="tab" href="https://localhost:7157/">
 						<i class="green ace-icon fa fa-user bigger-120">✒️</i>
 					@dict.PAProfileCaption
 				</a>
 			</li>
 
 			<li>
-				<a data-toggle="tab" href="#feed">
+					<a data-toggle="tab" href="https://localhost:7157/News">
 						<i class="orange ace-icon fa fa-rss bigger-120">🗨️</i>
 					@dict.PAMineNewsCaption
 				</a>
@@ -44,7 +43,7 @@
 			</li>
 
 			<li>
-				<a data-toggle="tab" href="#pictures">
+				<a data-toggle="tab" href="#pictures"><link rel="stylesheet" href="/css/news.css" />
 						<i class="pink ace-icon fa fa-picture-o bigger-120">📁</i>
 					@dict.PAArchivedNewsCaption
 				</a>
@@ -109,19 +108,6 @@
 									<div class="form-group">
 										<label for="content">@dict.EmployeeAboutCaption</label>
 										<textarea class="form-control" id="content" name="content" rows="10">@personalInfo.About</textarea>
-										<label for="toggle-smiles" id="label-for-toggle-smiles">😃</label>
-										<input type="checkbox" id="toggle-smiles">
-										<div class="smiles">
-											@if (emojiList != null && emojiList.Count > 0)
-											{
-												@foreach (var item in emojiList)
-												{
-													<span class="smile" id="@item.Hashcode">
-														@item.EmojiString
-													</span>
-												}
-											}
-										</div>
 									</div>
 									<button type="submit" class="btn btn-primary">@dict.SaveButtonCaption</button>
 								</form>
