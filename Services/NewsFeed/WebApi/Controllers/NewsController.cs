@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApi.Models.LikedNews;
 using WebApi.Models.News;
+using WebApi.Models.Picture;
 
 namespace WebApi.Controllers
 {

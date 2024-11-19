@@ -10,7 +10,7 @@ namespace DataAccess.Context
         {
             services
                 .AddDbContext<DataContext>(o => o
-                    .UseSqlServer(connectionString));
+                    .UseSqlServer(connectionString, b => b.MigrationsAssembly("WebApi")));
             return services;
         }
     }

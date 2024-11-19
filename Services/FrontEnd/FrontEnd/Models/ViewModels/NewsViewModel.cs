@@ -1,4 +1,6 @@
-﻿namespace FrontEnd.Models
+﻿using FrontEnd.Models.Picture;
+
+namespace FrontEnd.Models
 {
     public class NewsViewModel
     {
@@ -15,6 +17,7 @@
         public List<NewsCommentModel>? NewsCommentList { get; set; }
         public List<HashtagNewsModel>? HashtagNewsList { get; set; }
         public List<HashtagModel>? HashtagList { get; set; }
+        public List<PictureModel>? PictureList { get; set; }
         public string? Hashtags { get; set; }
         public bool IsAuthor {  get; set; }
     }

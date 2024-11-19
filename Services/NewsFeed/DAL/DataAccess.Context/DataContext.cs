@@ -12,6 +12,7 @@ namespace DataAccess.Context
         public DbSet<NewsComment> NewsComment { get; set; }
         public DbSet<HashtagNews> HashtagNews { get; set; }
         public DbSet<LikedNews> LikedNews { get; set; }
+        public DbSet<Picture> Picture { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -30,6 +31,11 @@ namespace DataAccess.Context
                 .WithOne(nc => nc.Author)
                 .HasForeignKey(nc => nc.AuthorId);
 
+            modelBuilder.Entity<Employee>()
+                .HasMany(emp => emp.PictureList)
+                .WithOne(pic => pic.Author)
+                .HasForeignKey(pic => pic.AuthorId);
+
             modelBuilder.Entity<News>()
                 .HasMany(news => news.NewsCommentList)
                 .WithOne(nc => nc.News)
@@ -40,6 +46,11 @@ namespace DataAccess.Context
                 .HasMany(news => news.HashtagNewsList)
                 .WithOne(hn => hn.News)
                 .HasForeignKey(hn => hn.NewsId);
+
+            modelBuilder.Entity<News>()
+                .HasMany(news => news.PictureList)
+                .WithOne(pic => pic.News)
+                .HasForeignKey(pic => pic.NewsId);
 
             modelBuilder.Entity<Hashtag>()
                 .HasMany(h => h.HashtagNewsList)
@@ -60,6 +71,10 @@ namespace DataAccess.Context
 
             modelBuilder.Entity<NewsComment>()
                 .Property(nc => nc.UpdatedAt)
+                .HasDefaultValue(DateTime.Now);
+
+            modelBuilder.Entity<Picture>()
+                .Property(pic => pic.CreatedAt)
                 .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<NewsComment>()
@@ -84,6 +99,10 @@ namespace DataAccess.Context
 
             modelBuilder.Entity<LikedNews>()
                 .Property(ln => ln.Id)
+                .HasDefaultValue(Guid.NewGuid());
+
+            modelBuilder.Entity<Picture>()
+                .Property(pic => pic.Id)
                 .HasDefaultValue(Guid.NewGuid());
 
             base.OnModelCreating(modelBuilder);

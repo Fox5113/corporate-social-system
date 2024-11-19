@@ -2,6 +2,7 @@
 using System;
 using BusinessLogic.Contracts.News;
 using BusinessLogic.Contracts.NewsComment;
+using BusinessLogic.Contracts.Picture;
 
 namespace BusinessLogic.Contracts.Employee
 {
@@ -15,5 +16,6 @@ namespace BusinessLogic.Contracts.Employee
         public bool IsAdmin { get; set; }
         public List<NewsDto> NewsList { get; set; }
         public List<NewsCommentDto> NewsCommentList { get; set; }
+        public List<PictureDto> PictureList { get; set; }
     }
 }

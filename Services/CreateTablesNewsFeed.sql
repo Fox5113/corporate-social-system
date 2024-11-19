@@ -110,3 +110,31 @@ ALTER TABLE LikedNews CHECK CONSTRAINT [FK_LikedNews_Employee_EmployeeId]
 ALTER TABLE LikedNews  WITH CHECK ADD  CONSTRAINT [FK_LikedNews_News_NewsId] FOREIGN KEY(NewsId)
 REFERENCES News (Id)
 ALTER TABLE LikedNews CHECK CONSTRAINT [FK_LikedNews_News_NewsId]
+
+--Картинки
+CREATE TABLE Picture(
+	Id uniqueidentifier NOT NULL,
+	[Name] nvarchar(500) NOT NULL,
+	[Description] nvarchar(max) NULL,
+	ByteAsString nvarchar(max) NULL,
+	[Format] nvarchar(250) NULL,
+	AuthorId uniqueidentifier NOT NULL,
+	NewsId uniqueidentifier NOT NULL,
+	CreatedAt datetime2(7) NOT NULL,
+	Size int NOT NULL,
+	[Data] varbinary(max) NOT NULL,
+ CONSTRAINT [PK_Picture] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+ALTER TABLE Picture ADD  CONSTRAINT [DFHuuyuW8Ndkh0wWuFOKvZp9Fs]  DEFAULT (newid()) FOR Id
+ALTER TABLE Picture ADD  DEFAULT (GETDATE()) FOR CreatedAt
+ALTER TABLE Picture WITH CHECK ADD  CONSTRAINT [FK_Picture_Employee_AuthorId] FOREIGN KEY(AuthorId)
+REFERENCES Employee (Id)
+ON DELETE CASCADE
+ALTER TABLE Picture CHECK CONSTRAINT [FK_Picture_Employee_AuthorId]
+ALTER TABLE Picture  WITH CHECK ADD  CONSTRAINT [FK_Picture_News_NewsId] FOREIGN KEY(NewsId)
+REFERENCES News (Id)
+ALTER TABLE Picture CHECK CONSTRAINT [FK_Picture_News_NewsId]

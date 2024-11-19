@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Contracts.Hashtag;
 using BusinessLogic.Contracts.LikedNews;
 using BusinessLogic.Contracts.News;
+using BusinessLogic.Contracts.Picture;
 using DataAccess.Common;
 using DataAccess.Entities;
 using System;

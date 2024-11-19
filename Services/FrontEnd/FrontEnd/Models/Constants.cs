@@ -2,46 +2,46 @@
 {
     public static class Constants
     {
-        public static string LanguageBase = "ru-RU";
-        public static string FullNamePrefix = "_FullName";
-        public static string LanguagePrefix = "_Language";
-        public static string ObjectPrefix = "_Object";
-        public static string IsAdminPrefix = "_IsAdmin";
-        public static string NewsFeedListViewDataKey = "NewsList";
-        public static string UserFullNameKey = "UserFullName";
-        public static string PersonalAccountDataKey = "PersonalAccountData";
-        public static string UserIdCookieKey = "userId";
-        public static string NewsListViewModelKey = "NewsListViewModel";
-        public static string CaptionsKey = "Captions";
-        public static string EmojiViewModelListKey = "EmojiViewModelList";
-        public static string CreateNewsViewModelKey = "CreateNewsViewModel";
-        public static string LangRUCaption = "RU";
-        public static string LangENCaption = "EN";
-        public static string RuRULangCaption = "ru-RU";
-        public static string EnUSLangCaption = "en-US";
-        public static string LanguageKey = "Langs";
-		public static string TimeTrackingDataKey = "TimeTrackingData";
-		public static string ProjectsDataKey = "ProjectsData";
-        public static string AllProjectsDataKey = "AllProjectsData";
-        public static string WeekDaysDataKey = "WeekDaysData";
-        public static string WeeksDataKey = "WeeksData";
-        public static string CurrentTimesheetStartKey = "CurrentTimesheetStart";
-        public static string CurrentTimesheetTillKey = "CurrentTimesheetTill";
-        public static string MonthsKey = "Months";
-        public static string PrevWeekKey = "PrevWeek";
-        public static string NextWeekKey = "NextWeek";
-        public static string PrevTwoWeeksKey = "PrevTwoWeeks";
-        public static string NextTwoWeeksKey = "NextTwoWeeks";
-        public static string TimeSheetDataKey = "TimeSheetData";
-        public static string LoginKey = "LoginValue";
+        public static readonly string LanguageBase = "ru-RU";
+        public static readonly string FullNamePrefix = "_FullName";
+        public static readonly string LanguagePrefix = "_Language";
+        public static readonly string ObjectPrefix = "_Object";
+        public static readonly string IsAdminPrefix = "_IsAdmin";
+        public static readonly string NewsFeedListViewDataKey = "NewsList";
+        public static readonly string UserFullNameKey = "UserFullName";
+        public static readonly string PersonalAccountDataKey = "PersonalAccountData";
+        public static readonly string UserIdCookieKey = "userId";
+        public static readonly string NewsListViewModelKey = "NewsListViewModel";
+        public static readonly string CaptionsKey = "Captions";
+        public static readonly string EmojiViewModelListKey = "EmojiViewModelList";
+        public static readonly string CreateNewsViewModelKey = "CreateNewsViewModel";
+        public static readonly string LangRUCaption = "RU";
+        public static readonly string LangENCaption = "EN";
+        public static readonly string RuRULangCaption = "ru-RU";
+        public static readonly string EnUSLangCaption = "en-US";
+        public static readonly string LanguageKey = "Langs";
+		public static readonly string TimeTrackingDataKey = "TimeTrackingData";
+		public static readonly string ProjectsDataKey = "ProjectsData";
+        public static readonly string AllProjectsDataKey = "AllProjectsData";
+        public static readonly string WeekDaysDataKey = "WeekDaysData";
+        public static readonly string WeeksDataKey = "WeeksData";
+        public static readonly string CurrentTimesheetStartKey = "CurrentTimesheetStart";
+        public static readonly string CurrentTimesheetTillKey = "CurrentTimesheetTill";
+        public static readonly string MonthsKey = "Months";
+        public static readonly string PrevWeekKey = "PrevWeek";
+        public static readonly string NextWeekKey = "NextWeek";
+        public static readonly string PrevTwoWeeksKey = "PrevTwoWeeks";
+        public static readonly string NextTwoWeeksKey = "NextTwoWeeks";
+        public static readonly string TimeSheetDataKey = "TimeSheetData";
+        public static readonly string LoginKey = "LoginValue";
 
-        public static Dictionary<string, object> Dictionaries = new Dictionary<string, object>()
+        public static readonly Dictionary<string, object> Dictionaries = new Dictionary<string, object>()
         {
             { "ru-RU", new CaptionsBase() },
             { "en-US", new CaptionsEN() }
         };
 
-        public static Dictionary<string, string> Langs = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> Langs = new Dictionary<string, string>()
         {
             { "ru-RU", LangRUCaption },
             { "en-US", LangENCaption }
@@ -167,12 +167,6 @@
         public virtual string RequestCaption { get; } = "Заявка";
         public virtual string ProblemRequestCaption { get; } = "Опишите проблему";
         public virtual string TitleChangePasswordCaption { get; } = "Смена пароля";
-        public virtual string IsSimplePasswordCaption { get; } = "Недостаточная сложность пароля.\nПароль должен содержать минимум 6 символов, максимум 64, символы, строчные и прописные буквы, цифры. \nПароль не должен содержать пробелов и значение логина.";
-        public virtual string LoginExistCaption { get; } = "Пользователь с таких логином уже зарегистрирован в системе.";
-        public virtual string EmailExistCaption { get; } = "Пользователь с такой почтой уже зарегистрирован в системе.";
-        public virtual string PasswordContainsUsernameCaption { get; } = "Пароль содержит логин пользователя. \nПароль должен содержать минимум 6 символов, максимум 64, символы, строчные и прописные буквы, цифры. \nПароль не должен содержать пробелов и значение логина.";
-        public virtual string IsNotAppropriateLoginCaption { get; } = "Логин содержит недопустимые символы (пробелы).";
-        public virtual string IsNotAppropriatePasswordCaption { get; } = "Пароль содержит недопустимые символы. \nПароль должен содержать минимум 6 символов, максимум 64, символы, строчные и прописные буквы, цифры. \nПароль не должен содержать пробелов и значение логина.";
         public virtual string RegisterRequestSuccessCaption { get; } = "Заявка на регистрацию успешно отправлена.";
         public virtual string RegisterRequestSuccessMessageCaption { get; } = "Уведомление о регистрации придет на указанную почту.";
         public virtual string MinimumSymbolsPasswordCaption { get; } = "Пароль должен содержать как минимум 6 символов";
@@ -183,7 +177,8 @@
         public virtual string ProblemRequestSucceededCaption { get; } = "Ваша заявка принята";
         public virtual string WeAnswerLaterByEmailCaption { get; } = "Ответ будет направлен Вам на указанную почту в ближайшее время.";
         public virtual string BackCaption { get; } = "Назад";
-        public virtual string AccessIsRestricted { get; } = "Доступ ограничен";
+        public virtual string AccessIsRestrictedCaption { get; } = "Доступ ограничен";
+        public virtual string PicturesCaption { get; } = "Фото";
     }
 
     public class CaptionsEN : CaptionsBase
@@ -305,5 +300,16 @@
         public override string RequestCaption { get; } = "Request";
         public override string ProblemRequestCaption { get; } = "Describe a problem";
         public override string TitleChangePasswordCaption { get; } = "Password changing";
+        public override string RegisterRequestSuccessCaption { get; } = "The register request is successfully sent.";
+        public override string RegisterRequestSuccessMessageCaption { get; } = "A notification about registration will be sent to your e-mail.";
+        public override string MinimumSymbolsPasswordCaption { get; } = "Password should contain minimum 6 symbols";
+        public override string GoToEmailBoxCaption { get; } = "For password reset use a link in a e-mail message, which was sent to your e-mail address.";
+        public override string PasswordWasResetCaption { get; } = "Your password is reset.";
+        public override string PasswordResetCaption { get; } = "Login ";
+        public override string LinkCaption { get; } = "link";
+        public override string ProblemRequestSucceededCaption { get; } = "The application accepted";
+        public override string WeAnswerLaterByEmailCaption { get; } = "Ответ будет направлен Вам на указанную почту в ближайшее время.";
+        public override string BackCaption { get; } = "Back";
+        public override string AccessIsRestrictedCaption { get; } = "Access restricted";
     }
 }

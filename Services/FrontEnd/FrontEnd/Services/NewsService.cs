@@ -1,6 +1,7 @@
 ﻿using FrontEnd.Models;
 using FrontEnd.Models.News;
 using FrontEnd.Models.PersonalAccountModels;
+using FrontEnd.Models.Picture;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SqlQuery;
 using System.Text.Json;
@@ -63,6 +64,17 @@ namespace FrontEnd.Services
                         newsViewModel.HashtagList = hashtags;
                         var names = hashtags?.Select(x => x.Name).ToList();
                         newsViewModel.Hashtags = names != null && names.Count > 0 ? string.Join(" ", names) : "";
+                    }
+
+                    if (news.PictureList != null)
+                    {
+                        newsViewModel.PictureList = news.PictureList;
+                    }
+                    else
+                    {
+                        var pics = await GetPicturesByNewsIds(new List<Guid>() { news.Id });
+                        if (pics != null)
+                            newsViewModel.PictureList = pics;
                     }
 
                     return newsViewModel;
@@ -241,6 +253,25 @@ namespace FrontEnd.Services
             }
         }
 
+        public async Task<List<PictureModel>> GetPicturesByNewsIds(List<Guid> newsIds)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"{_url}Picture/GetCollectionByNewsIds", newsIds);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var pics = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<List<PictureModel>>(pics, options);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public async Task<bool> Update(UpdatingNewsModel newsModel)
         {
             var response = await _httpClient.PutAsJsonAsync($"{_url}News/SendOnModeration", newsModel);
@@ -292,6 +323,7 @@ namespace FrontEnd.Services
         {
             var newsIdsList = new List<Guid>();
             var likes = list.Count > 0 ? await GetLikesInfo(list.Select(x => x.Id).ToList(), userId) : null;
+            var pics = list.Count > 0 ? await GetPicturesByNewsIds(list.Select(x => x.Id).ToList()) : null;
             var modelList = new List<NewsViewModel>();
             var employees = new List<EmployeeModel>();
             foreach (var newsItem in list)
@@ -359,6 +391,9 @@ namespace FrontEnd.Services
                     newNews.IsLikedByCurrentUser = likeInfo.IsLiked;
                     newNews.Likes = likeInfo.LikesCount;
                 }
+
+                if(pics != null)
+                    newNews.PictureList = pics.Where(x => x.NewsId == newsItem.Id).ToList();
 
                 modelList.Add(newNews);
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using WebApi.Models.Employee;
 using WebApi.Models.HashtagNews;
 using WebApi.Models.NewsComment;
+using WebApi.Models.Picture;
 
 namespace WebApi.Models.News
 {
@@ -20,5 +21,6 @@ namespace WebApi.Models.News
         public EmployeeModel Author { get; set; }
         public List<NewsCommentModel> NewsCommentList { get; set; }
         public List<HashtagNewsModel> HashtagNewsList { get; set; }
+        public List<PictureModel> PictureList { get; set; }
     }
 }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccess.Context;
+using System.Net.Http.Headers;
+using System.IO;
 
 namespace DataAccess.Repositories
 {
@@ -83,6 +85,9 @@ namespace DataAccess.Repositories
 
             var newsCommentRep = new NewsCommentRepository(_dataContext);
             await newsCommentRep.DeleteByNewsId(newsId);
+
+            var picturesRep = new PictureRepository(_dataContext);
+            await picturesRep.DeleteByNewsId(newsId);
         }
 
         /// <summary>
@@ -99,6 +104,8 @@ namespace DataAccess.Repositories
                 .ToList() : null;
 
             news.HashtagNewsList = PrepareHashtagNews(hNames).Result;
+            if(news.PictureList != null && news.PictureList.Count > 0)
+                news.PictureList = PreparePictures(news.PictureList);
             return _dataContext.Set<News>().Add(news).Entity;
         }
 
@@ -116,6 +123,8 @@ namespace DataAccess.Repositories
                 .ToList() : null;
 
             news.HashtagNewsList = await PrepareHashtagNews(hNames);
+            if (news.PictureList != null && news.PictureList.Count > 0)
+                news.PictureList = PreparePictures(news.PictureList);
             return (await _dataContext.Set<News>().AddAsync(news)).Entity;
         }
 
@@ -130,8 +139,9 @@ namespace DataAccess.Repositories
 
             var hashtagNews = GetHashtagNews(news.Select(x => x.Id).ToList());
             var hashtags = GetHashtags(hashtagNews.Select(x => x.HashtagId).Distinct().ToList());
+            var pictures = GetPictures(news.Select(x => x.Id).ToList());
 
-            foreach(var item in news)
+            foreach (var item in news)
             {
                 item.Author = authors.FirstOrDefault(x => x.Id == item.AuthorId);
                 if (item.Author != null)
@@ -152,6 +162,9 @@ namespace DataAccess.Repositories
                             hn.Hashtag.HashtagNewsList = null;
                     }
                 }
+
+                if(pictures != null)
+                    item.PictureList = pictures;
             }
         }
 
@@ -181,6 +194,7 @@ namespace DataAccess.Repositories
             {
                 news.Author.NewsList = null;
                 news.Author.NewsCommentList = null;
+                news.Author.PictureList = null;
             }
 
             if (news.HashtagNewsList != null && news.HashtagNewsList.Count > 0)
@@ -191,6 +205,34 @@ namespace DataAccess.Repositories
 
                     if (hn.Hashtag != null)
                         hn.Hashtag.HashtagNewsList = null;
+                }
+            }
+
+            if(news.NewsCommentList != null)
+            {
+                foreach(var comment  in news.NewsCommentList)
+                {
+                    comment.News = null;
+                    if (comment.Author != null)
+                    {
+                        comment.Author.NewsList = null;
+                        comment.Author.NewsCommentList = null;
+                        comment.Author.PictureList = null;
+                    }
+                }
+            }
+
+            if(news.PictureList != null)
+            {
+                foreach(var pic in news.PictureList)
+                {
+                    pic.News = null;
+                    if (pic.Author != null)
+                    {
+                        pic.Author.NewsList = null;
+                        pic.Author.NewsCommentList = null;
+                        pic.Author.PictureList = null;
+                    }
                 }
             }
         }
@@ -393,6 +435,17 @@ namespace DataAccess.Repositories
             var repoH = new HashtagRepository(_dataContext);
             return repoH.GetCollectionByNames(names).Result;
         }
+        /// <summary>
+        /// Получить коллекцию картинок по Id
+        /// </summary>
+        /// <param name="ids">Id картинок</param>
+        /// <returns>Коллекция картинок</returns>
+        private ICollection<Picture> GetPictures(ICollection<Guid> ids)
+        {
+            var repoH = new PictureRepository(_dataContext);
+            return repoH.GetCollectionByNewsIds(ids).Result;
+        }
+
 
         /// <summary>
         /// Создание коллекции сущностей таблицы, связывающей хештеги и новости
@@ -433,6 +486,36 @@ namespace DataAccess.Repositories
             }
 
             return null;
+        }
+
+        private ICollection<Picture> PreparePictures(ICollection<Picture> pictures)
+        {
+            foreach (var picture in pictures)
+            {
+                if(picture != null)
+                {
+                    if(picture.Data != null && picture.Data.Length > 0)
+                    {
+                        if (String.IsNullOrEmpty(picture.ByteAsString))
+                        {
+                            picture.ByteAsString = Convert.ToBase64String(picture.Data);
+                        }
+                        if (picture.Size == 0)
+                        {
+                            picture.Size = picture.Data.Length;
+                        }
+                    }
+                    if (!String.IsNullOrEmpty(picture.Name))
+                    {
+                        if (String.IsNullOrEmpty(picture.Format))
+                        {
+                            picture.Format = Path.GetExtension(picture.Name);
+                        }
+                    }
+                }
+            }
+
+            return pictures;
         }
 
         #endregion

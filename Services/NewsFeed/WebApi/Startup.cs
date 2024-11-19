@@ -99,6 +99,8 @@ namespace WebApi
                 cfg.AddProfile<HashtagMappingsProfile>();
                 cfg.AddProfile<LikedNewsInfoMappingsProfile>();
                 cfg.AddProfile<NewsCommentInfoMappingsProfile>();
+                cfg.AddProfile<PictureMappingsProfile>();
+                cfg.AddProfile<BusinessLogic.Services.Mapping.PictureMappingsProfile>();
                 cfg.AddProfile<BusinessLogic.Services.Mapping.NewsMappingsProfile>();
                 cfg.AddProfile<BusinessLogic.Services.Mapping.NewsCommentMappingsProfile>();
                 cfg.AddProfile<BusinessLogic.Services.Mapping.EmployeeMappingsProfile>();

@@ -12,7 +12,8 @@ namespace BusinessLogic.Services.Mapping
 
             CreateMap<ShortEmployeeDto, Employee>()
                 .ForMember(d => d.NewsCommentList, map => map.Ignore())
-                .ForMember(d => d.NewsList, map => map.Ignore());
+                .ForMember(d => d.NewsList, map => map.Ignore())
+                .ForMember(d => d.PictureList, map => map.Ignore());
         }
     }
 }

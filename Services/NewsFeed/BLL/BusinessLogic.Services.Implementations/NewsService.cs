@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccess.Repositories;
+using BusinessLogic.Contracts.Picture;
+using Azure;
 
 namespace BusinessLogic.Services
 {

@@ -121,7 +121,7 @@ namespace FrontEnd.Services
 
         public async Task<UserViewModel> GetUserByLogin(string username)
         {
-            var response = await _httpClient.GetAsync($"https://localhost:7192/api/User/getUserByName/{username}");
+            var response = await _httpClient.GetAsync($"https://localhost:7272/api/Users/GetUserByName?name={username}");
 
             if (response.IsSuccessStatusCode)
             {
