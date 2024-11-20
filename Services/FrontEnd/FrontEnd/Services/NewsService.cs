@@ -39,43 +39,14 @@ namespace FrontEnd.Services
                 };
                 var news = JsonSerializer.Deserialize<NewsModel>(newsStr, options);
                 if (news != null) {
-                    var newsViewModel = new NewsViewModel()
-                    {
-                        Id = news.Id,
-                        Title = news.Title,
-                        ShortDescription = news.ShortDescription,
-                        Content = news.Content
-                    };
-
-                    if (news.HashtagNewsList != null)
-                    {
-                        newsViewModel.HashtagNewsList = news.HashtagNewsList;
-                    }
-                    else
-                    {
-                        var hashtagNews = await GetHashtagNewsByNewsIds(new List<Guid>() { news.Id });
-                        newsViewModel.HashtagNewsList = hashtagNews;
-                    }
-
-                    if (newsViewModel.HashtagNewsList != null)
-                    {
-                        var hashtagIds = newsViewModel.HashtagNewsList.Select(x => x.HashtagId).ToList();
-                        var hashtags = hashtagIds != null && hashtagIds.Count > 0 ? await GetHashtags(hashtagIds) : null;
-                        newsViewModel.HashtagList = hashtags;
-                        var names = hashtags?.Select(x => x.Name).ToList();
-                        newsViewModel.Hashtags = names != null && names.Count > 0 ? string.Join(" ", names) : "";
-                    }
-
-                    if (news.PictureList != null)
-                    {
-                        newsViewModel.PictureList = news.PictureList;
-                    }
-                    else
-                    {
-                        var pics = await GetPicturesByNewsIds(new List<Guid>() { news.Id });
-                        if (pics != null)
-                            newsViewModel.PictureList = pics;
-                    }
+                    var pics = news.PictureList != null ? news.PictureList : await GetPicturesByNewsIds(new List<Guid>() { news.Id });
+                    var nmp = new NewsModelPreparer().SetService(this).SetPicturesList(pics).SetNews(news);
+                    var nvmp = new NewsViewModelPreparer().SetNews(news).SetService(this);
+                    var newsViewModel = new NewsViewModel();
+                    nmp.SetBaseFields(newsViewModel);
+                    nmp.SetPictures(newsViewModel);
+                    await nmp.SetHashtagNews(newsViewModel); 
+                    await nvmp.SetHashtags(newsViewModel);
 
                     return newsViewModel;
                 }
@@ -333,67 +304,12 @@ namespace FrontEnd.Services
                 else
                     newsIdsList.Add(newsItem.Id);
 
-                var newNews = new NewsViewModel()
-                {
-                    Id = newsItem.Id,
-                    Title = newsItem.Title,
-                    Content = newsItem.Content,
-                    ShortDescription = newsItem.ShortDescription,
-                    CreatedAt = newsItem.CreatedAt,
-                    UpdatedAt = newsItem.UpdatedAt,
-                    AuthorId = newsItem.AuthorId,
-                    IsAuthor = newsItem.AuthorId == userId
-                };
-
-                if (newsItem.Author == null)
-                {
-                    var isInList = employees.FirstOrDefault(x => x.Id == newsItem.AuthorId) != null;
-                    var employee = isInList ? employees.FirstOrDefault(x => x.Id == newsItem.AuthorId) : await GetEmployeeInfo(newsItem.AuthorId);
-
-                    if (employee != null)
-                    {
-                        if (!isInList)
-                            employees.Add(employee);
-
-                        newNews.AuthorFullName = employee.Firstname + ' ' + employee.Surname;
-                    }
-                }
-                else
-                {
-                    if (!employees.Contains(newsItem.Author))
-                        employees.Add(newsItem.Author);
-
-                    newNews.AuthorFullName = newsItem.Author.Firstname + ' ' + newsItem.Author.Surname;
-                }
-
-                if (newsItem.HashtagNewsList != null)
-                {
-                    newNews.HashtagNewsList = newsItem.HashtagNewsList;
-                }
-                else
-                {
-                    var hashtagNews = await GetHashtagNewsByNewsIds(new List<Guid>() { newsItem.Id });
-                    newNews.HashtagNewsList = hashtagNews;
-                }
-
-                if(newNews.HashtagNewsList != null)
-                {
-                    var hashtagIds = newNews.HashtagNewsList.Select(x => x.HashtagId).ToList();
-                    var hashtags = hashtagIds != null && hashtagIds.Count > 0 ? await GetHashtags(hashtagIds) : null;
-                    newNews.HashtagList = hashtags;
-                    var names = hashtags?.Select(x => "#" + x.Name).ToList();
-                    newNews.Hashtags = names != null && names.Count > 0 ? string.Join(" ", names) : "";
-                }
-
-                var likeInfo = likes?.FirstOrDefault(x => x.NewsId == newsItem.Id);
-                if (likeInfo != null)
-                {
-                    newNews.IsLikedByCurrentUser = likeInfo.IsLiked;
-                    newNews.Likes = likeInfo.LikesCount;
-                }
-
-                if(pics != null)
-                    newNews.PictureList = pics.Where(x => x.NewsId == newsItem.Id).ToList();
+                var nmp = new NewsModelPreparer().SetService(this).SetPicturesList(pics).SetEmployeesList(employees).SetNews(newsItem);
+                var nvmp = new NewsViewModelPreparer().SetNews(newsItem).SetLikesList(likes).SetService(this);
+                var facade = new NewsModelFacade(nmp, nvmp, userId);
+                await facade.PrepareBase();
+                await facade.PrepareAdditional();
+                var newNews = facade.GetResult();
 
                 modelList.Add(newNews);
             }

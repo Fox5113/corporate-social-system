@@ -27,7 +27,7 @@ namespace WebApi.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("1191c0ea-9888-44a2-8777-7a8e42edd91f"));
+                        .HasDefaultValue(new Guid("d8f37952-6b6d-4b45-bd38-328eb731b13d"));
 
                     b.Property<string>("Firstname")
                         .HasColumnType("nvarchar(max)");
@@ -54,7 +54,7 @@ namespace WebApi.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("6ad9b462-8db1-4880-9906-ce4015519e0d"));
+                        .HasDefaultValue(new Guid("f06c755f-4c47-4ff7-8733-a08581e72833"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -69,7 +69,7 @@ namespace WebApi.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("a00c3355-e508-4cb5-b11a-d0315b4a920b"));
+                        .HasDefaultValue(new Guid("41dff794-5ee9-425a-8e8f-6ea2b2472f32"));
 
                     b.Property<Guid>("HashtagId")
                         .HasColumnType("uniqueidentifier");
@@ -91,7 +91,7 @@ namespace WebApi.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("e0406b61-140c-4ff1-9033-e715f90f658a"));
+                        .HasDefaultValue(new Guid("6d74e44b-faba-4ce7-b777-df863ce4f33a"));
 
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
@@ -109,7 +109,7 @@ namespace WebApi.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("596eb1dc-f19d-4371-94b5-92c92178b31a"));
+                        .HasDefaultValue(new Guid("b542152f-6fbf-4d51-aea7-a3e535bd98cf"));
 
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
@@ -120,7 +120,7 @@ namespace WebApi.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 19, 11, 5, 42, 643, DateTimeKind.Local).AddTicks(3598));
+                        .HasDefaultValue(new DateTime(2024, 11, 20, 11, 14, 56, 630, DateTimeKind.Local).AddTicks(8972));
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("bit");
@@ -137,7 +137,7 @@ namespace WebApi.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 19, 11, 5, 42, 643, DateTimeKind.Local).AddTicks(4051));
+                        .HasDefaultValue(new DateTime(2024, 11, 20, 11, 14, 56, 630, DateTimeKind.Local).AddTicks(9816));
 
                     b.HasKey("Id");
 
@@ -151,7 +151,7 @@ namespace WebApi.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("1778b33b-91d5-413a-a967-44a7a153e035"));
+                        .HasDefaultValue(new Guid("b3b2695a-fe10-40f1-8338-683f697f32ec"));
 
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
@@ -162,7 +162,7 @@ namespace WebApi.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 19, 11, 5, 42, 643, DateTimeKind.Local).AddTicks(4336));
+                        .HasDefaultValue(new DateTime(2024, 11, 20, 11, 14, 56, 631, DateTimeKind.Local).AddTicks(298));
 
                     b.Property<Guid>("NewsId")
                         .HasColumnType("uniqueidentifier");
@@ -170,7 +170,7 @@ namespace WebApi.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 19, 11, 5, 42, 643, DateTimeKind.Local).AddTicks(4604));
+                        .HasDefaultValue(new DateTime(2024, 11, 20, 11, 14, 56, 631, DateTimeKind.Local).AddTicks(631));
 
                     b.HasKey("Id");
 
@@ -186,7 +186,7 @@ namespace WebApi.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("f58b4aa2-f0cf-44bc-b089-d8d732d6a29b"));
+                        .HasDefaultValue(new Guid("4d3390c3-7713-4df5-ae3e-7486830ae20a"));
 
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
@@ -197,7 +197,7 @@ namespace WebApi.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 19, 11, 5, 42, 643, DateTimeKind.Local).AddTicks(4919));
+                        .HasDefaultValue(new DateTime(2024, 11, 20, 11, 14, 56, 631, DateTimeKind.Local).AddTicks(1170));
 
                     b.Property<byte[]>("Data")
                         .HasColumnType("varbinary(max)");
@@ -214,8 +214,8 @@ namespace WebApi.Migrations
                     b.Property<Guid>("NewsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Size")
-                        .HasColumnType("int");
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

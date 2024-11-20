@@ -48,7 +48,7 @@ namespace FrontEnd.Models
 
         public override void SetLogin()
         {
-            userModel.Id = _userName;
+            userModel.UserLogin = _userName;
         }
     }
 }

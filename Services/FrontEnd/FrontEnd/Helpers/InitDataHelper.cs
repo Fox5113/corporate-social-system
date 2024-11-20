@@ -11,7 +11,7 @@ namespace FrontEnd.Helpers
         {
             try
             {
-                if (!String.IsNullOrEmpty(userName) && String.IsNullOrEmpty(context.Session.GetString(userName)))
+                if (!String.IsNullOrEmpty(userName) && String.IsNullOrEmpty(context.Session.GetString(userName + Constants.FullNamePrefix)))
                 {
                     if (context?.Request?.Cookies[Constants.UserIdCookieKey] != null)
                     {
@@ -19,18 +19,18 @@ namespace FrontEnd.Helpers
                             context.Request.Cookies[Constants.UserIdCookieKey].ToString(), 
                             userName);
                         var ownerBuilder = new BuilderOwner(builder);
-                        ownerBuilder.Construct();
+                        await ownerBuilder.Construct();
                         var result = builder.GetResult();
 
                         viewData[Constants.PersonalAccountDataKey] = result.UserModel;
                         SetSession(context, result);
                     }
 
-                    if (!String.IsNullOrEmpty(userName) && String.IsNullOrEmpty(context.Session.GetString(userName)))
+                    if (String.IsNullOrEmpty(context.Session.GetString(userName + Constants.FullNamePrefix)))
                     {
                         var builder = new UserDataBuilderFromAuth(authService, userName);
                         var ownerBuilder = new BuilderOwner(builder);
-                        ownerBuilder.Construct();
+                        await ownerBuilder.Construct();
                         var result = builder.GetResult();
                         SetSession(context, result);
                     }
@@ -62,10 +62,13 @@ namespace FrontEnd.Helpers
             if (!String.IsNullOrEmpty(result.Id))
             {
                 context.Session.SetString(result.UserLogin, result.Id);
-                context.Session.SetString(result.UserLogin + Constants.FullNamePrefix, result.FullName);
                 context.Session.SetString(result.UserLogin + Constants.IsAdminPrefix, result.IsAdmin.ToString());
             }
-            
+            if (!String.IsNullOrEmpty(result.FullName))
+            {
+                context.Session.SetString(result.UserLogin + Constants.FullNamePrefix, result.FullName);
+            }
+
             context.Session.SetString(result.UserLogin + Constants.LanguagePrefix, result.Language);
         }
     }

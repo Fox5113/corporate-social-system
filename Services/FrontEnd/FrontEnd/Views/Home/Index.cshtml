@@ -23,10 +23,11 @@
     };
 }
 
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<link rel="stylesheet" href="/css/swiper-bundle.min.css" />
 <link rel="stylesheet" href="/css/site.css" />
 <link rel="stylesheet" href="/css/news.css" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<link rel="stylesheet" href="/css/icon.css" />
+<link rel="stylesheet" href="/css/slider.css" type="text/css" />
 
 <!-- Карусель -->
 <div class="swiper-container">
@@ -59,6 +60,36 @@
                     <div class="news-card card mb-4 shadow-sm">
                         <!--<img class="card-img-top" src="/img/test/64559-thanks5.png" alt="News Image">-->
                         <div class="card-body_@news.Id">
+                            @if (news.IsAuthor)
+                            {
+                                <form id='updateNews' method='post' asp-controller='News' asp-action='Update'>
+                                    <input class='form-control' id='newsId' name='newsId' type='hidden' value='@news.Id'>
+                                    <button type='submit' class='pen-update'>✏️</button>
+                                </form>
+                            }
+                            @if (news.PictureList != null && news.PictureList.Count > 0)
+                            {
+                                <div class="slider">
+                                    <div class="slides" id="slides_@news.Id">
+                                        @for (var i = 0; i < news.PictureList.Count; i++)
+                                        {
+                                            <div id="img_@(news.Id)_@i" class="imgDiv @(i == 0 ? "block" : string.Empty)">
+                                                <img class="slide" src="data:image/png;base64,@(String.IsNullOrEmpty(news.PictureList[i].ByteAsString) ? Convert.ToBase64String(news.PictureList[i].Data) : news.PictureList[i].ByteAsString)" alt="" />
+                                            </div>
+                                        }
+                                        <a class="back-slide-btn" onclick="back('@(news.Id)')"></a>
+                                        <a class="next-slide-btn" onclick="next('@(news.Id)')"></a>
+                                        <div id="dots_@(news.Id)" class="dots">
+                                        @for (var i = 0; i < news.PictureList.Count; i++)
+                                        {
+                                            <a onclick="selectImg('@(news.Id)', '@i')">
+                                                <span id="dot_@(news.Id)_@i" class="dot @(i == 0 ? "active" : string.Empty)"></span>
+                                            </a>
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                             <h5 class="card-title-news">@news.Title</h5>
                             <p class="card-text-news">@news.ShortDescription</p>
                             <input type="checkbox" id="cb_@news.Id" class="hide" />
@@ -93,8 +124,9 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/swiper-bundle.min.js"></script>
+<script src="/js/news.js"></script>
 <script>
     var swiper = new Swiper('.swiper-container', {
         loop: true,
