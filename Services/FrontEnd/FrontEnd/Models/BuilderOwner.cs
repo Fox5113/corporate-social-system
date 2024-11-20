@@ -7,10 +7,10 @@
         {
             this.builder = builder;
         }
-        public void Construct()
+        public async Task Construct()
         {
             builder.SetLogin();
-            builder.BuildFromUserModel();
+            await builder.BuildFromUserModel();
             builder.SetLanguage();
             builder.SetAdditional();
         }

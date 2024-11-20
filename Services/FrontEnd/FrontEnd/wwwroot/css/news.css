@@ -1,4 +1,22 @@
-﻿.smiles {
+﻿[id^='slider'] {
+    position: relative;
+    width: 618px;
+    height: 246px;
+}
+
+    [id^='slider'] img {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        display: none;
+    }
+
+    [id^='slider'] a {
+        border: 0;
+        display: block;
+    }
+
+.smiles {
     display: none;
     text-align: center;
     max-height: 200px;

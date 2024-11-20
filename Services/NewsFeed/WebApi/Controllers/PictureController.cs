@@ -50,8 +50,8 @@ namespace WebApi.Controllers
         }
 
         [Route("GetCollectionByNewsIds")]
-        [HttpGet]
-        public async Task<IActionResult> GetCollectionByNewsIds(List<Guid> newsIds)
+        [HttpPost]
+        public async Task<IActionResult> GetCollectionByNewsIds([FromBody]List<Guid> newsIds)
         {
             if (newsIds == null || newsIds.Count == 0)
             {

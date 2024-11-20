@@ -144,27 +144,18 @@ namespace DataAccess.Repositories
             foreach (var item in news)
             {
                 item.Author = authors.FirstOrDefault(x => x.Id == item.AuthorId);
-                if (item.Author != null)
-                {
-                    item.Author.NewsList = null;
-                    item.Author.NewsCommentList = null;
-                }
-
                 item.HashtagNewsList = hashtagNews.Where(x => x.NewsId == item.Id).ToList();
                 if (item.HashtagNewsList != null && item.HashtagNewsList.Count > 0)
                 {
                     foreach (var hn in item.HashtagNewsList) 
                     {
-                        hn.News = null;
                         hn.Hashtag = hashtags.FirstOrDefault(x => x.Id == hn.HashtagId);
-
-                        if (hn.Hashtag != null)
-                            hn.Hashtag.HashtagNewsList = null;
                     }
                 }
-
                 if(pictures != null)
-                    item.PictureList = pictures;
+                    item.PictureList = pictures.Where(x => x.NewsId == item.Id).ToList();
+
+                ClearLinks(item);
             }
         }
 
