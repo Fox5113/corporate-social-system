@@ -1,4 +1,6 @@
 ﻿using FrontEnd.Models.Timesheet;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System.Text.Json;
 
 namespace FrontEnd.Services
@@ -94,5 +96,29 @@ namespace FrontEnd.Services
 				throw new HttpRequestException("Timesheet service is not available.");
 			}
 		}
-	}
+
+		public async Task<Guid> CreateProject(CreatingProjectModel model)
+		{
+            var response = await _httpClient.PostAsJsonAsync($"https://localhost:7010/Project/create", model);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var id = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                return JsonSerializer.Deserialize<Guid>(id, options);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return Guid.Empty;
+            }
+            else
+            {
+                throw new HttpRequestException("Timesheet service is not available.");
+            }
+        }
+
+    }
 }

@@ -34,16 +34,16 @@ namespace WebApi.Controllers
 			return Ok(_mapper.Map<ProjectModel>(await _service.GetByIdAsync(id)));
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> CreateAsync(CreatingProjectModel courseModel)
+		[HttpPost("create")]
+		public async Task<IActionResult> CreateAsync([FromBody]CreatingProjectModel model)
 		{
-			return Ok(await _service.CreateAsync(_mapper.Map<CreatingProjectDto>(courseModel)));
+			return Ok(await _service.CreateAsync(_mapper.Map<CreatingProjectDto>(model)));
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> EditAsync(Guid id, UpdatingProjectModel courseModel)
+		public async Task<IActionResult> EditAsync(Guid id, UpdatingProjectModel model)
 		{
-			await _service.UpdateAsync(id, _mapper.Map<UpdatingProjectModel, UpdatingProjectDto>(courseModel));
+			await _service.UpdateAsync(id, _mapper.Map<UpdatingProjectModel, UpdatingProjectDto>(model));
 			return Ok();
 		}
 

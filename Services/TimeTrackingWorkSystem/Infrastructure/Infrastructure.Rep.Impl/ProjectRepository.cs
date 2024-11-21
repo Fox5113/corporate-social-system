@@ -69,5 +69,14 @@ namespace Infrastructure.Rep.Impl
 
 			return await query.ToListAsync();
 		}
-	}
+
+        public bool CheckCanCreate(Project model)
+        {
+            var collection = GetAll()
+                .Where(x => model.Code == x.Code)
+                .ToList();
+
+            return collection == null || collection.Count == 0;
+        }
+    }
 }

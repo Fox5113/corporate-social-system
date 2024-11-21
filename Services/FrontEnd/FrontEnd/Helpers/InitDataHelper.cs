@@ -41,7 +41,10 @@ namespace FrontEnd.Helpers
 
         public static void InitViewData(ViewDataDictionary viewData, HttpContext context, string userName)
         {
-            var lang = context.Session.GetString(userName + Constants.LanguagePrefix);
+            var lang = context.Request?.Cookies[userName + Constants.LanguagePrefix] != null ?
+                context.Request?.Cookies[userName + Constants.LanguagePrefix].ToString() :
+                context.Session.GetString(userName + Constants.LanguagePrefix);
+
             if (!String.IsNullOrEmpty(userName) && !String.IsNullOrEmpty(lang))
             {
                 viewData[Constants.CaptionsKey] = Constants.Dictionaries[lang];
@@ -69,7 +72,28 @@ namespace FrontEnd.Helpers
                 context.Session.SetString(result.UserLogin + Constants.FullNamePrefix, result.FullName);
             }
 
-            context.Session.SetString(result.UserLogin + Constants.LanguagePrefix, result.Language);
+            if(context?.Request?.Cookies[result.UserLogin + Constants.IsAdminPrefix] == null && result.IsAdmin)
+            {
+                context.Response.Cookies.Append(result.UserLogin + Constants.IsAdminPrefix, result.IsAdmin.ToString(), new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Expires = DateTime.UtcNow.AddDays(30)
+                });
+            }
+
+            if (!String.IsNullOrEmpty(result.Language))
+            {
+                if(context?.Request?.Cookies[result.UserLogin + Constants.LanguagePrefix] != null)
+                    context.Response.Cookies.Delete(result.UserLogin + Constants.LanguagePrefix);
+
+                context.Response.Cookies.Append(result.UserLogin + Constants.LanguagePrefix, result.Language, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Expires = DateTime.UtcNow.AddDays(30)
+                });
+            }
         }
     }
 }

@@ -74,5 +74,15 @@ namespace Infrastructure.Rep.Impl
 
 			return await query.ToListAsync();
 		}
-	}
+
+		public bool CheckCanCreate(TimeTracker model)
+		{
+            var collection = GetAll()
+				.Where(x => x.ProjectId == model.ProjectId && x.EmployeeId == model.EmployeeId && x.Date == model.Date)
+				.ToList();
+
+			return collection == null || collection.Count == 0;
+        }
+
+    }
 }
