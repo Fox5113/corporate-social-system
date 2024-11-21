@@ -50,6 +50,9 @@ namespace FrontEnd.Models
 
         public async Task SetAuthor(NewsModel newsViewModel)
         {
+            if (_employees == null)
+                _employees = new List<EmployeeModel>();
+
             if (_newsItem != null)
             {
                 if (_newsItem.Author == null)
@@ -61,8 +64,10 @@ namespace FrontEnd.Models
 
                         if (employee != null)
                         {
-                            if (!isInList)
+                            if (!isInList && _employees != null)
                                 _employees.Add(employee);
+
+                            newsViewModel.Author = employee;
                         }
                     }
                     catch (Exception ex) { }
@@ -71,6 +76,8 @@ namespace FrontEnd.Models
                 {
                     if (!_employees.Contains(_newsItem.Author))
                         _employees.Add(_newsItem.Author);
+
+                    newsViewModel.Author = _newsItem.Author;
                 }
             }
         }

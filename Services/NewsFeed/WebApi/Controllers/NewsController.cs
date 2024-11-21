@@ -71,18 +71,14 @@ namespace WebApi.Controllers
 
         [Route("Publish")]
         [HttpPut]
-        public async Task<IActionResult> Publish(UpdatingNewsModel newsModel)
+        public async Task<IActionResult> Publish(Guid newsId)
         {
-            if (!CheckParams(newsModel.Id, newsModel, "NewsController.Publish"))
-                return BadRequest(GetBadRequestObject("NewsController.Publish: id is empty or object is null."));
+            if (newsId == Guid.Empty)
+                return BadRequest(GetBadRequestObject("NewsController.Publish: id is empty."));
 
             try
             {
-                var newsDto = _mapper.Map<UpdatingNewsModel, UpdatingNewsDto>(newsModel);
-                newsDto.IsPublished = true;
-                newsDto.IsArchived = false;
-
-                await _service.UpdateAsync(newsDto);
+                await _service.ChangeVisibility(newsId, true, false);
                 return Ok();
             }
             catch (Exception ex)
@@ -93,18 +89,14 @@ namespace WebApi.Controllers
 
         [Route("Cancel")]
         [HttpPut]
-        public async Task<IActionResult> Cancel(UpdatingNewsModel newsModel)
+        public async Task<IActionResult> Cancel(Guid newsId)
         {
-            if (!CheckParams(newsModel.Id, newsModel, "NewsController.Cancel"))
-                return BadRequest(GetBadRequestObject("NewsController.Cancel: id is empty or object is null."));
+            if (newsId == Guid.Empty)
+                return BadRequest(GetBadRequestObject("NewsController.Cancel: id is empty."));
 
             try
             {
-                var newsDto = _mapper.Map<UpdatingNewsModel, UpdatingNewsDto>(newsModel);
-                newsDto.IsPublished = false;
-                newsDto.IsArchived = true;
-
-                await _service.UpdateAsync(newsDto);
+                await _service.ChangeVisibility(newsId, false, true);
                 return Ok();
             }
             catch (Exception ex)
@@ -115,17 +107,13 @@ namespace WebApi.Controllers
 
         [Route("Archive")]
         [HttpPut]
-        public async Task<IActionResult> Archive(UpdatingNewsModel newsModel)
+        public async Task<IActionResult> Archive(Guid newsId)
         {
-            if (!CheckParams(newsModel.Id, newsModel, "NewsController.Archive"))
-                return BadRequest(GetBadRequestObject("NewsController.Archive: id is empty or object is null."));
+            if (newsId == Guid.Empty)
+                return BadRequest(GetBadRequestObject("NewsController.Archive: id is empty."));
             try
             {
-                var newsDto = _mapper.Map<UpdatingNewsModel, UpdatingNewsDto>(newsModel);
-                newsDto.IsPublished = true;
-                newsDto.IsArchived = true;
-
-                await _service.UpdateAsync(newsDto);
+                await _service.ChangeVisibility(newsId, true, true);
                 return Ok();
             }
             catch (Exception ex)

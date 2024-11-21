@@ -39,5 +39,15 @@ namespace BusinessLogic.Services
             ICollection<Picture> entities = await _pictureRepository.GetCollectionByNewsIds(newsIds);
             return _mapper.Map<ICollection<Picture>, ICollection<PictureDto>>(entities);
         }
+
+        /// <summary>
+        /// Удалить.
+        /// </summary>
+        /// <param name="id"> Идентификатор. </param>
+        public async Task DeleteAsync(Guid id)
+        {
+            _pictureRepository.Delete(id);
+            await _pictureRepository.SaveChangesAsync();
+        }
     }
 }

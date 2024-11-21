@@ -9,5 +9,11 @@ namespace BusinessLogic.Abstractions
     {
         Task<PictureDto> GetByIdAsync(Guid id);
         Task<ICollection<PictureDto>> GetCollectionByNewsIds(ICollection<Guid> newsIds);
+
+        /// <summary>
+        /// Удалить.
+        /// </summary>
+        /// <param name="id"> Идентификатор. </param>
+        Task DeleteAsync(Guid id);
     }
 }

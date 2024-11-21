@@ -93,6 +93,59 @@ namespace FrontEnd.Services
             }
         }
 
+        public async Task<List<NewsViewModel>> GetOnModerationListAsync(int page, int itemsPerPage, Guid userId)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"page", page.ToString()},
+                {"itemsPerPage", itemsPerPage.ToString()}
+            };
+
+            var queryString = string.Join("&", queryParameters
+                .Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}"));
+
+            var url = $"{_url}News/GetOnModerationListAsync?{queryString}";
+            var response = await _httpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var newsList = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                var list = JsonSerializer.Deserialize<List<NewsModel>>(newsList, options);
+                var newList = new List<NewsViewModel>();
+                if (list != null)
+                {
+                    foreach (var news in list)
+                    {
+                        var pics = news.PictureList != null ? news.PictureList : await GetPicturesByNewsIds(new List<Guid>() { news.Id });
+                        var nmp = new NewsModelPreparer().SetService(this).SetPicturesList(pics).SetNews(news);
+                        var nvmp = new NewsViewModelPreparer().SetNews(news).SetService(this);
+                        var newsViewModel = new NewsViewModel();
+                        nmp.SetBaseFields(newsViewModel);
+                        nmp.SetPictures(newsViewModel);
+                        await nmp.SetAuthor(newsViewModel);
+                        await nmp.SetHashtagNews(newsViewModel);
+                        nvmp.SetIsAuthor(newsViewModel, userId);
+                        nvmp.SetAuthorFullName(newsViewModel);
+                        await nvmp.SetHashtags(newsViewModel);
+                        newList.Add(newsViewModel);
+                    }
+                }
+                return newList;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                return null;
+            }
+            else
+            {
+                throw new HttpRequestException("News service is not available.");
+            }
+        }
+
         public async Task<EmployeeModel> GetEmployeeInfo(Guid id)
         {
             var queryParameters = new Dictionary<string, string>
@@ -257,6 +310,13 @@ namespace FrontEnd.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> DeletePicture(Guid pictureId)
+        {
+            var response = await _httpClient.DeleteAsync($"{_url}Picture/DeleteAsync?id={pictureId}");
+
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<bool> CheckIsAuthor(Guid newsId, Guid authorId)
         {
             var queryParameters = new Dictionary<string, string>
@@ -288,6 +348,27 @@ namespace FrontEnd.Services
             {
                 throw new HttpRequestException("News service is not available.");
             }
+        }
+
+        public async Task<bool> Publish(Guid newsId)
+        {
+            var response = await _httpClient.PutAsync($"{_url}News/Publish?newsId={newsId}", null);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> Archive(Guid newsId)
+        {
+            var response = await _httpClient.PutAsync($"{_url}News/Archive?newsId={newsId}", null);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> Cancel(Guid newsId)
+        {
+            var response = await _httpClient.PutAsync($"{_url}News/Cancel?newsId={newsId}", null);
+
+            return response.IsSuccessStatusCode;
         }
 
         private async Task<List<NewsViewModel>> PrepareNewsList(List<NewsModel> list, Guid userId)

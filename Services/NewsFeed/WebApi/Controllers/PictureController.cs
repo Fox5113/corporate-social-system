@@ -69,6 +69,26 @@ namespace WebApi.Controllers
             }
         }
 
+        [Route("DeleteAsync")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                _logger.LogError("PictureController.DeleteAsync: Id is empty.");
+                return BadRequest(GetBadRequestObject("PictureController.DeleteAsync: id is empty."));
+            }
+            try
+            {
+                await _service.DeleteAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(GetBadRequestObject($"PictureController.DeleteAsync: {ex}"));
+            }
+        }
+
         private object GetBadRequestObject(string error)
         {
             return new { Status = "400", Error = error };

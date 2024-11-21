@@ -9,6 +9,7 @@
 }
 
 <link rel="stylesheet" href="/css/news.css" />
+<link rel="stylesheet" href="/css/newsForms.css" />
 <link href="/css/icon.css" rel="stylesheet" />
 
 <div class="news-menu-wrapper">
@@ -31,19 +32,19 @@
         <div id="delete-block">
             <button id="ask-delete-news">@dict.DeleteNewsButtonCaption</button>
         </div>
-        <form id="updatingForm" method="post" asp-controller="News" asp-action="UpdateNews">
+        <form id="updatingForm" method="post" asp-controller="News" asp-action="UpdateNews" enctype="multipart/form-data">
             <input class="form-control" id="newsId" name="newsId" type="hidden" value="@createNewsViewModel.News.Id">
             <div class="form-group">
                 <label for="title">@dict.CreatingNewsTitleCaption</label>
-                <input type="text" class="form-control" id="title" name="title" value="@createNewsViewModel.News.Title" required>
+                <input type="text" class="form-control" id="title" name="Title" value="@createNewsViewModel.News.Title" required>
             </div>
             <div class="form-group">
                 <label for="shortDescription">@dict.CreatingNewsShortDescriptionCaption</label>
-                <textarea class="form-control" id="shortDescription" name="shortDescription" rows="5">@createNewsViewModel.News.ShortDescription</textarea>
+                <textarea class="form-control" id="shortDescription" name="ShortDescription" rows="5">@createNewsViewModel.News.ShortDescription</textarea>
             </div>
             <div class="form-group">
                 <label for="content">@dict.CreatingNewsContentCaption</label>
-                <textarea class="form-control" id="content" name="content" rows="10" required>@createNewsViewModel.News.Content</textarea>
+                <textarea class="form-control" id="content" name="Content" rows="10" required>@createNewsViewModel.News.Content</textarea>
                 <label for="toggle-smiles" id="label-for-toggle-smiles">😃</label>
                 <input type="checkbox" id="toggle-smiles">
                 <div class="smiles">
@@ -59,8 +60,25 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="hashtags">@dict.CreatingNewsShortDescriptionCaption</label>
-                <input type="text" class="form-control" id="hashtags" name="hashtags" value="@createNewsViewModel.News.Hashtags">
+                <label for="pictures">@dict.PicturesCaption</label>
+                <input id="pictures" accept=".jpg,.png,.gif,.jpeg" class="form-control" name="Pictures" type="file" multiple>
+            </div>
+            @if (createNewsViewModel.News.PictureList != null && createNewsViewModel.News.PictureList.Count > 0)
+            {
+                <div class="news-pictures" id="news-pictures">
+                @foreach (var picture in createNewsViewModel.News.PictureList)
+                {
+                    <div class="picture" id="picture_@picture.Id">
+                            <img class="slide" src="data:image/png;base64,@(String.IsNullOrEmpty(picture.ByteAsString) ? Convert.ToBase64String(picture.Data) : picture.ByteAsString)" alt="" />
+
+                            <a href="javascript:void(0)" onclick="deletePic('@picture.Id')">X</a>
+                    </div>
+                }
+                </div>
+            }
+            <div class="form-group">
+                <label for="hashtags">@dict.CreatingNewsHashtagsCaption</label>
+                <input type="text" class="form-control" id="hashtags" name="Hashtags" value="@(String.Join(" ", createNewsViewModel?.News?.HashtagList?.Select(x => x.Name).ToList()))">
             </div>
             <button type="submit" class="btn btn-primary">@dict.SaveButtonCaption</button>
         </form>
@@ -115,7 +133,28 @@
 
 <script src="/js/jquery.min.js"></script>
 <script type="text/javascript">
+    function deletePic(picId){
+        $.ajax({
+            type: 'POST',
+            data: {
+                pictureId: picId,
+                newsId: '@createNewsViewModel?.News?.Id'
+            },
+            async: true,
+            cache: false,
+            dataType: 'json',
+            url: '@Url.Action("DeletePicture")',
+            error: function (jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); },
+            success: function () {
+                var pict = document.getElementById('picture_' + picId);
+                pict.parentNode.removeChild(pict);
+            }
+        });
+    }
+
 	$(document).ready(function () {
+        var picturesIds = [];
+
 		$(".smile").click(function () {
             var smile = this.innerText;
             var text = $.trim($("#content").val());
