@@ -1,15 +1,15 @@
-﻿img.slide {
-    max-width: 100%;
-    width: 100%;
-}
-.imgDiv {
+﻿.imgDiv {
     display: none;
     max-width: 300px;
     width: 100%;
     margin: auto;
+    height: 300px;
 }
     .imgDiv.block {
-        display: block;
+        display: flex;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        justify-content: center;
     }
 .slides {
     height: 350px;

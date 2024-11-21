@@ -7,7 +7,7 @@
 	ViewData["PageTitle"] = dict.PageTitlePersonalAccountCaption;
 
 	var personalInfo = (EmployeeModelFromPA)ViewData[Constants.PersonalAccountDataKey];
-	var birthday = personalInfo.EmploymentDate;
+	var birthday = personalInfo.Birthdate;
 	var empDate = personalInfo.EmploymentDate;
 
 	var birthStr = birthday != null && ((DateTime)birthday).ToString("yyyy-MM-dd") != DateTime.MinValue.ToString("yyyy-MM-dd") ? ((DateTime)birthday).ToString("yyyy-MM-dd") : string.Empty;
@@ -20,35 +20,35 @@
 <div class="plain-div-with-margin">
 <div id="user-profile-2" class="user-profile">
 	<div class="tabbable">
-		<ul class="nav nav-tabs padding-18">
+		<!--<ul class="nav nav-tabs padding-18">
 			<li class="active">
-					<a data-toggle="tab" href="https://localhost:7157/">
+					<a data-toggle="tab" href="/PersonalAccount?page=0">
 						<i class="green ace-icon fa fa-user bigger-120">✒️</i>
 					@dict.PAProfileCaption
 				</a>
 			</li>
 
 			<li>
-					<a data-toggle="tab" href="https://localhost:7157/News">
+					<a data-toggle="tab" href="/PersonalAccount?page=1">
 						<i class="orange ace-icon fa fa-rss bigger-120">🗨️</i>
 					@dict.PAMineNewsCaption
 				</a>
 			</li>
 
 			<li>
-				<a data-toggle="tab" href="#friends">
+					<a data-toggle="tab" href="/PersonalAccount?page=2">
 						<i class="blue ace-icon fa fa-users bigger-120">✍</i>
 					@dict.PAModerationNewsCaption
 				</a>
 			</li>
 
 			<li>
-				<a data-toggle="tab" href="#pictures"><link rel="stylesheet" href="/css/news.css" />
+					<a data-toggle="tab" href="/PersonalAccount?page=3">
 						<i class="pink ace-icon fa fa-picture-o bigger-120">📁</i>
 					@dict.PAArchivedNewsCaption
 				</a>
 			</li>
-		</ul>
+		</ul>-->
 		@if (personalInfo != null)
 		{				
 			<div class="tab-content-pa no-border padding-24">
@@ -92,22 +92,22 @@
 							</div>
 
 								<form id="updatingForm" method="post" asp-controller="PersonalAccount" asp-action="UpdateInfo">
-									<input class="form-control" id="id" name="id" type="hidden" value="@personalInfo.Id">
+									<input class="form-control" id="id" name="Id" type="hidden" value="@personalInfo.Id">
 									<div class="form-group">
 										<label for="start">@dict.EmployeeBirthdayCaption</label>
-										<input type="date" class="form-control" id="start" name="start" value="@birthStr">
+										<input type="date" class="form-control" id="birth" name="Birthdate" value="@birthStr">
 									</div>
 									<div class="form-group">
 										<label for="hashtags">@dict.EmployeeEmailCaption</label>
-										<input type="text" class="form-control" id="hashtags" name="hashtags" value="@personalInfo.MainEmail">
+										<input type="email" class="form-control" id="email" name="MainEmail" value="@personalInfo.MainEmail">
 									</div>
 									<div class="form-group">
 										<label for="hashtags">@dict.EmployeePhoneCaption</label>
-										<input type="text" class="form-control" id="hashtags" name="hashtags" value="@personalInfo.MainTelephoneNumber">
+										<input type="text" class="form-control" id="phone" name="MainTelephoneNumber" value="@personalInfo.MainTelephoneNumber">
 									</div>
 									<div class="form-group">
 										<label for="content">@dict.EmployeeAboutCaption</label>
-										<textarea class="form-control" id="content" name="content" rows="10">@personalInfo.About</textarea>
+										<textarea class="form-control" id="content" name="About" rows="10">@personalInfo.About</textarea>
 									</div>
 									<button type="submit" class="btn btn-primary">@dict.SaveButtonCaption</button>
 								</form>

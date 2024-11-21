@@ -1,5 +1,6 @@
 using FrontEnd.Helpers;
 using FrontEnd.Models;
+using FrontEnd.Models.PersonalAccountModels.Employee;
 using FrontEnd.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,19 @@ namespace FrontEnd.Controllers
             catch (Exception ex)
             {
                 return View();
+            }
+        }
+
+        public async Task<IActionResult> UpdateInfo(UpdatingEmployeeModel employeeModel)
+        {
+            try
+            {
+                await _personalAccountService.Update(employeeModel);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
             }
         }
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SqlQuery;
 using System.Diagnostics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static SqlQuery.Enums;
 
 namespace FrontEnd.Controllers
@@ -59,8 +60,7 @@ namespace FrontEnd.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Search(int page, string title, string authorName, string authorSurname, DateTime start, DateTime end, string hashtags)
+        public async Task<IActionResult> Moderation()
         {
             try
             {
@@ -69,7 +69,35 @@ namespace FrontEnd.Controllers
 
                 if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
                 {
-                    var query = PrepareSelectQuery(page > 0 ? page - 1 : 0, title, authorName, authorSurname, start, end, hashtags);
+                    try
+                    {
+                        var newsList = await _newsService.GetOnModerationListAsync(1, _itemsPerPage, userId);
+                        var pagingInfo = new PagingInfo() { CurrentPage = 1, ItemsPerPage = _itemsPerPage };
+                        var info = new NewsListViewModel { PagingInfo = pagingInfo, News = newsList };
+                        ViewData[Constants.NewsListViewModelKey] = info;
+                    }
+                    catch (Exception ex) { }
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(int page, string title, string authorName, string authorSurname, DateTime start, DateTime end, string hashtags, List<string> newsIds)
+        {
+            try
+            {
+                InitDataHelper.InitSession(HttpContext, _personalAccountService, _authService, ViewData, User?.Identity?.Name);
+                InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
+
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                {
+                    var query = PrepareSelectQuery(page > 0 ? page - 1 : 0, title, authorName, authorSurname, start, end, hashtags, newsIds);
                     var data = await _newsService.Search(query, userId);
                     var pagingInfo = new PagingInfo() { CurrentPage = page, ItemsPerPage = _itemsPerPage };
                     var info = new NewsListViewModel
@@ -81,7 +109,7 @@ namespace FrontEnd.Controllers
                         },
                         FiltersEmpty = false
                     };
-                    if (page == 1)
+                    if (page < 2)
                     {
                         ViewData[Constants.NewsListViewModelKey] = info;
                         return View();
@@ -208,28 +236,31 @@ namespace FrontEnd.Controllers
                     }
 
                     var pictures = new List<CreatingPictureModel>();
-                    foreach (var item in model.Pictures)
+                    if (model.Pictures != null)
                     {
-                        var fileName = Path.GetFileName(item.FileName);
-                        var contentType = item.ContentType;
-                        long length = item.Length;
-                        if (length < 0)
-                            return BadRequest();
-
-                        using var fileStream = item.OpenReadStream();
-                        byte[] bytes = new byte[length];
-                        fileStream.Read(bytes, 0, (int)item.Length);
-
-                        pictures.Add(new CreatingPictureModel()
+                        foreach (var item in model.Pictures)
                         {
-                            AuthorId = userId,
-                            Name = fileName,
-                            Format = contentType,
-                            Size = length,
-                            Data = bytes,
-                            ByteAsString = Convert.ToBase64String(bytes),
-                            Description = model.Title
-                        });
+                            var fileName = Path.GetFileName(item.FileName);
+                            var contentType = item.ContentType;
+                            long length = item.Length;
+                            if (length < 0)
+                                return BadRequest();
+
+                            using var fileStream = item.OpenReadStream();
+                            byte[] bytes = new byte[length];
+                            fileStream.Read(bytes, 0, (int)item.Length);
+
+                            pictures.Add(new CreatingPictureModel()
+                            {
+                                AuthorId = userId,
+                                Name = fileName,
+                                Format = contentType,
+                                Size = length,
+                                Data = bytes,
+                                ByteAsString = Convert.ToBase64String(bytes),
+                                Description = model.Title
+                            });
+                        }
                     }
 
                     query.PictureList = pictures;
@@ -248,7 +279,7 @@ namespace FrontEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateNews(Guid newsId, string title, string shortDescription, string content, string hashtags)
+        public async Task<IActionResult> UpdateNews(Guid newsId, NewNewsViewModel modelNews)
         {
             try
             {
@@ -257,14 +288,14 @@ namespace FrontEnd.Controllers
                     var isAuthor = await _newsService.CheckIsAuthor(newsId, userId);
                     if (isAuthor)
                     {
-                        var hashArr = !String.IsNullOrEmpty(hashtags) ?
-                            hashtags.Split(' ').Where(x => !String.IsNullOrEmpty(x.Trim())).Select(x => x.Trim()).ToList() : null;
+                        var hashArr = !String.IsNullOrEmpty(modelNews.Hashtags) ?
+                            modelNews.Hashtags.Split(' ').Where(x => !String.IsNullOrEmpty(x.Trim())).Select(x => x.Trim()).ToList() : null;
                         var model = new UpdatingNewsModel()
                         {
                             Id = newsId,
-                            Title = title,
-                            Content = content,
-                            ShortDescription = shortDescription
+                            Title = modelNews.Title,
+                            Content = modelNews.Content,
+                            ShortDescription = modelNews.ShortDescription
                         };
                         if (hashArr != null && hashArr.Count > 0)
                         {
@@ -280,6 +311,38 @@ namespace FrontEnd.Controllers
                                 });
                             }
                         }
+
+                        var pictures = new List<UpdatingPictureModel>();
+                        if(modelNews.Pictures != null)
+                        {
+                            foreach (var item in modelNews.Pictures)
+                            {
+                                var fileName = Path.GetFileName(item.FileName);
+                                var contentType = item.ContentType;
+                                long length = item.Length;
+                                if (length < 0)
+                                    return BadRequest();
+
+                                using var fileStream = item.OpenReadStream();
+                                byte[] bytes = new byte[length];
+                                fileStream.Read(bytes, 0, (int)item.Length);
+
+                                pictures.Add(new UpdatingPictureModel()
+                                {
+                                    AuthorId = userId,
+                                    Name = fileName,
+                                    Format = contentType,
+                                    Size = length,
+                                    Data = bytes,
+                                    ByteAsString = Convert.ToBase64String(bytes),
+                                    Description = model.Title,
+                                    NewsId = newsId
+                                });
+                            }
+
+                            model.PictureList = pictures;
+                        }
+
                         var isUpdated = await _newsService.Update(model);
                         return isUpdated ? RedirectToAction("UpdatedNews") : RedirectToAction("FailedUpdatingNews");
                     }
@@ -287,11 +350,36 @@ namespace FrontEnd.Controllers
                         return RedirectToAction("FailedUpdatingNews");
                 }
                 ViewData[Constants.UserFullNameKey] = HttpContext.Session.GetString(User?.Identity?.Name + Constants.FullNamePrefix);
-                return View();
+                return RedirectToAction("FailedUpdatingNews");
             }
             catch (Exception ex)
             {
-                return View();
+                return RedirectToAction("FailedUpdatingNews");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePicture(Guid pictureId, Guid newsId)
+        {
+            try
+            {
+                if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
+                {
+                    var isAuthor = await _newsService.CheckIsAuthor(newsId, userId);
+                    if (isAuthor)
+                    {
+                        var isDeleted = await _newsService.DeletePicture(pictureId);
+                        return isDeleted ? Ok(isDeleted) : BadRequest("News service is not available now");
+                    }
+                    else
+                        return RedirectToAction("Index");
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Ok();
             }
         }
 
@@ -364,6 +452,25 @@ namespace FrontEnd.Controllers
                 return Ok();
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Publish(Guid newsId)
+        {
+            try
+            {
+                if (newsId != Guid.Empty)
+                {
+
+                    await _newsService.Publish(newsId);
+                }
+
+                return RedirectToAction("Moderation");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Moderation");
+            }
+        }
         #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -372,7 +479,7 @@ namespace FrontEnd.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private MappingQuery PrepareSelectQuery(int page, string title, string authorName, string authorSurname, DateTime start, DateTime end, string hashtags)
+        private MappingQuery PrepareSelectQuery(int page, string title, string authorName, string authorSurname, DateTime start, DateTime end, string hashtags, List<string> newsIds)
         {
             var hashtagsArr = hashtags?.Split(' ').Where(x => x.Trim() != String.Empty).Select(x => x.Trim()).ToList();
             var mapping = new MappingQuery()
@@ -550,6 +657,17 @@ namespace FrontEnd.Controllers
                 ComparisonType = (int)Enums.FilterComparisonType.Equal,
                 Data = new List<object> { 0 }
             });
+            if(newsIds != null && newsIds.Count > 0)
+            {
+                mapping.TableFilter.FieldsFilter.Add(new FieldFilter()
+                {
+                    TableName = "News",
+                    DataType = "Guid",
+                    Name = "Id",
+                    ComparisonType = (int)Enums.FilterComparisonType.NotEqual,
+                    Data = newsIds.Select(x => (object)x).ToList()
+                });
+            }
 
             return mapping;
         }

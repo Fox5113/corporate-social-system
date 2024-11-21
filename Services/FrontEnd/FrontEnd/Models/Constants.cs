@@ -183,6 +183,8 @@
         public virtual string TimeCountByProjectCaption { get; } = "Затрачено часов";
         public virtual string CreateProjectCaption { get; } = "Создать проект";
         public virtual string GoToProjects { get; } = "Перейти к проектам";
+        public virtual string ModeartionMenuCaption { get; } = "Модерация";
+        public virtual string PublishButtonCaption { get; } = "Опубликовать";
     }
 
     public class CaptionsEN : CaptionsBase
@@ -312,8 +314,14 @@
         public override string PasswordResetCaption { get; } = "Login ";
         public override string LinkCaption { get; } = "link";
         public override string ProblemRequestSucceededCaption { get; } = "The application accepted";
-        public override string WeAnswerLaterByEmailCaption { get; } = "Ответ будет направлен Вам на указанную почту в ближайшее время.";
+        public override string WeAnswerLaterByEmailCaption { get; } = "An answer will be sent to your email soon.";
         public override string BackCaption { get; } = "Back";
         public override string AccessIsRestrictedCaption { get; } = "Access restricted";
-    }
+		public override string PicturesCaption { get; } = "Photo";
+		public override string TimeCountByProjectCaption { get; } = "Work time";
+		public override string CreateProjectCaption { get; } = "Create project";
+		public override string GoToProjects { get; } = "Go to projects";
+		public override string ModeartionMenuCaption { get; } = "Moderation";
+		public override string PublishButtonCaption { get; } = "Publish";
+	}
 }

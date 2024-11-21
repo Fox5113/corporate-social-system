@@ -33,7 +33,7 @@ namespace DataAccess.Repositories
         /// Джоин связанных сущностей
         /// </summary>
         /// <param name="news">Список новостей</param>
-        void JoinEntities(ICollection<News> news);
+        void JoinEntities(ICollection<News> news, bool needClear);
 
         /// <summary>
         /// Джоин сущности автора
@@ -54,6 +54,13 @@ namespace DataAccess.Repositories
         /// <param name="newList">Новый список</param>
         /// <returns>Новый список</returns>
         List<HashtagNews> GetNewHashtagNewsList(ICollection<HashtagNews> oldList, ICollection<HashtagNews> newList);
+
+        /// <summary>
+        /// Обновление списка картинок новости
+        /// </summary>
+        /// <param name="newList">Новый список</param>
+        /// <returns>Новый список</returns>
+        Task AddNewPicturesList(ICollection<Picture> newList);
 
         /// <summary>
         /// Лайкнуть новость
