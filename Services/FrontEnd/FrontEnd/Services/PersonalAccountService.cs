@@ -31,7 +31,8 @@ namespace FrontEnd.Services
                 {
                     PropertyNameCaseInsensitive = true
                 };
-                return JsonSerializer.Deserialize<EmployeeModelFromPA>(user, options);
+                var result  = JsonSerializer.Deserialize<EmployeeModelFromPA>(user, options);
+                return result;
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {

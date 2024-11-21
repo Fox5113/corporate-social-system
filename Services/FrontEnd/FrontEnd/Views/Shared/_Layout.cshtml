@@ -1,4 +1,4 @@
-﻿@using FrontEnd.Helpers
+@using FrontEnd.Helpers
 @{
     var dict = ((CaptionsBase)ViewData[Constants.CaptionsKey]);
     if (dict == null)
@@ -43,7 +43,7 @@
             <div class="user-menu">
                 <div class="user-menu-buttons">
                     <button class="user-btn" id="userBtn">
-                        <img src="https://via.placeholder.com/40" alt="User">
+                        <img src="https://static.wikia.nocookie.net/angrybirds/images/3/31/Red.png/revision/latest/scale-to-width/360?cb=20241017062330" alt="User">
                         @if (User.Identity.IsAuthenticated)
                         {
                             @ViewData["UserFullName"]
@@ -58,7 +58,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="user-dropdown" id="userDropdown">
-                        <a class="user-dropdown-item" href="/PersonalAccount/Index">@dict.ProfileCaption</a>
+                        <a class="user-dropdown-item" href="/PersonalAccount">@dict.PersonalAccountMenuCaption</a>
                         <form class="user-dropdown-item" method="post" action="/Logout">
                             <button type="submit" style="background:none; border:none; cursor:pointer; color:#007bff; padding:0;">@dict.ExitCaption</button>
                         </form>
