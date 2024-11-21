@@ -14,5 +14,7 @@ namespace Services.Repositories.Abstractions
 		/// <param name="filterDto"> ДТО фильтра. </param>
 		/// <returns> Список тайм трекеров. </returns>
 		Task<List<TimeTracker>> GetPagedAsync(TimeTrackerFilterDto filterDto);
-	}
+		bool CheckCanCreate(TimeTracker model);
+
+    }
 }

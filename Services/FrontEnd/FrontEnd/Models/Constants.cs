@@ -34,6 +34,7 @@
         public static readonly string NextTwoWeeksKey = "NextTwoWeeks";
         public static readonly string TimeSheetDataKey = "TimeSheetData";
         public static readonly string LoginKey = "LoginValue";
+        public static readonly string IsAdminKey = "IsAdmin";
 
         public static readonly Dictionary<string, object> Dictionaries = new Dictionary<string, object>()
         {
@@ -179,6 +180,9 @@
         public virtual string BackCaption { get; } = "Назад";
         public virtual string AccessIsRestrictedCaption { get; } = "Доступ ограничен";
         public virtual string PicturesCaption { get; } = "Фото";
+        public virtual string TimeCountByProjectCaption { get; } = "Затрачено часов";
+        public virtual string CreateProjectCaption { get; } = "Создать проект";
+        public virtual string GoToProjects { get; } = "Перейти к проектам";
     }
 
     public class CaptionsEN : CaptionsBase

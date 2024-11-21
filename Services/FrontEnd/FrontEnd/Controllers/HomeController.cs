@@ -78,6 +78,17 @@ namespace FrontEnd.Controllers
                 if(!string.IsNullOrEmpty(language) && language != HttpContext.Session.GetString(User.Identity.Name + Constants.LanguagePrefix) && Constants.Dictionaries.ContainsKey(language))
                 {
                     HttpContext.Session.SetString(User.Identity.Name + Constants.LanguagePrefix, language);
+                    
+                    if (HttpContext?.Request?.Cookies[User.Identity.Name + Constants.LanguagePrefix] != null)
+                        HttpContext.Response.Cookies.Delete(User.Identity.Name + Constants.LanguagePrefix);
+
+                    HttpContext?.Response?.Cookies.Append(User.Identity.Name + Constants.LanguagePrefix, language, new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        Expires = DateTime.UtcNow.AddDays(30)
+                    });
+
                     InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
 
                     if (Guid.TryParse(HttpContext.Session.GetString(User.Identity.Name), out var userId))
@@ -107,6 +118,9 @@ namespace FrontEnd.Controllers
                                 await _personalAccountService.Update(newModel);
 
                                 ViewData[Constants.PersonalAccountDataKey] = empModel;
+
+                                if(HttpContext.Session.GetString(Constants.TimeSheetDataKey) != null)
+                                    HttpContext.Session.Remove(Constants.TimeSheetDataKey);
                             }
                         }
                         catch (Exception ex) { }

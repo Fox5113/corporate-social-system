@@ -58,7 +58,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="user-dropdown" id="userDropdown">
-                        <a class="user-dropdown-item" href="/Profile">@dict.ProfileCaption</a>
+                        <a class="user-dropdown-item" href="/PersonalAccount/Index">@dict.ProfileCaption</a>
                         <form class="user-dropdown-item" method="post" action="/Logout">
                             <button type="submit" style="background:none; border:none; cursor:pointer; color:#007bff; padding:0;">@dict.ExitCaption</button>
                         </form>

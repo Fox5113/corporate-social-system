@@ -5,6 +5,7 @@ using FrontEnd.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
@@ -46,6 +47,7 @@ namespace FrontEnd.Controllers
                 }
 				else
 				{
+                    InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
                     if (start == default)
                         start = DateOnly.FromDateTime(DateTime.Now.StartOfWeek(DayOfWeek.Monday));
 
@@ -240,7 +242,41 @@ namespace FrontEnd.Controllers
             }
 		}
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [HttpPost]
+        public async Task<ActionResult> CreateProject(CreatingProjectModel model)
+        {
+            try
+            {
+                var result = await _timesheetService.CreateProject(model);
+                if(result != Guid.Empty)
+                {
+                    if (HttpContext.Session.GetString(Constants.TimeSheetDataKey) != null)
+                        HttpContext.Session.Remove(Constants.TimeSheetDataKey);
+                }
+            }
+            catch (Exception ex) { }
+
+            return RedirectToAction("Projects");
+        }
+
+        [HttpGet]
+        public ActionResult CreateProject()
+        {
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
+            ViewData[Constants.IsAdminKey] = HttpContext?.Request?.Cookies[User?.Identity?.Name + Constants.IsAdminPrefix];
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Projects()
+        {
+            InitDataHelper.InitViewData(ViewData, HttpContext, User?.Identity?.Name);
+            ViewData[Constants.IsAdminKey] = HttpContext?.Request?.Cookies[User?.Identity?.Name + Constants.IsAdminPrefix];
+            ViewData[Constants.ProjectsDataKey] = await _timesheetService.GetProjects(); ;
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
@@ -285,7 +321,11 @@ namespace FrontEnd.Controllers
             await InitDataHelper.InitSession(HttpContext, _personalAccountService, _authService, viewData, User?.Identity?.Name);
             InitDataHelper.InitViewData(viewData, HttpContext, User?.Identity?.Name);
 
-            PrepareViewData(model, start, till, (CaptionsBase)viewData[Constants.CaptionsKey]);
+            var lang = Constants.LanguageBase;
+            if (HttpContext?.Request?.Cookies[User.Identity.Name + Constants.LanguagePrefix] != null)
+                lang = HttpContext?.Request?.Cookies[User.Identity.Name + Constants.LanguagePrefix].ToString();
+
+            PrepareViewData(model, start, till, (CaptionsBase)Constants.Dictionaries[lang]);
 
             var employeeId = HttpContext.Request.Cookies[Constants.UserIdCookieKey];
             var projectsGuids = new List<Guid>();

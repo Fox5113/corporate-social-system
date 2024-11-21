@@ -4,6 +4,7 @@ using Services.Abstractions;
 using Services.Contracts.Project;
 using Services.Contracts.TimeTracker;
 using Services.Repositories.Abstractions;
+using System.Threading;
 
 namespace Services.Implementations
 {
@@ -47,7 +48,7 @@ namespace Services.Implementations
 		/// <param name="creatingProjectDto"> ДТО создаваемого тайм трекера. </param>
 		/// <returns> Идентификатор. </returns>
 		public async Task<Guid> CreateAsync(CreatingTimeTrackerDto creatingProjectDto)
-		{
+        {
 			var timeTracker = _mapper.Map<CreatingTimeTrackerDto, TimeTracker>(creatingProjectDto);
 			var createdProject = await _timeTrackerRepository.AddAsync(timeTracker);
 			await _timeTrackerRepository.SaveChangesAsync();
@@ -61,7 +62,10 @@ namespace Services.Implementations
 			var result = new List<TimeTracker>();
 			foreach(var item in timeTracker)
 			{
-                result.Add(_timeTrackerRepository.Add(item));
+				if (_timeTrackerRepository.CheckCanCreate(item))
+				{
+                    result.Add(_timeTrackerRepository.Add(item));
+                }
             }
 			
 			await _timeTrackerRepository.SaveChangesAsync();

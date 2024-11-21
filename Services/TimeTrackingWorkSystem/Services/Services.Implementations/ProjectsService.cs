@@ -48,15 +48,14 @@ namespace Services.Implementations
 		public async Task<Guid> CreateAsync(CreatingProjectDto creatingProjectDto)
 		{
 			var project = _mapper.Map<CreatingProjectDto, Project>(creatingProjectDto);
-			var createdProject = await _projectsRepository.AddAsync(project);
-			await _projectsRepository.SaveChangesAsync();
-			/*
-			await _busControl.Publish(new MessageDto
+			if (_projectsRepository.CheckCanCreate(project))
 			{
-				Content = $"Course {createdCourse.Id} with name {createdCourse.Name} is added"
-			});
-			*/
-			return createdProject.Id;
+                var createdProject = await _projectsRepository.AddAsync(project);
+                await _projectsRepository.SaveChangesAsync();
+                return createdProject.Id;
+            }
+
+			return Guid.Empty;
 		}
 
 		/// <summary>

@@ -5,12 +5,12 @@
 		/// <summary>
 		/// Проект.
 		/// </summary>
-		public required Guid ProjectId { get; init; }
+		public required Guid ProjectId { get; set; }
 
 		/// <summary>
 		/// Сотрудник.
 		/// </summary>
-		public required Guid EmployeeId { get; init; }
+		public required Guid EmployeeId { get; set; }
 
 		/// <summary>
 		/// Описание.

@@ -145,7 +145,7 @@ button#langBtn {
     left: 0;
     overflow-x: hidden;
     transition: 0.5s;
-    background: linear-gradient(107deg, #ddecf0 0%, #ffffff 25%, #a1d3e4 80%, #c8c9d7 100%);
+    background: linear-gradient(107deg, #ddecf0 0%, #ffffff 25%, #465cec 80%, #c8c9d7 100%);
     padding-top: 60px;
     box-shadow: 2px 0px 10px 0px #aaaaaa;
 }
