@@ -34,7 +34,14 @@ namespace FrontEnd.Models
 
         public void SetAuthorFullName(NewsViewModel newsViewModel)
         {
-            newsViewModel.AuthorFullName = _newsItem?.Author?.Firstname + " " + _newsItem?.Author?.Surname;
+            if(_newsItem?.Author != null)
+            {
+                newsViewModel.AuthorFullName = _newsItem?.Author?.Firstname + " " + _newsItem?.Author?.Surname;
+            }
+            else if (newsViewModel?.Author != null)
+            {
+                newsViewModel.AuthorFullName = newsViewModel.Author.Firstname + " " + newsViewModel.Author.Surname;
+            }
         }
 
         public async Task SetHashtags(NewsViewModel newsViewModel)
