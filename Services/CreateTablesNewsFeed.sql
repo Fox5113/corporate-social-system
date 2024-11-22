@@ -1,4 +1,4 @@
---Сотрудник
+--Г‘Г®ГІГ°ГіГ¤Г­ГЁГЄ
 CREATE TABLE Employee (
 	Id uniqueidentifier NOT NULL,
 	Firstname nvarchar(max) NOT NULL,
@@ -11,14 +11,14 @@ ALTER TABLE Employee ADD  CONSTRAINT [DFHuuuvW8Ndkv0vWuFOKvZq9Fs]  DEFAULT (newi
 ALTER TABLE Employee ADD  DEFAULT (0) FOR IsDeleted
 ALTER TABLE Employee ADD  DEFAULT (0) FOR IsAdmin
 
---Хэштег
+--Г•ГЅГёГІГҐГЈ
 CREATE TABLE Hashtag (
 	Id uniqueidentifier NOT NULL,
 	Name nvarchar(max) NOT NULL
 )
 ALTER TABLE Hashtag ADD  CONSTRAINT [DFHuuuvW8Ndkv0vWuFOKvZr9Fs]  DEFAULT (newid()) FOR Id
 
---Новость
+--ГЌГ®ГўГ®Г±ГІГј
 CREATE TABLE News(
 	Id uniqueidentifier NOT NULL,
 	Title nvarchar(max) NULL,
@@ -45,7 +45,7 @@ REFERENCES Employee (Id)
 ON DELETE CASCADE
 ALTER TABLE News CHECK CONSTRAINT [FK_News_Employee_AuthorId]
 
---Связь хэштега и новости
+--Г‘ГўГїГ§Гј ГµГЅГёГІГҐГЈГ  ГЁ Г­Г®ГўГ®Г±ГІГЁ
 CREATE TABLE HashtagNews (
 	Id uniqueidentifier NOT NULL,
 	HashtagId uniqueidentifier NOT NULL,
@@ -66,7 +66,7 @@ REFERENCES News (Id)
 ON DELETE CASCADE
 ALTER TABLE HashtagNews CHECK CONSTRAINT [FK_HashtagNews_News_NewsId]
 
---Комментарий
+--ГЉГ®Г¬Г¬ГҐГ­ГІГ Г°ГЁГ©
 CREATE TABLE NewsComment(
 	Id uniqueidentifier NOT NULL,
 	Content nvarchar(max) NOT NULL,
@@ -91,7 +91,7 @@ ALTER TABLE NewsComment  WITH CHECK ADD  CONSTRAINT [FK_NewsComment_News_NewsId]
 REFERENCES News (Id)
 ALTER TABLE NewsComment CHECK CONSTRAINT [FK_NewsComment_News_NewsId]
 
---Лайк
+--Г‹Г Г©ГЄ
 CREATE TABLE LikedNews(
 	Id uniqueidentifier NOT NULL,
 	EmployeeId uniqueidentifier NOT NULL,
@@ -111,7 +111,7 @@ ALTER TABLE LikedNews  WITH CHECK ADD  CONSTRAINT [FK_LikedNews_News_NewsId] FOR
 REFERENCES News (Id)
 ALTER TABLE LikedNews CHECK CONSTRAINT [FK_LikedNews_News_NewsId]
 
---Картинки
+--ГЉГ Г°ГІГЁГ­ГЄГЁ
 CREATE TABLE Picture(
 	Id uniqueidentifier NOT NULL,
 	[Name] nvarchar(500) NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE Picture(
 	AuthorId uniqueidentifier NOT NULL,
 	NewsId uniqueidentifier NOT NULL,
 	CreatedAt datetime2(7) NOT NULL,
-	Size int NOT NULL,
+	Size bigint NOT NULL,
 	[Data] varbinary(max) NOT NULL,
  CONSTRAINT [PK_Picture] PRIMARY KEY CLUSTERED 
 (

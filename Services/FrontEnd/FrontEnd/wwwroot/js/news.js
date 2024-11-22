@@ -63,3 +63,19 @@ function selectImg(newsId, nextNum) {
         }
     }
 }
+
+function getNewsIds(newsIdSelector, splitChar) {
+    var blocks = $(newsIdSelector);
+    var newsIds = [];
+    if (blocks.length > 0) {
+        for (let a = 0; a < blocks.length; a++) {
+            var blockId = splitChar ? blocks[a].id?.split(splitChar) : blocks[a].id;
+            if (blockId.length == 2) {
+                var newsId = blockId[1].trim();
+                newsIds.push(newsId);
+            }
+        }
+    }
+
+    return newsIds;
+}

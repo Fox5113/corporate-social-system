@@ -132,7 +132,7 @@ namespace DataAccess.Repositories
         /// Джоин связанных сущностей
         /// </summary>
         /// <param name="news">Список новостей</param>
-        public void JoinEntities(ICollection<News> news)
+        public void JoinEntities(ICollection<News> news, bool needClear = true)
         {
             var authorsIds = news.Select(x => x.AuthorId).Distinct().ToList();
             var authors = GetEmployees(authorsIds);
@@ -155,7 +155,8 @@ namespace DataAccess.Repositories
                 if(pictures != null)
                     item.PictureList = pictures.Where(x => x.NewsId == item.Id).ToList();
 
-                ClearLinks(item);
+                if(needClear)
+                    ClearLinks(item);
             }
         }
 
@@ -282,6 +283,13 @@ namespace DataAccess.Repositories
             }
 
             return result;
+        }
+
+        public async Task AddNewPicturesList(ICollection<Picture> newList)
+        {
+            var picRepo = new PictureRepository(_dataContext);
+            await picRepo.AddRangeAsync(newList);
+            await picRepo.SaveChangesAsync();
         }
 
         /// <summary>

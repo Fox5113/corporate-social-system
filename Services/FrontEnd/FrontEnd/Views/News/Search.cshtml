@@ -37,7 +37,7 @@
             @if (newsListViewModel != null)
             {
                 <form id="searchForm" method="post" asp-controller="News" asp-action="Search">
-                    <input class="form-control" id="page" name="page" type="hidden" value="@newsListViewModel.PagingInfo.CurrentPage">
+                    <input class="form-control" id="page" name="page" type="hidden" value="1">
                     <div class="form-group">
                         <label for="title">@dict.SearchPlainFormTitleCaption</label>
                         <input type="text" class="form-control" id="title" name="title" value="@newsListViewModel.Filters["title"]">
@@ -81,7 +81,7 @@
                 <div class="col-md-12 col-lg-12">
                     <div class="news-card card mb-4 shadow-sm">
                         <!--<img class="card-img-top" src="/img/test/64559-thanks5.png" alt="News Image">-->
-                        <div class="card-body_@news.Id">
+                        <div class="card-body_@news.Id" id="card-body_@news.Id">
                             @if (news.IsAuthor)
                             {
                                 <form id='updateNews' method='post' asp-controller='News' asp-action='Update'>
@@ -153,16 +153,26 @@
 <script>
     $(document).ready(function () {
         like();
-
+        var newsIds = getNewsIds('[id^="card-body_"]', '_');
         var p = @newsListViewModel?.PagingInfo.CurrentPage;
+        var currentFilters = {
+            title: '@newsListViewModel.Filters["title"]',
+            authorName: '@newsListViewModel.Filters["authorName"]',
+            authorSurname: '@newsListViewModel.Filters["authorSurname"]',
+            start: '@newsListViewModel.Filters["start"]',
+            end: '@newsListViewModel.Filters["end"]',
+            hashtags: '@newsListViewModel.Filters["hashtags"]',
+            newsIds: newsIds
+        };
         $('.load-more').click(function () {
+            currentFilters.page = p + 1;
             $.ajax({
                 type: 'POST',
-                data: { page: p + 1 },
+                data: currentFilters,
                 async: true,
                 cache: false,
                 dataType: 'json',
-                url: '@Url.Action("LoadMore")',
+                url: '@Url.Action("Search")',
                 error: function (jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); },
                 success: function (data) {
                     if (data.news.length > 0) {

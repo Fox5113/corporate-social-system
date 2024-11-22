@@ -106,6 +106,9 @@
                 </div>
             </section>
 
+            <div>
+                <a class="light-gray-button" asp-area="" asp-controller="Timesheet" asp-action="Projects">@dict.GoToProjects</a>
+            </div>
             <!--<div class="btn-transfer">
                 <button>Перенести с прошлой недели</button>
                 <button>Перенести с выбранной недели</button>
@@ -134,7 +137,7 @@
                                         <input class="form-control" id="projectId_@project.Code" name="projectId" type="hidden" value="@project.Id">
                                         <input class="form-control" id="start_@project.Code" name="start" type="hidden" value="@startDay">
                                         <input class="form-control" id="till_@project.Code" name="till" type="hidden" value="@tillDay">
-                                        <button type="submit" class="create-project-btn">
+                                        <button type="submit" class="create-project-btn" id="submit-creation">
                                             <div class="col-md-6 project_info">@project.Name</div><div class="col-md-6 project_info">@project.Code</div>
                                         </button>
                                     </form>
@@ -228,6 +231,10 @@
         }
 
         $(document).ready(function () {
+            $('#submit-creation').dblclick(function (e) {
+                e.preventDefault();
+            })
+
             var currentStartDate = new Date('@(firstStart.ToString("yyyy-MM-dd"))');
             var currentEndDate = new Date('@(end.ToString("yyyy-MM-dd"))');
             var currentStart = new Date('@(startDay.ToString("yyyy-MM-dd"))');

@@ -86,5 +86,7 @@ namespace BusinessLogic.Abstractions
         /// <param name="entities">Список новостей</param>
         /// <returns></returns>
         Task AddRangeAsync(ICollection<CreatingNewsDto> entities);
+
+        Task ChangeVisibility(Guid newsId, bool isPublished, bool isArchived);
     }
 }

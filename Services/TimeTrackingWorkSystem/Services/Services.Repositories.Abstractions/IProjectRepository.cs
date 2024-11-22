@@ -15,6 +15,7 @@ namespace Services.Repositories.Abstractions
 		/// <param name="filterDto"> ДТО фильтра. </param>
 		/// <returns> Список проектов. </returns>
 		Task<List<Project>> GetPagedAsync(ProjectFilterDto filterDto);
-		
-	}
+        bool CheckCanCreate(Project model);
+
+    }
 }

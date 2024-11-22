@@ -35,7 +35,7 @@ namespace BusinessLogic.Services
         public async Task<ICollection<NewsDto>> GetPagedAsync(int page, int pageSize)
         {
             ICollection<News> entities = await _newsRepository.GetPagedAsync(page, pageSize);
-            _newsRepository.JoinEntities(entities);
+            _newsRepository.JoinEntities(entities, true);
             return _mapper.Map<ICollection<News>, ICollection<NewsDto>>(entities);
         }
 
@@ -47,7 +47,7 @@ namespace BusinessLogic.Services
         public async Task<ICollection<NewsDto>> GetCollection(NewsSearch newsSearch)
         {
             ICollection<News> entities = await _newsRepository.GetCollection(newsSearch);
-            _newsRepository.JoinEntities(entities);
+            _newsRepository.JoinEntities(entities, true);
             return _mapper.Map<ICollection<News>, ICollection<NewsDto>>(entities);
         }
 
@@ -59,7 +59,7 @@ namespace BusinessLogic.Services
         public async Task<NewsDto> GetByIdAsync(Guid id)
         {
             var news = await _newsRepository.GetAsync(id);
-            _newsRepository.JoinEntities(new List<News>() { news });
+            _newsRepository.JoinEntities(new List<News>() { news }, true);
             return _mapper.Map<NewsDto>(news);
         }
 
@@ -123,7 +123,7 @@ namespace BusinessLogic.Services
         public async Task<ICollection<NewsDto>> GetLikedNewsByEmployee(Guid employeeId, int page, int itemsPerPage)
         {
             ICollection<News> entities = await _newsRepository.GetLikedNewsByEmployee(employeeId, page, itemsPerPage);
-            _newsRepository.JoinEntities(entities);
+            _newsRepository.JoinEntities(entities, true);
             return _mapper.Map<ICollection<News>, ICollection<NewsDto>>(entities);
         }
 
@@ -139,7 +139,12 @@ namespace BusinessLogic.Services
             {
                 throw new Exception($"Новость с идентификатором {updatingNewsDto.Id} не найдена");
             }
-            _newsRepository.JoinEntities(new List<News>() { news });
+            if (updatingNewsDto.PictureList != null && updatingNewsDto.PictureList.Count > 0)
+            {
+                await _newsRepository.AddNewPicturesList(updatingNewsDto.PictureList.Select(x => _mapper.Map<UpdatingPictureDto, Picture>(x)).ToList());
+            }
+
+            _newsRepository.JoinEntities(new List<News>() { news }, false);
 
             news.Title = updatingNewsDto.Title;
             news.ShortDescription = updatingNewsDto.ShortDescription;
@@ -167,6 +172,20 @@ namespace BusinessLogic.Services
         {
             await _newsRepository.AddRangeAsync(_mapper.Map<ICollection<CreatingNewsDto>, ICollection<News>>(entities));
             _newsRepository.SaveChanges();
+        }
+
+        public async Task ChangeVisibility(Guid newsId, bool isPublished, bool isArchived)
+        {
+            var news = await _newsRepository.GetAsync(newsId);
+            if (news == null)
+            {
+                throw new Exception($"Новость с идентификатором {newsId} не найдена");
+            }
+            _newsRepository.JoinEntities(new List<News>() { news }, false);
+            news.IsArchived = isArchived;
+            news.IsPublished = isPublished;
+            _newsRepository.Update(news);
+            await _newsRepository.SaveChangesAsync();
         }
     }
 }

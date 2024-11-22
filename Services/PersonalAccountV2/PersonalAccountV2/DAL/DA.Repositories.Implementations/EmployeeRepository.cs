@@ -63,20 +63,19 @@ namespace DA.Repositories.Implementations
 
             if (emp != null)
             {
-                emp.Surname = employee.Surname;
-                emp.Firstname = employee.Firstname;
-                emp.Position = employee.Position;
-                emp.Birthdate = employee.Birthdate;
-                emp.OfficeAddress = employee.OfficeAddress;
-                emp.UpdatedAt = DateTime.UtcNow;
+                emp.Surname = !String.IsNullOrEmpty(employee.Surname) ? employee.Surname : emp.Surname;
+                emp.Firstname = !String.IsNullOrEmpty(employee.Firstname) ? employee.Firstname : emp.Firstname;
+                emp.Position = !String.IsNullOrEmpty(employee.Position) ? employee.Position : emp.Position;
+                emp.Birthdate = employee.Birthdate != default ? employee.Birthdate : emp.Birthdate;
+                emp.OfficeAddress = !String.IsNullOrEmpty(employee.OfficeAddress) ? employee.OfficeAddress : emp.OfficeAddress;
+				emp.UpdatedAt = DateTime.UtcNow;
                 emp.About = employee.About;
                 emp.MainEmail = employee.MainEmail;
                 emp.MainTelephoneNumber = employee.MainTelephoneNumber;
-                emp.IsAdmin = employee.IsAdmin;
-                emp.IsDeleted = employee.IsDeleted;
-                emp.Language = employee.Language;
+                emp.Language = !String.IsNullOrEmpty(employee.Language) ? employee.Language : emp.Language;
+				emp.EmploymentDate = employee.EmploymentDate != default ? employee.EmploymentDate : emp.EmploymentDate;
 
-                Update(emp);
+				Update(emp);
 
                 return emp.Id;
             }
