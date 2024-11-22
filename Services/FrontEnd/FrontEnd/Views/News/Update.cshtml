@@ -13,7 +13,7 @@
 <link href="/css/icon.css" rel="stylesheet" />
 
 <div class="news-menu-wrapper">
-    @if (createNewsViewModel != null && createNewsViewModel.News != null)
+    @if (createNewsViewModel != null && createNewsViewModel.News != null && createNewsViewModel.News.Id != Guid.Empty)
     {
         <dialog id="dialog-delete-news" style="width: 500px;height: 200px;text-align: center;border: solid #efefef 1px;border-radius: 5px;">
             <div id="dialog-mainDiv">
@@ -36,15 +36,15 @@
             <input class="form-control" id="newsId" name="newsId" type="hidden" value="@createNewsViewModel.News.Id">
             <div class="form-group">
                 <label for="title">@dict.CreatingNewsTitleCaption</label>
-                <input type="text" class="form-control" id="title" name="Title" value="@createNewsViewModel.News.Title" required>
+                <input type="text" class="form-control" id="title" name="Title" value="@(createNewsViewModel.News.Title != null ? createNewsViewModel.News.Title : string.Empty)" required>
             </div>
             <div class="form-group">
                 <label for="shortDescription">@dict.CreatingNewsShortDescriptionCaption</label>
-                <textarea class="form-control" id="shortDescription" name="ShortDescription" rows="5">@createNewsViewModel.News.ShortDescription</textarea>
+                <textarea class="form-control" id="shortDescription" name="ShortDescription" rows="5">@(createNewsViewModel.News.ShortDescription != null ? createNewsViewModel.News.ShortDescription : string.Empty)</textarea>
             </div>
             <div class="form-group">
                 <label for="content">@dict.CreatingNewsContentCaption</label>
-                <textarea class="form-control" id="content" name="Content" rows="10" required>@createNewsViewModel.News.Content</textarea>
+                <textarea class="form-control" id="content" name="Content" rows="10" required>@(createNewsViewModel.News.Content != null ? createNewsViewModel.News.Content : string.Empty)</textarea>
                 <label for="toggle-smiles" id="label-for-toggle-smiles">😃</label>
                 <input type="checkbox" id="toggle-smiles">
                 <div class="smiles">
@@ -78,7 +78,7 @@
             }
             <div class="form-group">
                 <label for="hashtags">@dict.CreatingNewsHashtagsCaption</label>
-                <input type="text" class="form-control" id="hashtags" name="Hashtags" value="@(String.Join(" ", createNewsViewModel?.News?.HashtagList?.Select(x => x.Name).ToList()))">
+                <input type="text" class="form-control" id="hashtags" name="Hashtags" value="@(createNewsViewModel.News.HashtagList != null && createNewsViewModel.News.HashtagList.Count > 0 ? String.Join(" ", createNewsViewModel.News.HashtagList.Select(x => x.Name).ToList()) : string.Empty)">
             </div>
             <button type="submit" class="btn btn-primary">@dict.SaveButtonCaption</button>
         </form>
@@ -153,8 +153,6 @@
     }
 
 	$(document).ready(function () {
-        var picturesIds = [];
-
 		$(".smile").click(function () {
             var smile = this.innerText;
             var text = $.trim($("#content").val());
