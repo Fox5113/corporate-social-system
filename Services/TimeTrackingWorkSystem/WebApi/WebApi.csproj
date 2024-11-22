@@ -26,9 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.EntityFramework\Infrastructure.EntityFramework.csproj" />
+    <ProjectReference Include="..\Services\Services.Abstractions\Services.Abstractions.csproj" />
+    <ProjectReference Include="..\Services\Services.Contracts\Services.Contracts.csproj" />
     <ProjectReference Include="..\Services\Services.Implementations\Services.Implementations.csproj" />
 	<ProjectReference Include="..\Domain\Domain.Entities\Domain.Entities.csproj" />
 	<ProjectReference Include="..\Infrastructure\Infrastructure.Rep.Impl\Infrastructure.Rep.Impl.csproj" />
+	<ProjectReference Include="..\Services\Services.Repositories.Abstractions\Services.Repositories.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

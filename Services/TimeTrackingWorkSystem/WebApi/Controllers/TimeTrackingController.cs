@@ -48,8 +48,14 @@ namespace WebApi.Controllers
         [HttpPost]
 		public async Task<IActionResult> CreateRangeAsync([FromBody] List<CreatingTimeTrackerModel> timeTrackingModel)
 		{
-			var list = await _service.CreateRangeAsync(_mapper.Map<List<CreatingTimeTrackerDto>>(timeTrackingModel));
-			return Ok(_mapper.Map<List<TimeTrackerModel>>(list));
+			try
+			{
+				var list = await _service.CreateRangeAsync(_mapper.Map<List<CreatingTimeTrackerDto>>(timeTrackingModel));
+				return Ok(_mapper.Map<List<TimeTrackerModel>>(list));
+			}
+			catch (Exception ex) {
+				return BadRequest(ex.Message);
+			}
 		}
 
         [Route("DeleteRangeAsync")]
